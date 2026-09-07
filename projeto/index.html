@@ -2635,7 +2635,7 @@
 <li>[ ] <strong>Pelo menos 3 classes com responsabilidades distintas</strong> — cada uma cuidando de uma coisa (não uma classe "Deus" fazendo tudo).</li>
 <li>[ ] <strong>Pelo menos 1 interface/classe abstrata usada polimorficamente</strong> (método <code>virtual</code>, chamado através de uma referência/ponteiro da classe base, com pelo menos duas implementações concretas).</li>
 <li>[ ] <strong>Uso justificado de pelo menos um container da STL</strong> (<code>vector</code>, <code>map</code> ou <code>set</code>) — "justificado" significa que você deveria saber explicar por que aquele container, e não outro, foi a escolha certa.</li>
-<li>[ ] <strong>A lógica de decisão testada no host</strong>, com <code>verifica.hpp</code>, sem depender de hardware/simulador rodando (se o projeto for embarcado: siga a arquitetura do capítulo 14 — interface <code>ISensor</code>-like, implementação real e falsa).</li>
+<li>[ ] <strong>A lógica de decisão testada no host</strong>, com <code>assert()</code> (<code>&lt;cassert&gt;</code>), sem depender de hardware/simulador rodando (se o projeto for embarcado: siga a arquitetura do capítulo 14 — interface <code>ISensor</code>-like, implementação real e falsa).</li>
 <li>[ ] <strong>README</strong> com uma descrição do projeto e um diagrama simples das classes (pode ser um desenho à mão fotografado, um diagrama de blocos, ou texto estruturado — não precisa ser UML formal).</li>
 </ul>
 <h2 id="marcos">Marcos<a class="headerlink" href="#marcos" title="Permanent link">&para;</a></h2>

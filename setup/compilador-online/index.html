@@ -2712,11 +2712,14 @@
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">// ESCREVA SUA SOLUCAO AQUI</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">// ============================================================</span>
 </code></pre></div>
-   Só mexa dentro dele. O resto (harness de teste e casos de teste) já vem pronto — não precisa (e não deve) editar.</li>
-<li>Rode. A saída mostra cada teste com <code>[OK]</code> ou <code>[FALHOU]</code>, e termina com algo como:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>7/8 testes passaram
+   Só mexa dentro dele. O resto (os <code>assert()</code> que testam sua solução) já vem pronto — não precisa (e não deve) editar.</li>
+<li>Rode. Se a sua solução estiver certa, o programa roda até o fim e imprime:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Todos os testes passaram!
 </code></pre></div></li>
-<li>Se algum teste falhou, a saída mostra o <strong>valor obtido</strong> e o <strong>valor esperado</strong> — comece por aí.</li>
+<li>Se algum teste falhar, o programa <strong>para imediatamente</strong> nessa linha e mostra uma mensagem parecida com:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>a.out: ex01_teste.cpp:6: int main(): Assertion `saudacao("Maria") == std::string("Ola, Maria!")' failed.
+</code></pre></div>
+   (o nome antes do primeiro <code>:</code> varia conforme o compilador — o que importa é o resto). <code>ex01_teste.cpp:6</code> diz <strong>onde</strong> parou (arquivo e linha); o texto entre aspas é a condição que falhou — compare com o que sua função deveria retornar ali. Só a primeira falha aparece; corrija-a, rode de novo, e a próxima (se houver) aparecerá.</li>
 </ol>
 <h2 id="o-que-nao-vai-funcionar-em-compilador-online">O que não vai funcionar em compilador online<a class="headerlink" href="#o-que-nao-vai-funcionar-em-compilador-online" title="Permanent link">&para;</a></h2>
 <ul>

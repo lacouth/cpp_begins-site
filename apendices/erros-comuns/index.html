@@ -2654,6 +2654,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#quando-um-teste-falha-assertion-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando um teste falha (Assertion failed)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quando um teste falha (Assertion failed)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assertion-failed-expr-function-main-file-x-line-n-ou-similar-e-o-programa-encerra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assertion failed: (expr), function main, file X, line N. (ou similar) e o programa encerra
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comportamento-errado-sem-erro-de-compilacao-os-mais-perigosos" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2990,6 +3018,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#quando-um-teste-falha-assertion-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando um teste falha (Assertion failed)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quando um teste falha (Assertion failed)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assertion-failed-expr-function-main-file-x-line-n-ou-similar-e-o-programa-encerra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assertion failed: (expr), function main, file X, line N. (ou similar) e o programa encerra
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comportamento-errado-sem-erro-de-compilacao-os-mais-perigosos" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3120,6 +3176,9 @@
 <p>Veja o capítulo 11 — é sempre um dos dois.</p>
 <h3 id="undefined-reference-to-main"><code>undefined reference to ‘main’</code><a class="headerlink" href="#undefined-reference-to-main" title="Permanent link">&para;</a></h3>
 <p>Nenhum dos arquivos compilados tem uma função <code>main()</code>. Confira se você incluiu o arquivo certo na compilação.</p>
+<h2 id="quando-um-teste-falha-assertion-failed">Quando um teste falha (<code>Assertion failed</code>)<a class="headerlink" href="#quando-um-teste-falha-assertion-failed" title="Permanent link">&para;</a></h2>
+<h3 id="assertion-failed-expr-function-main-file-x-line-n-ou-similar-e-o-programa-encerra"><code>Assertion failed: (expr), function main, file X, line N.</code> (ou similar) e o programa encerra<a class="headerlink" href="#assertion-failed-expr-function-main-file-x-line-n-ou-similar-e-o-programa-encerra" title="Permanent link">&para;</a></h3>
+<p>Isso <strong>não é um erro de compilação nem um bug do seu programa em si</strong> — é o <code>assert()</code> (de <code>&lt;cassert&gt;</code>) usado pelos testes de cada exercício avisando que uma condição esperada deu falsa. <code>X:N</code> diz <strong>em qual arquivo e linha</strong> o teste parou; <code>expr</code> é a condição exata que falhou (compare com o que sua função deveria devolver ali). O programa <strong>para imediatamente</strong> nesse ponto — os testes que viriam depois dessa linha nunca chegam a rodar. Corrija a lógica da sua função (nunca a linha do <code>assert</code> em si, que é o teste — não a solução), recompile e rode de novo: se havia mais de um problema, o próximo <code>assert</code> que falhar vai aparecer na vez dele.</p>
 <h2 id="comportamento-errado-sem-erro-de-compilacao-os-mais-perigosos">Comportamento errado sem erro de compilação (os mais perigosos)<a class="headerlink" href="#comportamento-errado-sem-erro-de-compilacao-os-mais-perigosos" title="Permanent link">&para;</a></h2>
 <h3 id="o-programa-compila-e-roda-mas-imprime-a-versao-errada-de-um-metodo-sobrescrito">O programa compila e roda, mas imprime a versão "errada" de um método sobrescrito<a class="headerlink" href="#o-programa-compila-e-roda-mas-imprime-a-versao-errada-de-um-metodo-sobrescrito" title="Permanent link">&para;</a></h3>
 <p>Falta <code>virtual</code> na classe base. Sem ele, a chamada é resolvida em tempo de compilação pelo tipo da referência/ponteiro, não pelo tipo real do objeto — veja o capítulo 10.</p>
@@ -3130,7 +3189,7 @@
 <h3 id="stdcin-variavel-seguido-de-stdgetline-pula-a-leitura"><code>std::cin &gt;&gt; variavel</code> seguido de <code>std::getline</code> "pula" a leitura<a class="headerlink" href="#stdcin-variavel-seguido-de-stdgetline-pula-a-leitura" title="Permanent link">&para;</a></h3>
 <p><code>&gt;&gt;</code> deixa o <code>\n</code> da tecla Enter no buffer de entrada, e a próxima chamada a <code>std::getline</code> lê essa linha vazia. Se você precisar misturar os dois, descarte o <code>\n</code> restante antes do <code>getline</code> (fora do escopo detalhado deste curso, mas saiba que o problema tem nome).</p>
 <h3 id="comparacao-de-doublefloat-com-as-vezes-falha-sem-motivo">Comparação de <code>double</code>/<code>float</code> com <code>==</code> às vezes falha "sem motivo"<a class="headerlink" href="#comparacao-de-doublefloat-com-as-vezes-falha-sem-motivo" title="Permanent link">&para;</a></h3>
-<p>Ponto flutuante tem erro de arredondamento inerente à representação binária. Nunca compare com <code>==</code> — use uma margem de tolerância (é exatamente o que <code>VERIFICA_PERTO</code> do nosso harness de testes faz).</p>
+<p>Ponto flutuante tem erro de arredondamento inerente à representação binária. Nunca compare com <code>==</code> — use uma margem de tolerância, como os testes do curso fazem: <code>assert(std::abs(obtido - esperado) &lt;= 0.0001);</code> (precisa de <code>#include &lt;cmath&gt;</code>).</p>
 
 
 

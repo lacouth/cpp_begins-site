@@ -2594,7 +2594,7 @@
 </table>
 <p>Para o projeto final, se você escolher o tema embarcado (recomendado), vai usar também o <strong>Wokwi</strong>, um simulador de hardware que roda no navegador — não é preciso comprar placa nenhuma. Veja <a href="wokwi/">Wokwi</a>.</p>
 <h2 id="regra-importante-para-os-dois-casos">Regra importante para os dois casos<a class="headerlink" href="#regra-importante-para-os-dois-casos" title="Permanent link">&para;</a></h2>
-<p>Todo exercício do curso é verificado pelo mesmo mecanismo: um pequeno arquivo de testes (<code>verifica.hpp</code>) que imprime <code>[OK]</code> ou <code>[FALHOU]</code> linha por linha e termina com um placar tipo <code>8/10 testes passaram</code>. Isso é <strong>igual</strong> no compilador online e no ambiente local — muda só a forma de rodar.</p>
+<p>Todo exercício do curso é verificado com <code>assert()</code>, da biblioteca padrão <code>&lt;cassert&gt;</code> — nada de infraestrutura própria do curso para você aprender antes. Se todas as condições forem verdadeiras, o programa roda até o fim e imprime <code>Todos os testes passaram!</code>. Se alguma condição falhar, o programa <strong>para imediatamente</strong> nela e mostra qual condição falhou e em que linha — corrija e rode de novo para ver a próxima. Isso é <strong>igual</strong> no compilador online e no ambiente local — muda só a forma de rodar.</p>
 
 
 

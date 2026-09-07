@@ -2782,7 +2782,7 @@
 
 
 <h1 id="14-arquitetura-testavel-interfaces-e-mocks">14. Arquitetura testável (interfaces e mocks)<a class="headerlink" href="#14-arquitetura-testavel-interfaces-e-mocks" title="Permanent link">&para;</a></h1>
-<p>Este capítulo fecha o círculo entre tudo que o curso ensinou: usa polimorfismo (Unidade 4) para desacoplar lógica de hardware, e usa exatamente o mesmo <code>verifica.hpp</code> das listas para testar código que, no fim, vai controlar um LED de verdade — sem nunca precisar abrir o Wokwi para isso.</p>
+<p>Este capítulo fecha o círculo entre tudo que o curso ensinou: usa polimorfismo (Unidade 4) para desacoplar lógica de hardware, e usa exatamente o mesmo <code>assert()</code> das listas para testar código que, no fim, vai controlar um LED de verdade — sem nunca precisar abrir o Wokwi para isso.</p>
 <h2 id="o-problema-codigo-que-so-roda-com-hardware-ligado">O problema: código que só roda com hardware ligado<a class="headerlink" href="#o-problema-codigo-que-so-roda-com-hardware-ligado" title="Permanent link">&para;</a></h2>
 <p>Se você escrever a lógica de decisão <strong>misturada</strong> com chamadas a <code>analogRead</code>/<code>digitalWrite</code>, só existe um jeito de testar essa lógica: rodar no hardware (ou no simulador) e observar. Isso é lento, difícil de automatizar, e praticamente impossível de cobrir todos os casos (e se o sensor ler exatamente no limite? e se ler um valor absurdo, fora de qualquer faixa esperada?).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// Tudo misturado -- so testavel rodando de verdade no hardware</span>
@@ -2847,29 +2847,31 @@
 </code></pre></div>
 <p>Note a <strong>histerese</strong> implementada em <code>atualiza()</code> (margem de 2 graus entre ligar e desligar) — evita que a ventoinha fique oscilando ligado/desligado quando a leitura balança perto do limite. É um detalhe de lógica de controle, e é exatamente o tipo de regra que fica muito mais fácil de acertar (e de testar) fora do hardware.</p>
 <h2 id="testando-no-host-sem-wokwi">Testando no host, sem Wokwi<a class="headerlink" href="#testando-no-host-sem-wokwi" title="Permanent link">&para;</a></h2>
-<p><code>projetos/esqueleto-host/teste_controlador.cpp</code> usa <code>SensorFalso</code> para testar <code>ControladorTemperatura</code> com o mesmo <code>verifica.hpp</code> de todo o curso:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"verifica.hpp"</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"controlador_temperatura.h"</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"sensor_falso.h"</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="n">SensorFalso</span><span class="w"> </span><span class="n">sensor</span><span class="p">(</span><span class="mf">20.0</span><span class="p">);</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="n">ControladorTemperatura</span><span class="w"> </span><span class="n">controlador</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span><span class="w"> </span><span class="cm">/*limite=*/</span><span class="mf">30.0</span><span class="p">);</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="n">controlador</span><span class="p">.</span><span class="n">atualiza</span><span class="p">();</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="n">VERIFICA_IGUAL</span><span class="p">(</span><span class="n">controlador</span><span class="p">.</span><span class="n">ventoinha_ligada</span><span class="p">(),</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="n">sensor</span><span class="p">.</span><span class="n">define_leitura</span><span class="p">(</span><span class="mf">31.0</span><span class="p">);</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="n">controlador</span><span class="p">.</span><span class="n">atualiza</span><span class="p">();</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="n">VERIFICA_IGUAL</span><span class="p">(</span><span class="n">controlador</span><span class="p">.</span><span class="n">ventoinha_ligada</span><span class="p">(),</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="c1">// histerese: 29 graus ainda esta acima do limite - margem (28) -- mantem ligada</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="n">sensor</span><span class="p">.</span><span class="n">define_leitura</span><span class="p">(</span><span class="mf">29.0</span><span class="p">);</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="n">controlador</span><span class="p">.</span><span class="n">atualiza</span><span class="p">();</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="n">VERIFICA_IGUAL</span><span class="p">(</span><span class="n">controlador</span><span class="p">.</span><span class="n">ventoinha_ligada</span><span class="p">(),</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="n">RESUMO_TESTES</span><span class="p">();</span>
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="p">}</span>
+<p><code>projetos/esqueleto-host/teste_controlador.cpp</code> usa <code>SensorFalso</code> para testar <code>ControladorTemperatura</code> com o mesmo <code>assert()</code> de todo o curso:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cassert&gt;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"controlador_temperatura.h"</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"sensor_falso.h"</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="n">SensorFalso</span><span class="w"> </span><span class="n">sensor</span><span class="p">(</span><span class="mf">20.0</span><span class="p">);</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="n">ControladorTemperatura</span><span class="w"> </span><span class="n">controlador</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span><span class="w"> </span><span class="cm">/*limite=*/</span><span class="mf">30.0</span><span class="p">);</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="n">controlador</span><span class="p">.</span><span class="n">atualiza</span><span class="p">();</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">controlador</span><span class="p">.</span><span class="n">ventoinha_ligada</span><span class="p">()));</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="n">sensor</span><span class="p">.</span><span class="n">define_leitura</span><span class="p">(</span><span class="mf">31.0</span><span class="p">);</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="n">controlador</span><span class="p">.</span><span class="n">atualiza</span><span class="p">();</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">controlador</span><span class="p">.</span><span class="n">ventoinha_ligada</span><span class="p">());</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="c1">// histerese: 29 graus ainda esta acima do limite - margem (28) -- mantem ligada</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="n">sensor</span><span class="p">.</span><span class="n">define_leitura</span><span class="p">(</span><span class="mf">29.0</span><span class="p">);</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="n">controlador</span><span class="p">.</span><span class="n">atualiza</span><span class="p">();</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">controlador</span><span class="p">.</span><span class="n">ventoinha_ligada</span><span class="p">());</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Todos os testes passaram!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="p">}</span>
 </code></pre></div>
 <p>Rode com <code>projetos/esqueleto-host/rodar.sh</code> — nenhuma dependência de Arduino, Wokwi, ou hardware. Isso testa <strong>exatamente a mesma lógica</strong> que vai rodar no ESP32 de verdade, incluindo casos difíceis de forçar manualmente no simulador (como o comportamento exato no limite da histerese).</p>
 <h2 id="ligando-ao-hardware-de-verdade-sketchino">Ligando ao hardware de verdade: <code>sketch.ino</code><a class="headerlink" href="#ligando-ao-hardware-de-verdade-sketchino" title="Permanent link">&para;</a></h2>
@@ -2914,7 +2916,7 @@
 <h2 id="resumo">Resumo<a class="headerlink" href="#resumo" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Interface (<code>ISensor</code>) separa "o que a lógica precisa saber" de "como o dado chega de verdade" — o mesmo padrão do capítulo 10, aplicado a hardware.</li>
-<li>Implementação falsa (<code>SensorFalso</code>) permite testar toda a lógica de decisão no host, com <code>verifica.hpp</code>, sem nunca precisar abrir o simulador.</li>
+<li>Implementação falsa (<code>SensorFalso</code>) permite testar toda a lógica de decisão no host, com <code>assert()</code>, sem nunca precisar abrir o simulador.</li>
 <li>Implementação real (<code>SensorReal</code>) só existe no lado do Wokwi, porque só ela depende do framework Arduino.</li>
 <li>O <code>sketch.ino</code> deve ser fino — só fiação (pinos → objetos), zero regra de negócio.</li>
 <li>Máquina de estados como classe/<code>enum class</code>: mesma lógica de isolamento, aplicada a fluxos com múltiplos estados.</li>
