@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <string>
 
 // Conta quantas vogais (a,e,i,o,u, maiusculas ou minusculas) o texto tem.
 int conta_vogais(const std::string& texto);
@@ -39,9 +30,6 @@ int conta_vogais(const std::string& texto) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(conta_vogais("banana") == 3);
     assert(conta_vogais("Programacao") == 5);

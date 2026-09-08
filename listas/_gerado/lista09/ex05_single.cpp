@@ -6,14 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -41,9 +33,6 @@ Sensor::~Sensor() {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     Sensor::total_destruidos = 0;
     {

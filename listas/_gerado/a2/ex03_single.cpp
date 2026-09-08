@@ -7,13 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -59,10 +52,6 @@ double Gerente::salario() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     Vendedor v(3);
     assert(std::abs((v.salario()) - (1800.0)) <= (0.0001));

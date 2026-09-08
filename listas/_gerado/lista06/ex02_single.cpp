@@ -6,22 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
 #include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX02_H
 #define EX02_H
-
-#include <vector>
 
 // Retorna os valores de v sem duplicatas, em ordem crescente.
 std::vector<int> remove_duplicados(const std::vector<int>& v);
@@ -31,8 +23,6 @@ std::vector<int> remove_duplicados(const std::vector<int>& v);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <set>
-
 std::vector<int> remove_duplicados(const std::vector<int>& v) {
     // TODO: insira todos os elementos de v num std::set<int> (remove duplicatas
     // e ordena sozinho), depois monte um vector a partir do set.
@@ -42,9 +32,6 @@ std::vector<int> remove_duplicados(const std::vector<int>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::vector<int> esperado1 = {1, 2, 3};
     assert(remove_duplicados({3, 1, 2, 3, 1}) == esperado1);

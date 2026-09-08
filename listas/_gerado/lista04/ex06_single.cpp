@@ -9,20 +9,12 @@
 #include <cmath>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX06_H
 #define EX06_H
-
-#include <string>
-#include <vector>
 
 struct Aluno {
     std::string nome;
@@ -45,10 +37,6 @@ double media_turma(const std::vector<Aluno>& turma) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     std::vector<Aluno> t1 = {{"Ana", 8.0}, {"Bruno", 6.0}};
     assert(std::abs((media_turma(t1)) - (7.0)) <= (0.0001));

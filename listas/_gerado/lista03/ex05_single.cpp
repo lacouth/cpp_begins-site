@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX05_H
 #define EX05_H
-
-#include <string>
 
 struct Aluno {
     std::string nome;
@@ -43,9 +34,6 @@ bool Aluno::aprovado() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     Aluno a{"Carlos", 7.5};
     assert(a.aprovado());

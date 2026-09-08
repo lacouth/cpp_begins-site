@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX02_H
 #define EX02_H
-
-#include <vector>
 
 class FilaComVector {
 private:
@@ -56,9 +47,6 @@ bool FilaComVector::vazia() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     FilaComVector f;
     assert(f.vazia());

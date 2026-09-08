@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX03_H
 #define EX03_H
-
-#include <string>
 
 // Retorna o texto invertido caractere por caractere.
 std::string inverte(const std::string& texto);
@@ -39,9 +30,6 @@ std::string inverte(const std::string& texto) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(inverte("abc") == std::string("cba"));
     assert(inverte("ana") == std::string("ana"));

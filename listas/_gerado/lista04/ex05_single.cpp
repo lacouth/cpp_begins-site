@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX05_H
 #define EX05_H
-
-#include <vector>
 
 // Retorna a soma de todos os elementos da matriz (vector de vector).
 int soma_matriz(const std::vector<std::vector<int>>& matriz);
@@ -39,9 +30,6 @@ int soma_matriz(const std::vector<std::vector<int>>& matriz) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(soma_matriz({{1, 2}, {3, 4}}) == 10);
     assert(soma_matriz({{5}}) == 5);

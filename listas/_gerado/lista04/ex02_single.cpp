@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX02_H
 #define EX02_H
-
-#include <vector>
 
 // Retorna o maior elemento do vector (assume que v nao esta vazio).
 int maior_elemento(const std::vector<int>& v);
@@ -39,9 +30,6 @@ int maior_elemento(const std::vector<int>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(maior_elemento({3, 9, 1, 7}) == 9);
     assert(maior_elemento({-5, -1, -9}) == -1);

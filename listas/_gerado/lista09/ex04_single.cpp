@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
+#include <memory>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <memory>
 
 class Recurso {
 private:
@@ -48,9 +39,6 @@ std::unique_ptr<Recurso> cria_recurso(int valor) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     auto r = cria_recurso(21);
     assert(r != nullptr);

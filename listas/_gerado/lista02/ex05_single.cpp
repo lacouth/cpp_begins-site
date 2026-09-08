@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX05_H
 #define EX05_H
-
-#include <string>
 
 // Converte texto para maiusculas, alterando a propria string do chamador.
 void maiusculo(std::string& texto);
@@ -39,9 +30,6 @@ void maiusculo(std::string& texto) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::string a = "ola mundo";
     maiusculo(a);

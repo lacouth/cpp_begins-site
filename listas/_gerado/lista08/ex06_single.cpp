@@ -7,21 +7,13 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX06_H
 #define EX06_H
-
-#include <vector>
 
 class BoletimAluno {
 private:
@@ -55,10 +47,6 @@ bool BoletimAluno::aprovado() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     BoletimAluno b;
     b.adiciona_nota(8.0);

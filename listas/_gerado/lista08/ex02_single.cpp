@@ -7,13 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -65,10 +58,6 @@ double Termometro::maximo() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     Termometro t(20.0);
     t.registra(25.0);

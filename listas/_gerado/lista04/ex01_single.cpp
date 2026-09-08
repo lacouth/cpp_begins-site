@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX01_H
 #define EX01_H
-
-#include <vector>
 
 // Retorna a soma de todos os elementos do vector.
 int soma_vector(const std::vector<int>& v);
@@ -39,9 +30,6 @@ int soma_vector(const std::vector<int>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(soma_vector({1, 2, 3}) == 6);
     assert(soma_vector({}) == 0);

@@ -7,13 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -54,10 +47,6 @@ bool Vetor2D::operator==(const Vetor2D& outro) const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     Vetor2D a(1.0, 2.0);
     Vetor2D b(3.0, 4.0);

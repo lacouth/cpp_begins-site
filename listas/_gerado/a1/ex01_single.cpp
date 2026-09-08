@@ -7,21 +7,13 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX01_H
 #define EX01_H
-
-#include <vector>
 
 // Reduz cada preco de "precos" pelo percentual informado (in-place).
 void aplica_desconto(std::vector<double>& precos, double percentual = 10.0);
@@ -38,10 +30,6 @@ void aplica_desconto(std::vector<double>& precos, double percentual) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     std::vector<double> precos = {100.0, 50.0};
     aplica_desconto(precos);

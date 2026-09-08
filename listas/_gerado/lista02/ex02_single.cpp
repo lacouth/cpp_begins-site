@@ -6,14 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -36,9 +28,6 @@ void troca(int& a, int& b) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     int a = 1, b = 2;
     troca(a, b);

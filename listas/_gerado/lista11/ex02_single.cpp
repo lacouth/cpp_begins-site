@@ -7,13 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -64,10 +57,6 @@ double Retangulo::area() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     Circulo c(2.0);
     assert(std::abs((c.area()) - (12.56636)) <= (0.001));

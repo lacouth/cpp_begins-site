@@ -6,22 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
+#include <numeric>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX05_H
 #define EX05_H
-
-#include <vector>
 
 // Retorna a soma dos quadrados dos elementos de v (use std::accumulate).
 int soma_quadrados(const std::vector<int>& v);
@@ -31,8 +23,6 @@ int soma_quadrados(const std::vector<int>& v);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <numeric>
-
 int soma_quadrados(const std::vector<int>& v) {
     // TODO: use std::accumulate(v.begin(), v.end(), 0, lambda(acumulador, x)).
     return 0;
@@ -41,9 +31,6 @@ int soma_quadrados(const std::vector<int>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(soma_quadrados({1, 2, 3}) == 14);
     assert(soma_quadrados({}) == 0);

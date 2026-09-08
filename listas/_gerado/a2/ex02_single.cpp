@@ -6,23 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX02_H
 #define EX02_H
-
-#include <string>
-#include <vector>
 
 class Playlist {
 private:
@@ -50,9 +41,6 @@ int Playlist::quantidade() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     Playlist p;
     p.adiciona("musica A");

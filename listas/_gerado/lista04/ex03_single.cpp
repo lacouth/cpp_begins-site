@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX03_H
 #define EX03_H
-
-#include <vector>
 
 // Retorna um novo vector so com os elementos pares de v, na mesma ordem.
 std::vector<int> filtra_pares(const std::vector<int>& v);
@@ -39,9 +30,6 @@ std::vector<int> filtra_pares(const std::vector<int>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::vector<int> esperado1 = {2, 4, 6};
     assert(filtra_pares({1, 2, 3, 4, 5, 6}) == esperado1);

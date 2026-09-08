@@ -6,23 +6,15 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
 #include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX06_H
 #define EX06_H
-
-#include <string>
-#include <vector>
 
 // Retorna a string mais longa de v (assume que v nao esta vazio).
 // Use std::max_element.
@@ -33,8 +25,6 @@ std::string maior_string(const std::vector<std::string>& v);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <algorithm>
-
 std::string maior_string(const std::vector<std::string>& v) {
     // TODO: use std::max_element(v.begin(), v.end(), lambda que compara .size())
     // e retorne *iterador.
@@ -44,9 +34,6 @@ std::string maior_string(const std::vector<std::string>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(maior_string({"a", "abc", "ab"}) == std::string("abc"));
     assert(maior_string({"x"}) == std::string("x"));

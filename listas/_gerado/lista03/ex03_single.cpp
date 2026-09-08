@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
+#include <utility>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX03_H
 #define EX03_H
-
-#include <utility>
 
 // Retorna {menor, maior} entre os tres valores.
 std::pair<int, int> min_max(int a, int b, int c);
@@ -39,9 +30,6 @@ std::pair<int, int> min_max(int a, int b, int c) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     auto r1 = min_max(3, 9, 5);
     assert(r1.first == 3);

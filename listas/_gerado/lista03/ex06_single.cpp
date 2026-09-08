@@ -6,13 +6,7 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
 #include <optional>
 
 // ============================================================
@@ -20,9 +14,6 @@
 // ============================================================
 #ifndef EX06_H
 #define EX06_H
-
-#include <optional>
-#include <string>
 
 // Retorna a posicao da primeira ocorrencia de "alvo" em "texto", ou nullopt.
 std::optional<int> busca_posicao(const std::string& texto, char alvo);
@@ -41,9 +32,6 @@ std::optional<int> busca_posicao(const std::string& texto, char alvo) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     auto r1 = busca_posicao("programacao", 'g');
     assert(r1.has_value());

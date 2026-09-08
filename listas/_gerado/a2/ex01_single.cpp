@@ -7,13 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -62,10 +55,6 @@ bool Ingresso::esta_usado() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     Ingresso i(50.0);
     assert(std::abs((i.preco()) - (50.0)) <= (0.0001));

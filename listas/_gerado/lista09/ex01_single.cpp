@@ -6,23 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX01_H
 #define EX01_H
-
-#include <string>
-#include <vector>
 
 class Mochila {
 private:
@@ -56,9 +47,6 @@ int Mochila::tamanho() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     Mochila m;
     m.adiciona("corda");

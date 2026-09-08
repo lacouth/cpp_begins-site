@@ -7,13 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -37,10 +30,6 @@ double media(double a, double b, double c) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     assert(std::abs((media(10.0, 10.0, 10.0)) - (10.0)) <= (0.0001));
     assert(std::abs((media(0.0, 0.0, 0.0)) - (0.0)) <= (0.0001));

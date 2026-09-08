@@ -6,14 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -51,9 +43,6 @@ Derivada::~Derivada() {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     Base::destruicoes = 0;
     Derivada::destruicoes = 0;

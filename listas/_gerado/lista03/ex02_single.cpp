@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX02_H
 #define EX02_H
-
-#include <string>
 
 enum class Turno { Manha, Tarde, Noite };
 
@@ -41,9 +32,6 @@ std::string nome_turno(Turno t) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(nome_turno(Turno::Manha) == std::string("Manha"));
     assert(nome_turno(Turno::Tarde) == std::string("Tarde"));

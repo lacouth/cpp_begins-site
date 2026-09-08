@@ -6,23 +6,15 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
 #include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX03_H
 #define EX03_H
-
-#include <string>
-#include <vector>
 
 struct Pessoa {
     std::string nome;
@@ -37,8 +29,6 @@ std::vector<Pessoa> parseia_pessoas(const std::string& conteudo);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <sstream>
-
 std::vector<Pessoa> parseia_pessoas(const std::string& conteudo) {
     // TODO: percorra o conteudo linha por linha (std::getline num while),
     // e para cada linha nao vazia, separe nome e idade (igual ao exercicio 1)
@@ -49,9 +39,6 @@ std::vector<Pessoa> parseia_pessoas(const std::string& conteudo) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     auto r1 = parseia_pessoas("Ana,25\nBruno,30");
     assert(r1.size() == static_cast<std::size_t>(2));

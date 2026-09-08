@@ -6,23 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
 #include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX03_H
 #define EX03_H
-
-#include <map>
-#include <string>
 
 // Retorna true se "chave" existir em m, sem usar operator[].
 bool existe_chave(const std::map<std::string, int>& m, const std::string& chave);
@@ -40,9 +31,6 @@ bool existe_chave(const std::map<std::string, int>& m, const std::string& chave)
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::map<std::string, int> m = {{"a", 1}, {"b", 2}};
     assert(existe_chave(m, "a"));

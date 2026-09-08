@@ -6,23 +6,15 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
 #include <sstream>
-#include <algorithm>
-#include <optional>
+#include <utility>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX01_H
 #define EX01_H
-
-#include <string>
-#include <utility>
 
 // Recebe uma linha "nome,idade" e retorna {nome, idade} (idade ja convertida para int).
 std::pair<std::string, int> parseia_linha(const std::string& linha);
@@ -32,8 +24,6 @@ std::pair<std::string, int> parseia_linha(const std::string& linha);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <sstream>
-
 std::pair<std::string, int> parseia_linha(const std::string& linha) {
     // TODO: use std::istringstream(linha), std::getline(..., ',') para o nome,
     // depois std::getline no resto e std::stoi para converter a idade.
@@ -43,9 +33,6 @@ std::pair<std::string, int> parseia_linha(const std::string& linha) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     auto r1 = parseia_linha("Ana,25");
     assert(r1.first == std::string("Ana"));

@@ -6,14 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -37,9 +29,6 @@ int maior_de_tres(int a, int b, int c) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(maior_de_tres(3, 9, 5) == 9);
     assert(maior_de_tres(-1, -5, -2) == -1);

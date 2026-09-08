@@ -7,21 +7,13 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX02_H
 #define EX02_H
-
-#include <vector>
 
 class CarrinhoDeCompras {
 private:
@@ -55,10 +47,6 @@ int CarrinhoDeCompras::quantidade_itens() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     CarrinhoDeCompras c;
     c.adiciona_item(10.0);

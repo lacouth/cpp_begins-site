@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <vector>
-#include <map>
 #include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <set>
 
 // Retorna um set com os valores que aparecem em a e em b ao mesmo tempo.
 std::set<int> interseccao(const std::set<int>& a, const std::set<int>& b);
@@ -41,9 +32,6 @@ std::set<int> interseccao(const std::set<int>& a, const std::set<int>& b) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::set<int> esperado1 = {2, 3};
     assert(interseccao({1, 2, 3}, {2, 3, 4}) == esperado1);

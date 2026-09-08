@@ -6,22 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
 #include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <vector>
 
 // Retorna um novo vector com cada elemento de v dobrado (use std::transform).
 std::vector<int> dobra_valores(const std::vector<int>& v);
@@ -31,8 +23,6 @@ std::vector<int> dobra_valores(const std::vector<int>& v);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <algorithm>
-
 std::vector<int> dobra_valores(const std::vector<int>& v) {
     // TODO: crie um vector "resultado" do mesmo tamanho de v e use
     // std::transform(v.begin(), v.end(), resultado.begin(), lambda).
@@ -42,9 +32,6 @@ std::vector<int> dobra_valores(const std::vector<int>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::vector<int> esperado1 = {2, 4, 6};
     assert(dobra_valores({1, 2, 3}) == esperado1);

@@ -8,20 +8,13 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
 #include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <string>
 
 // Recebe varias linhas "nome,nota" (nao vazio) e retorna a media das notas.
 double media_notas_csv(const std::string& conteudo);
@@ -31,8 +24,6 @@ double media_notas_csv(const std::string& conteudo);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <sstream>
-
 double media_notas_csv(const std::string& conteudo) {
     // TODO: percorra as linhas (igual Lista 07), some as notas (std::stod
     // converte string para double) e divida pela quantidade de linhas.
@@ -42,10 +33,6 @@ double media_notas_csv(const std::string& conteudo) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     assert(std::abs((media_notas_csv("Ana,8.0\nBruno,6.0")) - (7.0)) <= (0.0001));
     assert(std::abs((media_notas_csv("Carla,10.0")) - (10.0)) <= (0.0001));

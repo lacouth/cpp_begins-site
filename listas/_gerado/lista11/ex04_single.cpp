@@ -7,22 +7,14 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
+#include <memory>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <memory>
-#include <vector>
 
 class Forma {
 public:
@@ -64,10 +56,6 @@ double soma_areas(const std::vector<std::unique_ptr<Forma>>& formas) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     std::vector<std::unique_ptr<Forma>> formas;
     formas.push_back(std::make_unique<Quadrado>(2.0));

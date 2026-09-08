@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX06_H
 #define EX06_H
-
-#include <string>
 
 // Retorna true se o texto for igual ao seu inverso.
 bool eh_palindromo(const std::string& texto);
@@ -40,9 +31,6 @@ bool eh_palindromo(const std::string& texto) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(eh_palindromo("arara"));
     assert(eh_palindromo("ovo"));

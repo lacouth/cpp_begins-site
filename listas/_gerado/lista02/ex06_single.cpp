@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX06_H
 #define EX06_H
-
-#include <string>
 
 // Retorna "texto" repetido "vezes" vezes.
 std::string repete(const std::string& texto, int vezes);
@@ -39,9 +30,6 @@ std::string repete(const std::string& texto, int vezes) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(repete("ab", 3) == std::string("ababab"));
     assert(repete("x", 0) == std::string(""));

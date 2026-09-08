@@ -6,23 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
 #include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX05_H
 #define EX05_H
-
-#include <map>
-#include <string>
 
 // Retorna a chave associada ao maior valor em m (assume que m nao esta vazio).
 std::string chave_maior_valor(const std::map<std::string, int>& m);
@@ -41,9 +32,6 @@ std::string chave_maior_valor(const std::map<std::string, int>& m) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::map<std::string, int> m1 = {{"a", 3}, {"b", 9}, {"c", 1}};
     assert(chave_maior_valor(m1) == std::string("b"));

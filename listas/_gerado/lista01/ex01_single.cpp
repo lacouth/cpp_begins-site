@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX01_H
 #define EX01_H
-
-#include <string>
 
 // Retorna uma saudacao no formato "Ola, <nome>!".
 // Ex: saudacao("Maria") -> "Ola, Maria!"
@@ -40,9 +31,6 @@ std::string saudacao(const std::string& nome) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(saudacao("Maria") == std::string("Ola, Maria!"));
     assert(saudacao("Joao") == std::string("Ola, Joao!"));

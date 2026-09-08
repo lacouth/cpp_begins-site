@@ -6,22 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
 #include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX02_H
 #define EX02_H
-
-#include <vector>
 
 // Retorna quantos elementos de v sao maiores que "limite" (use std::count_if).
 int conta_maiores_que(const std::vector<int>& v, int limite);
@@ -31,8 +23,6 @@ int conta_maiores_que(const std::vector<int>& v, int limite);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <algorithm>
-
 int conta_maiores_que(const std::vector<int>& v, int limite) {
     // TODO: use std::count_if(v.begin(), v.end(), lambda) e retorne o resultado
     // (o retorno de count_if e um inteiro grande o suficiente; converta para int).
@@ -42,9 +32,6 @@ int conta_maiores_que(const std::vector<int>& v, int limite) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(conta_maiores_que({1, 5, 8, 3, 9}, 4) == 3);
     assert(conta_maiores_que({1, 2, 3}, 10) == 0);

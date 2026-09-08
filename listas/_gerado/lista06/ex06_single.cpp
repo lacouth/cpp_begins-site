@@ -6,22 +6,15 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
-#include <map>
 #include <set>
 #include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX06_H
 #define EX06_H
-
-#include <string>
 
 // Retorna quantas palavras diferentes existem em texto.
 int palavras_unicas(const std::string& texto);
@@ -31,9 +24,6 @@ int palavras_unicas(const std::string& texto);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <set>
-#include <sstream>
-
 int palavras_unicas(const std::string& texto) {
     // TODO: use std::istringstream para separar as palavras (stream >> palavra
     // num while), insira cada uma num std::set<std::string>, e retorne o
@@ -44,9 +34,6 @@ int palavras_unicas(const std::string& texto) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     assert(palavras_unicas("o rato roeu a roupa do rei de roma") == 9);
     assert(palavras_unicas("oi oi oi") == 1);

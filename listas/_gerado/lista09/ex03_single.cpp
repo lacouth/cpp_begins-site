@@ -6,13 +6,8 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
 #include <optional>
 
 // ============================================================
@@ -20,10 +15,6 @@
 // ============================================================
 #ifndef EX03_H
 #define EX03_H
-
-#include <optional>
-#include <string>
-#include <vector>
 
 class HistoricoNavegacao {
 private:
@@ -58,9 +49,6 @@ int HistoricoNavegacao::total_visitas() const {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     HistoricoNavegacao h;
     h.visita("home");

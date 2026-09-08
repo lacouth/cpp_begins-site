@@ -7,12 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
 #include <optional>
 
 // ============================================================
@@ -20,8 +14,6 @@
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <optional>
 
 // Retorna a / b, ou nullopt se b for zero.
 std::optional<double> divide_seguro(double a, double b);
@@ -39,10 +31,6 @@ std::optional<double> divide_seguro(double a, double b) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     auto r1 = divide_seguro(10.0, 2.0);
     assert(r1.has_value());

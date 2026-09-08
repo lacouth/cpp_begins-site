@@ -6,23 +6,15 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <vector>
-#include <map>
-#include <set>
 #include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <string>
-#include <vector>
 
 struct Pessoa {
     std::string nome;
@@ -37,8 +29,6 @@ std::string monta_csv(const std::vector<Pessoa>& pessoas);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <sstream>
-
 std::string monta_csv(const std::vector<Pessoa>& pessoas) {
     // TODO: use um std::ostringstream, escreva "nome,idade" para cada Pessoa,
     // colocando "\n" ANTES de cada linha exceto a primeira (para nao sobrar
@@ -49,9 +39,6 @@ std::string monta_csv(const std::vector<Pessoa>& pessoas) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::vector<Pessoa> p1 = {{"Ana", 25}, {"Bruno", 30}};
     assert(monta_csv(p1) == std::string("Ana,25\nBruno,30"));

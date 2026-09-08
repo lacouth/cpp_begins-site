@@ -6,24 +6,15 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <vector>
 #include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX03_H
 #define EX03_H
-
-#include <map>
-#include <string>
-#include <vector>
 
 // Retorna as chaves de "estoque" cujo valor e 0, em ordem crescente de chave.
 std::vector<std::string> chaves_com_valor_zero(const std::map<std::string, int>& estoque);
@@ -42,9 +33,6 @@ std::vector<std::string> chaves_com_valor_zero(const std::map<std::string, int>&
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::map<std::string, int> estoque = {{"parafuso", 0}, {"prego", 5}, {"arruela", 0}};
     auto resultado = chaves_com_valor_zero(estoque);

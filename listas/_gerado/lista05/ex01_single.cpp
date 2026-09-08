@@ -6,22 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
 #include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX01_H
 #define EX01_H
-
-#include <vector>
 
 // Ordena v em ordem crescente (use std::sort).
 void ordena_crescente(std::vector<int>& v);
@@ -31,8 +23,6 @@ void ordena_crescente(std::vector<int>& v);
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-#include <algorithm>
-
 void ordena_crescente(std::vector<int>& v) {
     // TODO: chame std::sort(v.begin(), v.end());
 }
@@ -40,9 +30,6 @@ void ordena_crescente(std::vector<int>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::vector<int> a = {5, 1, 4, 2};
     ordena_crescente(a);

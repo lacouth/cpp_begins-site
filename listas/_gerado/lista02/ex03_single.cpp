@@ -7,13 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -37,10 +30,6 @@ double preco_final(double preco, double taxa) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-#include <cmath>
-
 int main() {
     assert(std::abs((preco_final(100.0)) - (110.0)) <= (0.0001));
     assert(std::abs((preco_final(100.0, 1.0)) - (100.0)) <= (0.0001));

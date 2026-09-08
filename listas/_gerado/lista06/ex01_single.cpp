@@ -6,23 +6,14 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <string>
-#include <vector>
 #include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX01_H
 #define EX01_H
-
-#include <map>
-#include <string>
 
 // Retorna um map com a contagem de cada caractere de texto.
 std::map<char, int> conta_caracteres(const std::string& texto);
@@ -41,9 +32,6 @@ std::map<char, int> conta_caracteres(const std::string& texto) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::map<char, int> esperado1 = {{'a', 2}, {'b', 1}};
     assert(conta_caracteres("aab") == esperado1);

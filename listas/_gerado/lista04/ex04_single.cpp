@@ -6,22 +6,13 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <vector>
-#include <map>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
 #ifndef EX04_H
 #define EX04_H
-
-#include <vector>
 
 // Inverte a ordem dos elementos de v, alterando o proprio vector do chamador.
 void inverte_vector(std::vector<int>& v);
@@ -38,9 +29,6 @@ void inverte_vector(std::vector<int>& v) {
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-#include <cassert>
-#include <iostream>
-
 int main() {
     std::vector<int> a = {1, 2, 3, 4};
     inverte_vector(a);
