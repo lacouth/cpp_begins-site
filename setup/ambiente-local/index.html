@@ -476,21 +476,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#compilando-um-exercicio-avulso" class="md-nav__link">
+  <a href="#compilando-e-rodando-exercicios" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Compilando um exercício avulso
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rodando-com-o-script-do-curso" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rodando com o script do curso
+        Compilando e rodando exercícios
       
     </span>
   </a>
@@ -2366,21 +2355,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#compilando-um-exercicio-avulso" class="md-nav__link">
+  <a href="#compilando-e-rodando-exercicios" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Compilando um exercício avulso
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rodando-com-o-script-do-curso" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rodando com o script do curso
+        Compilando e rodando exercícios
       
     </span>
   </a>
@@ -2447,18 +2425,14 @@ Você precisa de uma versão que suporte <strong>C++17</strong> (GCC 8 ou mais r
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;url-do-repositorio&gt;<span class="w"> </span>cpp_begins
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">cd</span><span class="w"> </span>cpp_begins
 </code></pre></div>
-<h2 id="compilando-um-exercicio-avulso">Compilando um exercício avulso<a class="headerlink" href="#compilando-um-exercicio-avulso" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>g++<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>exercicios/lista01/ex01/ex01.cpp<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>exercicios/lista01/ex01/ex01_teste.cpp<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>-o<span class="w"> </span>/tmp/ex01
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>/tmp/ex01
+<h2 id="compilando-e-rodando-exercicios">Compilando e rodando exercícios<a class="headerlink" href="#compilando-e-rodando-exercicios" title="Permanent link">&para;</a></h2>
+<p>A forma mais simples é usar o script do curso: ele compila, roda e mostra um placar, sem você precisar digitar caminho de arquivo nem flags do compilador.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>./check.sh<span class="w">                 </span><span class="c1"># todas as listas</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>./check.sh<span class="w"> </span>lista01<span class="w">         </span><span class="c1"># só a lista01</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>./check.sh<span class="w"> </span>lista01/ex01<span class="w">    </span><span class="c1"># só um exercício</span>
 </code></pre></div>
-<h2 id="rodando-com-o-script-do-curso">Rodando com o script do curso<a class="headerlink" href="#rodando-com-o-script-do-curso" title="Permanent link">&para;</a></h2>
-<p>O <code>check.sh</code> compila e roda uma lista inteira (ou um exercício específico) e mostra um placar:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>./check.sh<span class="w">                 </span><span class="c1"># todas as listas</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>./check.sh<span class="w"> </span>lista01<span class="w">         </span><span class="c1"># só a lista01</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>./check.sh<span class="w"> </span>lista01/ex03<span class="w">    </span><span class="c1"># só um exercício</span>
+<p>Se preferir compilar na mão (ou quiser entender o que o script faz por baixo):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>g++<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>exercicios/lista01/ex01/ex01.cpp<span class="w"> </span>exercicios/lista01/ex01/ex01_teste.cpp<span class="w"> </span>-o<span class="w"> </span>ex01<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./ex01
 </code></pre></div>
 <h2 id="subindo-o-site-localmente">Subindo o site localmente<a class="headerlink" href="#subindo-o-site-localmente" title="Permanent link">&para;</a></h2>
 <p>Se você quiser navegar o material como o site publicado, sem depender de internet:</p>
