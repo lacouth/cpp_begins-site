@@ -7,7 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,27 +14,32 @@
 #ifndef EX03_H
 #define EX03_H
 
-// Retorna true se algum elemento de v for negativo (use std::any_of).
-bool existe_negativo(const std::vector<int>& v);
+// Retorna quantos elementos de v sao pares.
+int conta_pares(const std::vector<int>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-bool existe_negativo(const std::vector<int>& v) {
-    // TODO: use std::any_of(v.begin(), v.end(), lambda).
-    return false;
+int conta_pares(const std::vector<int>& v) {
+    // TODO: declare o contador ANTES do laco, percorra v e some 1
+    // para cada elemento par (x % 2 == 0).
+    return 0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    assert(existe_negativo({1, -2, 3}));
-    assert(!(existe_negativo({1, 2, 3})));
-    assert(!(existe_negativo({})));
-    assert(existe_negativo({-1}));
+    assert(conta_pares({1, 2, 3, 4}) == 2);
+    assert(conta_pares({1, 3, 5}) == 0);
+    assert(conta_pares({2, 4, 6}) == 3);
+    assert(conta_pares({}) == 0);
+
+    // zero e par; negativos pares tambem contam
+    assert(conta_pares({0, -2, -3}) == 2);
+
     std::cout << "Todos os testes passaram!\n";
     return 0;
 }

@@ -6,7 +6,8 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
+#include <vector>
+#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -14,59 +15,32 @@
 #ifndef EX04_H
 #define EX04_H
 
-class RetanguloValidado {
-private:
-    double largura_;
-    double altura_;
-
-public:
-    RetanguloValidado(double largura, double altura);
-
-    double area() const;
-    double perimetro() const;
-    bool eh_quadrado() const;
-};
+// Retorna um novo vector com cada elemento de v dobrado (use std::transform).
+std::vector<int> dobra_valores(const std::vector<int>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-RetanguloValidado::RetanguloValidado(double largura, double altura)
-    // TODO: use a lista de inicializacao para definir largura_ e altura_,
-    // trocando valores negativos por 0 (ex: largura >= 0 ? largura : 0.0).
-    : largura_(0.0), altura_(0.0) {
-}
-
-double RetanguloValidado::area() const {
-    // TODO: retorne largura_ * altura_.
-    return 0.0;
-}
-
-double RetanguloValidado::perimetro() const {
-    // TODO: retorne 2 * (largura_ + altura_).
-    return 0.0;
-}
-
-bool RetanguloValidado::eh_quadrado() const {
-    // TODO: retorne true se largura_ == altura_.
-    return false;
+std::vector<int> dobra_valores(const std::vector<int>& v) {
+    // TODO: crie um vector "resultado" do mesmo tamanho de v e use
+    // std::transform(v.begin(), v.end(), resultado.begin(), lambda).
+    return {};
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    RetanguloValidado r1(4.0, 3.0);
-    assert(std::abs((r1.area()) - (12.0)) <= (0.0001));
-    assert(!(r1.eh_quadrado()));
+    std::vector<int> esperado1 = {2, 4, 6};
+    assert(dobra_valores({1, 2, 3}) == esperado1);
 
-    RetanguloValidado r2(-5.0, 5.0);
-    assert(std::abs((r2.area()) - (0.0)) <= (0.0001));
+    std::vector<int> esperado2 = {};
+    assert(dobra_valores({}) == esperado2);
 
-    RetanguloValidado r3(5.0, 5.0);
-    assert(r3.eh_quadrado());
-    assert(std::abs((r3.perimetro()) - (20.0)) <= (0.0001));
+    std::vector<int> esperado3 = {-2, 0, 2};
+    assert(dobra_valores({-1, 0, 1}) == esperado3);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

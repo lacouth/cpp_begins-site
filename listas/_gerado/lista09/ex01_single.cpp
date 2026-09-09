@@ -6,8 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <string>
-#include <vector>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,14 +13,16 @@
 #ifndef EX01_H
 #define EX01_H
 
-class Mochila {
+class Contador {
 private:
-    std::vector<std::string> itens_;
+    int valor_;
 
 public:
-    void adiciona(const std::string& item);
-    bool contem(const std::string& item) const;
-    int tamanho() const;
+    Contador() : valor_(0) {}
+
+    void incrementa();
+    void decrementa();
+    int valor() const;
 };
 
 #endif
@@ -30,17 +30,16 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void Mochila::adiciona(const std::string& item) {
-    // TODO: adicione "item" ao final de itens_.
+void Contador::incrementa() {
+    // TODO: some 1 a valor_.
 }
 
-bool Mochila::contem(const std::string& item) const {
-    // TODO: percorra itens_ e retorne true se algum elemento for igual a "item".
-    return false;
+void Contador::decrementa() {
+    // TODO: subtraia 1 de valor_, mas so se valor_ for maior que 0.
 }
 
-int Mochila::tamanho() const {
-    // TODO: retorne o tamanho de itens_.
+int Contador::valor() const {
+    // TODO: retorne valor_.
     return 0;
 }
 
@@ -48,19 +47,21 @@ int Mochila::tamanho() const {
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Mochila m;
-    m.adiciona("corda");
-    m.adiciona("lanterna");
-    assert(m.tamanho() == 2);
-    assert(m.contem("corda"));
-    assert(!(m.contem("faca")));
+    Contador c;
+    c.incrementa();
+    c.incrementa();
+    c.decrementa();
+    assert(c.valor() == 1);
 
-    Mochila copia = m;
-    copia.adiciona("faca");
-    assert(m.tamanho() == 2);
-    assert(copia.tamanho() == 3);
-    assert(!(m.contem("faca")));
-    assert(copia.contem("faca"));
+    Contador c2;
+    c2.decrementa();
+    assert(c2.valor() == 0);
+
+    Contador c3;
+    c3.incrementa();
+    c3.incrementa();
+    c3.incrementa();
+    assert(c3.valor() == 3);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

@@ -6,7 +6,7 @@
 
 #include <cassert>
 #include <iostream>
-#include <memory>
+#include <cmath>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -14,38 +14,59 @@
 #ifndef EX04_H
 #define EX04_H
 
-class Recurso {
+class RetanguloValidado {
 private:
-    int valor_;
+    double largura_;
+    double altura_;
 
 public:
-    explicit Recurso(int valor) : valor_(valor) {}
-    int valor() const { return valor_; }
-};
+    RetanguloValidado(double largura, double altura);
 
-// Cria um Recurso(valor) alocado dinamicamente e retorna um unique_ptr para ele.
-std::unique_ptr<Recurso> cria_recurso(int valor);
+    double area() const;
+    double perimetro() const;
+    bool eh_quadrado() const;
+};
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-std::unique_ptr<Recurso> cria_recurso(int valor) {
-    // TODO: use std::make_unique<Recurso>(valor) e retorne o resultado.
-    return nullptr;
+RetanguloValidado::RetanguloValidado(double largura, double altura)
+    // TODO: use a lista de inicializacao para definir largura_ e altura_,
+    // trocando valores negativos por 0 (ex: largura >= 0 ? largura : 0.0).
+    : largura_(0.0), altura_(0.0) {
+}
+
+double RetanguloValidado::area() const {
+    // TODO: retorne largura_ * altura_.
+    return 0.0;
+}
+
+double RetanguloValidado::perimetro() const {
+    // TODO: retorne 2 * (largura_ + altura_).
+    return 0.0;
+}
+
+bool RetanguloValidado::eh_quadrado() const {
+    // TODO: retorne true se largura_ == altura_.
+    return false;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    auto r = cria_recurso(21);
-    assert(r != nullptr);
-    assert(r->valor() == 21);
+    RetanguloValidado r1(4.0, 3.0);
+    assert(std::abs((r1.area()) - (12.0)) <= (0.0001));
+    assert(!(r1.eh_quadrado()));
 
-    auto r2 = cria_recurso(0);
-    assert(r2->valor() == 0);
+    RetanguloValidado r2(-5.0, 5.0);
+    assert(std::abs((r2.area()) - (0.0)) <= (0.0001));
+
+    RetanguloValidado r3(5.0, 5.0);
+    assert(r3.eh_quadrado());
+    assert(std::abs((r3.perimetro()) - (20.0)) <= (0.0001));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

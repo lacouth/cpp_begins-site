@@ -6,6 +6,9 @@
 
 #include <cassert>
 #include <iostream>
+#include <string>
+#include <vector>
+#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -13,35 +16,14 @@
 #ifndef EX03_H
 #define EX03_H
 
-struct No {
-    static inline int total_vivos = 0;
-
-    int valor;
-    No* proximo;
-
-    No(int v) : valor(v), proximo(nullptr) { total_vivos++; }
-    ~No() { total_vivos--; }
-};
-
-class ListaEncadeada {
+class HistoricoNavegacao {
 private:
-    No* cabeca_;
+    std::vector<std::string> paginas_;
 
 public:
-    ListaEncadeada() : cabeca_(nullptr) {}
-    ~ListaEncadeada();
-
-    void insere_inicio(int valor);
-
-    int tamanho() const {
-        int contagem = 0;
-        No* atual = cabeca_;
-        while (atual != nullptr) {
-            contagem++;
-            atual = atual->proximo;
-        }
-        return contagem;
-    }
+    void visita(const std::string& pagina);
+    std::optional<std::string> ultima_visitada() const;
+    int total_visitas() const;
 };
 
 #endif
@@ -49,36 +31,36 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-ListaEncadeada::~ListaEncadeada() {
-    // TODO: percorra a lista a partir de cabeca_, guardando o proximo no
-    // ANTES de dar delete no atual, ate atual virar nullptr.
+void HistoricoNavegacao::visita(const std::string& pagina) {
+    // TODO: adicione "pagina" ao final de paginas_.
 }
 
-void ListaEncadeada::insere_inicio(int valor) {
-    // TODO: crie um novo No(valor) com "new", faca o proximo dele apontar
-    // para cabeca_, e atualize cabeca_ para o novo no.
+std::optional<std::string> HistoricoNavegacao::ultima_visitada() const {
+    // TODO: se paginas_ estiver vazio, retorne std::nullopt.
+    // Senao, retorne o ultimo elemento de paginas_.
+    return std::nullopt;
+}
+
+int HistoricoNavegacao::total_visitas() const {
+    // TODO: retorne o tamanho de paginas_.
+    return 0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    No::total_vivos = 0;
-    {
-        ListaEncadeada l;
-        l.insere_inicio(1);
-        l.insere_inicio(2);
-        l.insere_inicio(3);
-        assert(l.tamanho() == 3);
-        assert(No::total_vivos == 3);
-    }
-    assert(No::total_vivos == 0);
+    HistoricoNavegacao h;
+    h.visita("home");
+    h.visita("perfil");
+    auto ultima = h.ultima_visitada();
+    assert(ultima.has_value());
+    assert(ultima.value() == std::string("perfil"));
+    assert(h.total_visitas() == 2);
 
-    {
-        ListaEncadeada l2;
-        assert(l2.tamanho() == 0);
-    }
-    assert(No::total_vivos == 0);
+    HistoricoNavegacao vazio;
+    assert(!vazio.ultima_visitada().has_value());
+    assert(vazio.total_visitas() == 0);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

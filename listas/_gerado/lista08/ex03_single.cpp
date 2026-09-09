@@ -6,6 +6,8 @@
 
 #include <cassert>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -13,55 +15,27 @@
 #ifndef EX03_H
 #define EX03_H
 
-class Estoque {
-private:
-    int quantidade_;
-
-public:
-    Estoque() : quantidade_(0) {}
-
-    void adiciona(int quantidade);
-    bool remove(int quantidade);
-    int quantidade() const;
-};
+// Retorna true se algum elemento de v for negativo (use std::any_of).
+bool existe_negativo(const std::vector<int>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void Estoque::adiciona(int quantidade) {
-    // TODO: se quantidade > 0, some a quantidade_.
-}
-
-bool Estoque::remove(int quantidade) {
-    // TODO: se quantidade > 0 e quantidade <= quantidade_, subtraia e retorne true.
-    // Caso contrario, nao altere nada e retorne false.
+bool existe_negativo(const std::vector<int>& v) {
+    // TODO: use std::any_of(v.begin(), v.end(), lambda).
     return false;
-}
-
-int Estoque::quantidade() const {
-    // TODO: retorne quantidade_.
-    return 0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Estoque e;
-    e.adiciona(10);
-    bool ok = e.remove(3);
-    assert(e.quantidade() == 7);
-    assert(ok);
-
-    bool falhou = e.remove(100);
-    assert(e.quantidade() == 7);
-    assert(!(falhou));
-
-    e.adiciona(-5);
-    assert(e.quantidade() == 7);
-
+    assert(existe_negativo({1, -2, 3}));
+    assert(!(existe_negativo({1, 2, 3})));
+    assert(!(existe_negativo({})));
+    assert(existe_negativo({-1}));
     std::cout << "Todos os testes passaram!\n";
     return 0;
 }

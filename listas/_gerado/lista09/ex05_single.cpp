@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <string>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -13,11 +14,17 @@
 #ifndef EX05_H
 #define EX05_H
 
-class Sensor {
-public:
-    static inline int total_destruidos = 0;
+class Pessoa {
+private:
+    std::string nome_;
+    int idade_;
 
-    ~Sensor();
+public:
+    Pessoa(std::string nome, int idade) : nome_(nome), idade_(idade) {}
+
+    std::string nome() const;
+    int idade() const;
+    void define_idade(int nova_idade);
 };
 
 #endif
@@ -25,27 +32,33 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-Sensor::~Sensor() {
-    // TODO: incremente Sensor::total_destruidos (ou apenas total_destruidos,
-    // dentro de um metodo da propria classe).
+std::string Pessoa::nome() const {
+    // TODO: retorne nome_.
+    return "";
+}
+
+int Pessoa::idade() const {
+    // TODO: retorne idade_.
+    return 0;
+}
+
+void Pessoa::define_idade(int nova_idade) {
+    // TODO: so atualize idade_ se nova_idade >= 0.
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Sensor::total_destruidos = 0;
-    {
-        Sensor s1;
-        Sensor s2;
-        assert(Sensor::total_destruidos == 0);   // ainda nao saiu de escopo
-    }
-    assert(Sensor::total_destruidos == 2);
+    Pessoa p("Ana", 25);
+    assert(p.nome() == std::string("Ana"));
+    assert(p.idade() == 25);
 
-    {
-        Sensor s3;
-    }
-    assert(Sensor::total_destruidos == 3);
+    p.define_idade(26);
+    assert(p.idade() == 26);
+
+    p.define_idade(-10);
+    assert(p.idade() == 26);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

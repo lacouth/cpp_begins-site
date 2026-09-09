@@ -13,27 +13,11 @@
 #ifndef EX05_H
 #define EX05_H
 
-struct No {
-    static inline int total_vivos = 0;
-
-    int valor;
-    No* proximo;
-
-    No(int v) : valor(v), proximo(nullptr) { total_vivos++; }
-    ~No() { total_vivos--; }
-};
-
-class PilhaEficiente {
-private:
-    No* cabeca_;
-
+class Sensor {
 public:
-    PilhaEficiente() : cabeca_(nullptr) {}
-    ~PilhaEficiente();
+    static inline int total_destruidos = 0;
 
-    void empilha(int valor);
-    int desempilha();
-    bool vazia() const;
+    ~Sensor();
 };
 
 #endif
@@ -41,46 +25,27 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-PilhaEficiente::~PilhaEficiente() {
-    // TODO: percorra a partir de cabeca_, guardando o proximo no ANTES de
-    // dar delete no atual, ate atual virar nullptr.
-}
-
-void PilhaEficiente::empilha(int valor) {
-    // TODO: crie um No(valor) com "new", conecte o proximo dele a cabeca_
-    // atual, e atualize cabeca_ para o novo no.
-}
-
-int PilhaEficiente::desempilha() {
-    // TODO: guarde cabeca_->valor, avance cabeca_ para cabeca_->proximo,
-    // de delete no no antigo, e retorne o valor guardado.
-    return 0;
-}
-
-bool PilhaEficiente::vazia() const {
-    // TODO: retorne true se cabeca_ for nullptr.
-    return true;
+Sensor::~Sensor() {
+    // TODO: incremente Sensor::total_destruidos (ou apenas total_destruidos,
+    // dentro de um metodo da propria classe).
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    No::total_vivos = 0;
+    Sensor::total_destruidos = 0;
     {
-        PilhaEficiente p;
-        assert(p.vazia());
-        p.empilha(1);
-        p.empilha(2);
-        p.empilha(3);
-        assert(!(p.vazia()));
-        assert(p.desempilha() == 3);
-        assert(p.desempilha() == 2);
-        assert(No::total_vivos == 1);
-        assert(p.desempilha() == 1);
-        assert(p.vazia());
+        Sensor s1;
+        Sensor s2;
+        assert(Sensor::total_destruidos == 0);   // ainda nao saiu de escopo
     }
-    assert(No::total_vivos == 0);
+    assert(Sensor::total_destruidos == 2);
+
+    {
+        Sensor s3;
+    }
+    assert(Sensor::total_destruidos == 3);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

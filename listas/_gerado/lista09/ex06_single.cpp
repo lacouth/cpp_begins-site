@@ -6,7 +6,7 @@
 
 #include <cassert>
 #include <iostream>
-#include <string>
+#include <cmath>
 #include <vector>
 
 // ============================================================
@@ -15,16 +15,14 @@
 #ifndef EX06_H
 #define EX06_H
 
-class ListaDeCompras {
+class BoletimAluno {
 private:
-    std::vector<std::string> itens_;
+    std::vector<double> notas_;
 
 public:
-    // Acrescenta o item so se ele ainda nao estiver na lista.
-    // Retorna true se acrescentou, false se ja existia.
-    bool adiciona(const std::string& item);
-    bool contem(const std::string& item) const;
-    int quantidade() const;
+    void adiciona_nota(double nota);
+    double media() const;
+    bool aprovado() const;
 };
 
 #endif
@@ -32,47 +30,37 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-bool ListaDeCompras::adiciona(const std::string& item) {
-    // TODO: se contem(item) for true, devolva false sem mexer na lista.
-    // Senao, faca push_back e devolva true.
-    return false;
+void BoletimAluno::adiciona_nota(double nota) {
+    // TODO: adicione "nota" ao final de notas_ (push_back).
 }
 
-bool ListaDeCompras::contem(const std::string& item) const {
-    // TODO: percorra itens_ procurando por item.
-    return false;
+double BoletimAluno::media() const {
+    // TODO: se notas_ estiver vazio, retorne 0.0. Senao, retorne a media.
+    return 0.0;
 }
 
-int ListaDeCompras::quantidade() const {
-    // TODO: devolva o tamanho de itens_ (cuidado: .size() devolve size_t,
-    // converta para int com static_cast<int>).
-    return 0;
+bool BoletimAluno::aprovado() const {
+    // TODO: retorne true se media() >= 6.0 (voce pode chamar media() aqui dentro).
+    return false;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    ListaDeCompras l;
-    assert(l.quantidade() == 0);
-    assert(!(l.contem("cafe")));
+    BoletimAluno b;
+    b.adiciona_nota(8.0);
+    b.adiciona_nota(6.0);
+    assert(std::abs((b.media()) - (7.0)) <= (0.0001));
+    assert(b.aprovado());
 
-    assert(l.adiciona("cafe"));
-    assert(l.contem("cafe"));
-    assert(l.quantidade() == 1);
+    BoletimAluno vazio;
+    assert(std::abs((vazio.media()) - (0.0)) <= (0.0001));
 
-    assert(!(l.adiciona("cafe")));
-    assert(l.quantidade() == 1);
-
-    assert(l.adiciona("acucar"));
-    assert(l.quantidade() == 2);
-
-    // Regra do zero: copiar a lista funciona sem escrever construtor de copia.
-    ListaDeCompras copia = l;
-    assert(copia.quantidade() == 2);
-    copia.adiciona("leite");
-    assert(copia.quantidade() == 3);
-    assert(l.quantidade() == 2);
+    BoletimAluno reprovado;
+    reprovado.adiciona_nota(3.0);
+    reprovado.adiciona_nota(4.0);
+    assert(!(reprovado.aprovado()));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

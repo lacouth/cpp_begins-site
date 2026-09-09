@@ -7,7 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,7 +14,8 @@
 #ifndef EX02_H
 #define EX02_H
 
-// Retorna true se todas as notas forem >= 6.0 (use std::all_of).
+// Retorna true se todas as notas forem >= 6.0.
+// Escreva com laco: nada de <algorithm> nesta avaliacao.
 bool todos_aprovados(const std::vector<double>& notas);
 
 #endif
@@ -24,7 +24,8 @@ bool todos_aprovados(const std::vector<double>& notas);
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
 bool todos_aprovados(const std::vector<double>& notas) {
-    // TODO: use std::all_of(notas.begin(), notas.end(), lambda).
+    // TODO: percorra as notas. Assim que achar uma menor que 6.0, ja pode
+    // devolver false. Se o laco terminar sem achar nenhuma, devolva true.
     return false;
 }
 

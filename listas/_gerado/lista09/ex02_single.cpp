@@ -7,7 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <cmath>
-#include <vector>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,14 +14,20 @@
 #ifndef EX02_H
 #define EX02_H
 
-class CarrinhoDeCompras {
+class Termometro {
 private:
-    std::vector<double> precos_;
+    double atual_;
+    double minimo_;
+    double maximo_;
 
 public:
-    void adiciona_item(double preco);
-    double total() const;
-    int quantidade_itens() const;
+    explicit Termometro(double leitura_inicial)
+        : atual_(leitura_inicial), minimo_(leitura_inicial), maximo_(leitura_inicial) {}
+
+    void registra(double leitura);
+    double atual() const;
+    double minimo() const;
+    double maximo() const;
 };
 
 #endif
@@ -30,34 +35,41 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void CarrinhoDeCompras::adiciona_item(double preco) {
-    // TODO: adicione "preco" ao final de precos_.
+void Termometro::registra(double leitura) {
+    // TODO: atualize atual_ para leitura. Se leitura < minimo_, atualize minimo_.
+    // Se leitura > maximo_, atualize maximo_.
 }
 
-double CarrinhoDeCompras::total() const {
-    // TODO: some todos os elementos de precos_.
+double Termometro::atual() const {
+    // TODO: retorne atual_.
     return 0.0;
 }
 
-int CarrinhoDeCompras::quantidade_itens() const {
-    // TODO: retorne o tamanho de precos_.
-    return 0;
+double Termometro::minimo() const {
+    // TODO: retorne minimo_.
+    return 0.0;
+}
+
+double Termometro::maximo() const {
+    // TODO: retorne maximo_.
+    return 0.0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    CarrinhoDeCompras c;
-    c.adiciona_item(10.0);
-    c.adiciona_item(25.5);
-    assert(std::abs((c.total()) - (35.5)) <= (0.0001));
-    assert(c.quantidade_itens() == 2);
+    Termometro t(20.0);
+    t.registra(25.0);
+    t.registra(15.0);
+    assert(std::abs((t.atual()) - (15.0)) <= (0.0001));
+    assert(std::abs((t.minimo()) - (15.0)) <= (0.0001));
+    assert(std::abs((t.maximo()) - (25.0)) <= (0.0001));
 
-    CarrinhoDeCompras copia = c;
-    copia.adiciona_item(100.0);
-    assert(std::abs((c.total()) - (35.5)) <= (0.0001));
-    assert(std::abs((copia.total()) - (135.5)) <= (0.0001));
+    Termometro t2(10.0);
+    assert(std::abs((t2.atual()) - (10.0)) <= (0.0001));
+    assert(std::abs((t2.minimo()) - (10.0)) <= (0.0001));
+    assert(std::abs((t2.maximo()) - (10.0)) <= (0.0001));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

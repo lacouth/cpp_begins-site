@@ -6,8 +6,8 @@
 
 #include <cassert>
 #include <iostream>
+#include <cmath>
 #include <vector>
-#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,32 +15,30 @@
 #ifndef EX04_H
 #define EX04_H
 
-// Retorna um novo vector com cada elemento de v dobrado (use std::transform).
-std::vector<int> dobra_valores(const std::vector<int>& v);
+// Retorna a media aritmetica dos valores de v, ou 0.0 se v estiver vazio.
+double media(const std::vector<double>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-std::vector<int> dobra_valores(const std::vector<int>& v) {
-    // TODO: crie um vector "resultado" do mesmo tamanho de v e use
-    // std::transform(v.begin(), v.end(), resultado.begin(), lambda).
-    return {};
+double media(const std::vector<double>& v) {
+    // TODO: trate primeiro o vector vazio (devolva 0.0, senao ha divisao
+    // por zero). Depois acumule a soma num double e divida por v.size().
+    return 0.0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    std::vector<int> esperado1 = {2, 4, 6};
-    assert(dobra_valores({1, 2, 3}) == esperado1);
+    assert(std::abs((media({8.0, 7.0, 10.0})) - (8.3333333)) <= (0.0001));
+    assert(std::abs((media({5.0})) - (5.0)) <= (0.0001));
+    assert(std::abs((media({2.0, 3.0})) - (2.5)) <= (0.0001));
 
-    std::vector<int> esperado2 = {};
-    assert(dobra_valores({}) == esperado2);
-
-    std::vector<int> esperado3 = {-2, 0, 2};
-    assert(dobra_valores({-1, 0, 1}) == esperado3);
+    // vector vazio nao pode dividir por zero
+    assert(std::abs((media({})) - (0.0)) <= (0.0001));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

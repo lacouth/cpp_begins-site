@@ -6,8 +6,8 @@
 
 #include <cassert>
 #include <iostream>
+#include <cmath>
 #include <vector>
-#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,43 +15,42 @@
 #ifndef EX07_H
 #define EX07_H
 
-// Remove do proprio vector todas as leituras fora da faixa [minimo, maximo],
-// preservando a ordem das que permanecem.
-void filtra_faixa(std::vector<double>& leituras, double minimo, double maximo);
+// Retorna a mediana dos valores. Recebe o vector POR VALOR de proposito:
+// a funcao precisa ordenar, e ordenar o vector de quem chamou seria um
+// efeito colateral surpreendente. Retorna 0.0 se o vector estiver vazio.
+double mediana(std::vector<int> v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void filtra_faixa(std::vector<double>& leituras, double minimo, double maximo) {
-    // TODO: use std::remove_if com uma lambda que devolve true para as leituras
-    // fora da faixa, e depois leituras.erase(...) ate leituras.end().
-    // A lambda precisa capturar minimo e maximo: [minimo, maximo](double x) { ... }
+double mediana(std::vector<int> v) {
+    // TODO: trate o vector vazio. Depois ordene v (pode reaproveitar o
+    // bubble sort do ex05) e devolva o elemento do meio. Se a quantidade
+    // de elementos for PAR, devolva a media dos dois centrais -- cuidado
+    // para dividir por 2.0, e nao por 2.
+    return 0.0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    std::vector<double> tensoes = {5.0, 127.0, 250.0, 220.0};
-    filtra_faixa(tensoes, 10.0, 240.0);
-    assert(tensoes.size() == 2);
-    assert(tensoes[0] == 127.0);
-    assert(tensoes[1] == 220.0);
+    // impar: o do meio, depois de ordenar
+    assert(std::abs((mediana({3, 1, 2})) - (2.0)) <= (0.0001));
+    assert(std::abs((mediana({5})) - (5.0)) <= (0.0001));
 
-    // Os limites entram: a faixa e fechada.
-    std::vector<double> limites = {10.0, 240.0};
-    filtra_faixa(limites, 10.0, 240.0);
-    assert(limites.size() == 2);
+    // par: media dos dois centrais -- e aqui o /2.0 faz diferenca
+    assert(std::abs((mediana({1, 2})) - (1.5)) <= (0.0001));
+    assert(std::abs((mediana({4, 1, 3, 2})) - (2.5)) <= (0.0001));
 
-    std::vector<double> nenhuma_valida = {1.0, 2.0, 999.0};
-    filtra_faixa(nenhuma_valida, 10.0, 240.0);
-    assert(nenhuma_valida.empty());
+    assert(std::abs((mediana({})) - (0.0)) <= (0.0001));
 
-    std::vector<double> vazio;
-    filtra_faixa(vazio, 10.0, 240.0);
-    assert(vazio.empty());
+    // o vector de quem chamou nao pode ser alterado
+    std::vector<int> original = {3, 1, 2};
+    mediana(original);
+    assert((original == std::vector<int>{3, 1, 2}));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

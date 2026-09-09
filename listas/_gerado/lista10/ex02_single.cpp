@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <cmath>
 #include <vector>
 
 // ============================================================
@@ -14,14 +15,14 @@
 #ifndef EX02_H
 #define EX02_H
 
-class FilaComVector {
+class CarrinhoDeCompras {
 private:
-    std::vector<int> dados_;
+    std::vector<double> precos_;
 
 public:
-    void enfileira(int valor);
-    int desenfileira();
-    bool vazia() const;
+    void adiciona_item(double preco);
+    double total() const;
+    int quantidade_itens() const;
 };
 
 #endif
@@ -29,35 +30,34 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void FilaComVector::enfileira(int valor) {
-    // TODO: adicione "valor" ao final de dados_.
+void CarrinhoDeCompras::adiciona_item(double preco) {
+    // TODO: adicione "preco" ao final de precos_.
 }
 
-int FilaComVector::desenfileira() {
-    // TODO: guarde dados_.front(), remova com dados_.erase(dados_.begin()),
-    // retorne o valor guardado.
+double CarrinhoDeCompras::total() const {
+    // TODO: some todos os elementos de precos_.
+    return 0.0;
+}
+
+int CarrinhoDeCompras::quantidade_itens() const {
+    // TODO: retorne o tamanho de precos_.
     return 0;
-}
-
-bool FilaComVector::vazia() const {
-    // TODO: retorne dados_.empty().
-    return true;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    FilaComVector f;
-    assert(f.vazia());
-    f.enfileira(1);
-    f.enfileira(2);
-    f.enfileira(3);
-    assert(!(f.vazia()));
-    assert(f.desenfileira() == 1);
-    assert(f.desenfileira() == 2);
-    assert(f.desenfileira() == 3);
-    assert(f.vazia());
+    CarrinhoDeCompras c;
+    c.adiciona_item(10.0);
+    c.adiciona_item(25.5);
+    assert(std::abs((c.total()) - (35.5)) <= (0.0001));
+    assert(c.quantidade_itens() == 2);
+
+    CarrinhoDeCompras copia = c;
+    copia.adiciona_item(100.0);
+    assert(std::abs((c.total()) - (35.5)) <= (0.0001));
+    assert(std::abs((copia.total()) - (135.5)) <= (0.0001));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

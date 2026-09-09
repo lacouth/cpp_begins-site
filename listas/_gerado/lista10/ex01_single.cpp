@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <string>
 #include <vector>
 
 // ============================================================
@@ -14,15 +15,14 @@
 #ifndef EX01_H
 #define EX01_H
 
-class PilhaComVector {
+class Mochila {
 private:
-    std::vector<int> dados_;
+    std::vector<std::string> itens_;
 
 public:
-    void empilha(int valor);
-    int desempilha();
-    int topo() const;
-    bool vazia() const;
+    void adiciona(const std::string& item);
+    bool contem(const std::string& item) const;
+    int tamanho() const;
 };
 
 #endif
@@ -30,40 +30,37 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void PilhaComVector::empilha(int valor) {
-    // TODO: adicione "valor" ao final de dados_.
+void Mochila::adiciona(const std::string& item) {
+    // TODO: adicione "item" ao final de itens_.
 }
 
-int PilhaComVector::desempilha() {
-    // TODO: guarde dados_.back(), remova com pop_back(), retorne o valor guardado.
+bool Mochila::contem(const std::string& item) const {
+    // TODO: percorra itens_ e retorne true se algum elemento for igual a "item".
+    return false;
+}
+
+int Mochila::tamanho() const {
+    // TODO: retorne o tamanho de itens_.
     return 0;
-}
-
-int PilhaComVector::topo() const {
-    // TODO: retorne dados_.back().
-    return 0;
-}
-
-bool PilhaComVector::vazia() const {
-    // TODO: retorne dados_.empty().
-    return true;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    PilhaComVector p;
-    assert(p.vazia());
-    p.empilha(1);
-    p.empilha(2);
-    p.empilha(3);
-    assert(!(p.vazia()));
-    assert(p.desempilha() == 3);
-    assert(p.topo() == 2);
-    assert(p.desempilha() == 2);
-    assert(p.desempilha() == 1);
-    assert(p.vazia());
+    Mochila m;
+    m.adiciona("corda");
+    m.adiciona("lanterna");
+    assert(m.tamanho() == 2);
+    assert(m.contem("corda"));
+    assert(!(m.contem("faca")));
+
+    Mochila copia = m;
+    copia.adiciona("faca");
+    assert(m.tamanho() == 2);
+    assert(copia.tamanho() == 3);
+    assert(!(m.contem("faca")));
+    assert(copia.contem("faca"));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

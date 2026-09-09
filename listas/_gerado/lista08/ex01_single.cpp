@@ -6,6 +6,8 @@
 
 #include <cassert>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -13,55 +15,35 @@
 #ifndef EX01_H
 #define EX01_H
 
-class Contador {
-private:
-    int valor_;
-
-public:
-    Contador() : valor_(0) {}
-
-    void incrementa();
-    void decrementa();
-    int valor() const;
-};
+// Ordena v em ordem crescente (use std::sort).
+void ordena_crescente(std::vector<int>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void Contador::incrementa() {
-    // TODO: some 1 a valor_.
-}
-
-void Contador::decrementa() {
-    // TODO: subtraia 1 de valor_, mas so se valor_ for maior que 0.
-}
-
-int Contador::valor() const {
-    // TODO: retorne valor_.
-    return 0;
+void ordena_crescente(std::vector<int>& v) {
+    // TODO: chame std::sort(v.begin(), v.end());
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Contador c;
-    c.incrementa();
-    c.incrementa();
-    c.decrementa();
-    assert(c.valor() == 1);
+    std::vector<int> a = {5, 1, 4, 2};
+    ordena_crescente(a);
+    std::vector<int> esperado_a = {1, 2, 4, 5};
+    assert(a == esperado_a);
 
-    Contador c2;
-    c2.decrementa();
-    assert(c2.valor() == 0);
+    std::vector<int> b = {1};
+    ordena_crescente(b);
+    std::vector<int> esperado_b = {1};
+    assert(b == esperado_b);
 
-    Contador c3;
-    c3.incrementa();
-    c3.incrementa();
-    c3.incrementa();
-    assert(c3.valor() == 3);
+    std::vector<int> c = {};
+    ordena_crescente(c);
+    assert(c.empty());
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

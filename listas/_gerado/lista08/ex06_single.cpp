@@ -6,8 +6,9 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
+#include <string>
 #include <vector>
+#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,53 +16,28 @@
 #ifndef EX06_H
 #define EX06_H
 
-class BoletimAluno {
-private:
-    std::vector<double> notas_;
-
-public:
-    void adiciona_nota(double nota);
-    double media() const;
-    bool aprovado() const;
-};
+// Retorna a string mais longa de v (assume que v nao esta vazio).
+// Use std::max_element.
+std::string maior_string(const std::vector<std::string>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void BoletimAluno::adiciona_nota(double nota) {
-    // TODO: adicione "nota" ao final de notas_ (push_back).
-}
-
-double BoletimAluno::media() const {
-    // TODO: se notas_ estiver vazio, retorne 0.0. Senao, retorne a media.
-    return 0.0;
-}
-
-bool BoletimAluno::aprovado() const {
-    // TODO: retorne true se media() >= 6.0 (voce pode chamar media() aqui dentro).
-    return false;
+std::string maior_string(const std::vector<std::string>& v) {
+    // TODO: use std::max_element(v.begin(), v.end(), lambda que compara .size())
+    // e retorne *iterador.
+    return "";
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    BoletimAluno b;
-    b.adiciona_nota(8.0);
-    b.adiciona_nota(6.0);
-    assert(std::abs((b.media()) - (7.0)) <= (0.0001));
-    assert(b.aprovado());
-
-    BoletimAluno vazio;
-    assert(std::abs((vazio.media()) - (0.0)) <= (0.0001));
-
-    BoletimAluno reprovado;
-    reprovado.adiciona_nota(3.0);
-    reprovado.adiciona_nota(4.0);
-    assert(!(reprovado.aprovado()));
-
+    assert(maior_string({"a", "abc", "ab"}) == std::string("abc"));
+    assert(maior_string({"x"}) == std::string("x"));
+    assert(maior_string({"aa", "bb", "c"}) == std::string("aa"));
     std::cout << "Todos os testes passaram!\n";
     return 0;
 }

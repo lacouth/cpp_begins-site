@@ -6,7 +6,8 @@
 
 #include <cassert>
 #include <iostream>
-#include <string>
+#include <vector>
+#include <numeric>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -14,52 +15,26 @@
 #ifndef EX05_H
 #define EX05_H
 
-class Pessoa {
-private:
-    std::string nome_;
-    int idade_;
-
-public:
-    Pessoa(std::string nome, int idade) : nome_(nome), idade_(idade) {}
-
-    std::string nome() const;
-    int idade() const;
-    void define_idade(int nova_idade);
-};
+// Retorna a soma dos quadrados dos elementos de v (use std::accumulate).
+int soma_quadrados(const std::vector<int>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-std::string Pessoa::nome() const {
-    // TODO: retorne nome_.
-    return "";
-}
-
-int Pessoa::idade() const {
-    // TODO: retorne idade_.
+int soma_quadrados(const std::vector<int>& v) {
+    // TODO: use std::accumulate(v.begin(), v.end(), 0, lambda(acumulador, x)).
     return 0;
-}
-
-void Pessoa::define_idade(int nova_idade) {
-    // TODO: so atualize idade_ se nova_idade >= 0.
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Pessoa p("Ana", 25);
-    assert(p.nome() == std::string("Ana"));
-    assert(p.idade() == 25);
-
-    p.define_idade(26);
-    assert(p.idade() == 26);
-
-    p.define_idade(-10);
-    assert(p.idade() == 26);
-
+    assert(soma_quadrados({1, 2, 3}) == 14);
+    assert(soma_quadrados({}) == 0);
+    assert(soma_quadrados({5}) == 25);
     std::cout << "Todos os testes passaram!\n";
     return 0;
 }

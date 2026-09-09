@@ -81,6 +81,10 @@
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
+         <loc>https://lacouth.github.io/cpp_begins/listas/lista12/</loc>
+         <lastmod>2026-09-09</lastmod>
+    </url>
+    <url>
          <loc>https://lacouth.github.io/cpp_begins/projeto/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
@@ -129,7 +133,7 @@
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade2-containers/05-algorithm-lambdas/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade2-containers/05-algoritmos-classicos/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
@@ -145,43 +149,51 @@
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade4-oo/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade4-algoritmos-stl/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade4-oo/08-classes-construtores/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade4-algoritmos-stl/08-algorithm-lambdas/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade4-oo/09-destrutor-raii/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade5-oo/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade4-oo/10-polimorfismo-operadores/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade5-oo/09-classes-construtores/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade4-oo/11-multiplos-arquivos/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade5-oo/10-destrutor-raii/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade5-estruturas/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade5-oo/11-polimorfismo-operadores/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade5-estruturas/12-filas-pilhas-listas/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade5-oo/12-multiplos-arquivos/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade6-embarcados/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade6-estruturas/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade6-embarcados/13-cpp-no-wokwi/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade6-estruturas/13-filas-pilhas-listas/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/cpp_begins/unidade6-embarcados/14-arquitetura-testavel/</loc>
+         <loc>https://lacouth.github.io/cpp_begins/unidade7-embarcados/</loc>
+         <lastmod>2026-09-09</lastmod>
+    </url>
+    <url>
+         <loc>https://lacouth.github.io/cpp_begins/unidade7-embarcados/14-cpp-no-wokwi/</loc>
+         <lastmod>2026-09-09</lastmod>
+    </url>
+    <url>
+         <loc>https://lacouth.github.io/cpp_begins/unidade7-embarcados/15-arquitetura-testavel/</loc>
          <lastmod>2026-09-09</lastmod>
     </url>
 </urlset>

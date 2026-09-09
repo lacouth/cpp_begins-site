@@ -6,7 +6,8 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
+#include <vector>
+#include <algorithm>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -14,63 +15,27 @@
 #ifndef EX02_H
 #define EX02_H
 
-class Termometro {
-private:
-    double atual_;
-    double minimo_;
-    double maximo_;
-
-public:
-    explicit Termometro(double leitura_inicial)
-        : atual_(leitura_inicial), minimo_(leitura_inicial), maximo_(leitura_inicial) {}
-
-    void registra(double leitura);
-    double atual() const;
-    double minimo() const;
-    double maximo() const;
-};
+// Retorna quantos elementos de v sao maiores que "limite" (use std::count_if).
+int conta_maiores_que(const std::vector<int>& v, int limite);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void Termometro::registra(double leitura) {
-    // TODO: atualize atual_ para leitura. Se leitura < minimo_, atualize minimo_.
-    // Se leitura > maximo_, atualize maximo_.
-}
-
-double Termometro::atual() const {
-    // TODO: retorne atual_.
-    return 0.0;
-}
-
-double Termometro::minimo() const {
-    // TODO: retorne minimo_.
-    return 0.0;
-}
-
-double Termometro::maximo() const {
-    // TODO: retorne maximo_.
-    return 0.0;
+int conta_maiores_que(const std::vector<int>& v, int limite) {
+    // TODO: use std::count_if(v.begin(), v.end(), lambda) e retorne o resultado
+    // (o retorno de count_if e um inteiro grande o suficiente; converta para int).
+    return 0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Termometro t(20.0);
-    t.registra(25.0);
-    t.registra(15.0);
-    assert(std::abs((t.atual()) - (15.0)) <= (0.0001));
-    assert(std::abs((t.minimo()) - (15.0)) <= (0.0001));
-    assert(std::abs((t.maximo()) - (25.0)) <= (0.0001));
-
-    Termometro t2(10.0);
-    assert(std::abs((t2.atual()) - (10.0)) <= (0.0001));
-    assert(std::abs((t2.minimo()) - (10.0)) <= (0.0001));
-    assert(std::abs((t2.maximo()) - (10.0)) <= (0.0001));
-
+    assert(conta_maiores_que({1, 5, 8, 3, 9}, 4) == 3);
+    assert(conta_maiores_que({1, 2, 3}, 10) == 0);
+    assert(conta_maiores_que({}, 0) == 0);
     std::cout << "Todos os testes passaram!\n";
     return 0;
 }

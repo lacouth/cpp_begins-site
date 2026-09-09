@@ -6,9 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <string>
-#include <vector>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -16,14 +13,16 @@
 #ifndef EX03_H
 #define EX03_H
 
-class HistoricoNavegacao {
+class Estoque {
 private:
-    std::vector<std::string> paginas_;
+    int quantidade_;
 
 public:
-    void visita(const std::string& pagina);
-    std::optional<std::string> ultima_visitada() const;
-    int total_visitas() const;
+    Estoque() : quantidade_(0) {}
+
+    void adiciona(int quantidade);
+    bool remove(int quantidade);
+    int quantidade() const;
 };
 
 #endif
@@ -31,18 +30,18 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void HistoricoNavegacao::visita(const std::string& pagina) {
-    // TODO: adicione "pagina" ao final de paginas_.
+void Estoque::adiciona(int quantidade) {
+    // TODO: se quantidade > 0, some a quantidade_.
 }
 
-std::optional<std::string> HistoricoNavegacao::ultima_visitada() const {
-    // TODO: se paginas_ estiver vazio, retorne std::nullopt.
-    // Senao, retorne o ultimo elemento de paginas_.
-    return std::nullopt;
+bool Estoque::remove(int quantidade) {
+    // TODO: se quantidade > 0 e quantidade <= quantidade_, subtraia e retorne true.
+    // Caso contrario, nao altere nada e retorne false.
+    return false;
 }
 
-int HistoricoNavegacao::total_visitas() const {
-    // TODO: retorne o tamanho de paginas_.
+int Estoque::quantidade() const {
+    // TODO: retorne quantidade_.
     return 0;
 }
 
@@ -50,17 +49,18 @@ int HistoricoNavegacao::total_visitas() const {
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    HistoricoNavegacao h;
-    h.visita("home");
-    h.visita("perfil");
-    auto ultima = h.ultima_visitada();
-    assert(ultima.has_value());
-    assert(ultima.value() == std::string("perfil"));
-    assert(h.total_visitas() == 2);
+    Estoque e;
+    e.adiciona(10);
+    bool ok = e.remove(3);
+    assert(e.quantidade() == 7);
+    assert(ok);
 
-    HistoricoNavegacao vazio;
-    assert(!vazio.ultima_visitada().has_value());
-    assert(vazio.total_visitas() == 0);
+    bool falhou = e.remove(100);
+    assert(e.quantidade() == 7);
+    assert(!(falhou));
+
+    e.adiciona(-5);
+    assert(e.quantidade() == 7);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;
