@@ -14,29 +14,31 @@
 #ifndef EX02_H
 #define EX02_H
 
-class Forma {
+class MeioDeTransporte {
 public:
-    virtual double area() const = 0;
-    virtual ~Forma() {}
+    // Tempo de viagem, em horas, para percorrer a distancia dada em km.
+    virtual double tempo_de_viagem(double km) const = 0;
+    virtual ~MeioDeTransporte() {}
 };
 
-class Circulo : public Forma {
+class Bicicleta : public MeioDeTransporte {
 private:
-    double raio_;
+    double velocidade_media_;      // km/h
 
 public:
-    explicit Circulo(double raio) : raio_(raio) {}
-    double area() const override;
+    explicit Bicicleta(double velocidade_media) : velocidade_media_(velocidade_media) {}
+    double tempo_de_viagem(double km) const override;
 };
 
-class Retangulo : public Forma {
+class Carro : public MeioDeTransporte {
 private:
-    double largura_;
-    double altura_;
+    double velocidade_media_;      // km/h
+    int minutos_de_parada_;        // a cada 100 km completos
 
 public:
-    Retangulo(double largura, double altura) : largura_(largura), altura_(altura) {}
-    double area() const override;
+    Carro(double velocidade_media, int minutos_de_parada)
+        : velocidade_media_(velocidade_media), minutos_de_parada_(minutos_de_parada) {}
+    double tempo_de_viagem(double km) const override;
 };
 
 #endif
@@ -44,28 +46,50 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-double Circulo::area() const {
-    // TODO: retorne 3.14159 * raio_ * raio_.
+double Bicicleta::tempo_de_viagem(double km) const {
+    // TODO: retorne km / velocidade_media_.
     return 0.0;
 }
 
-double Retangulo::area() const {
-    // TODO: retorne largura_ * altura_.
+double Carro::tempo_de_viagem(double km) const {
+    // TODO: comece com km / velocidade_media_.
+    // Some as paradas: static_cast<int>(km) / 100 paradas, cada uma
+    // custando minutos_de_parada_ / 60.0 horas.
     return 0.0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
+static bool perto(double a, double b) {
+    return std::fabs(a - b) < 0.0001;
+}
+
 int main() {
-    Circulo c(2.0);
-    assert(std::abs((c.area()) - (12.56636)) <= (0.001));
+    Bicicleta b(20.0);
+    assert(perto(b.tempo_de_viagem(50.0), 2.5));
+    assert(perto(b.tempo_de_viagem(0.0), 0.0));
 
-    Retangulo r(4.0, 5.0);
-    assert(std::abs((r.area()) - (20.0)) <= (0.0001));
+    Carro c(100.0, 30);
+    // 250 km: 2.5 h de estrada + 2 paradas de 30 min = 3.5 h
+    assert(perto(c.tempo_de_viagem(250.0), 3.5));
 
-    Forma& f = c;
-    assert(std::abs((f.area()) - (12.56636)) <= (0.001));
+    // menos de 100 km: nenhuma parada
+    assert(perto(c.tempo_de_viagem(80.0), 0.8));
+
+    // exatamente 100 km: uma parada completa
+    assert(perto(c.tempo_de_viagem(100.0), 1.5));
+
+    // carro sem paradas se comporta como a bicicleta, so que mais rapido
+    Carro sem_parada(50.0, 0);
+    assert(perto(sem_parada.tempo_de_viagem(200.0), 4.0));
+
+    // a mesma pergunta, feita pela referencia a classe base
+    MeioDeTransporte& transporte = c;
+    assert(perto(transporte.tempo_de_viagem(250.0), 3.5));
+
+    MeioDeTransporte& outro = b;
+    assert(perto(outro.tempo_de_viagem(50.0), 2.5));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

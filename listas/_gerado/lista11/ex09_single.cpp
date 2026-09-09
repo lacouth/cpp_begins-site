@@ -48,7 +48,7 @@ std::optional<int> indice_maior_area(const std::vector<std::unique_ptr<Forma>>& 
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
 std::optional<int> indice_maior_area(const std::vector<std::unique_ptr<Forma>>& formas) {
-    // TODO: e a busca do maior da Lista 05, so que agora o valor comparado
+    // TODO: e a busca do melhor ate agora da Lista 05, so que o valor comparado
     // vem de uma chamada polimorfica: formas[i]->area().
     // Comece pelo indice 0 (nao por area 0) e trate o vector vazio.
     return std::nullopt;

@@ -6,7 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -14,19 +13,19 @@
 #ifndef EX03_H
 #define EX03_H
 
-class Vetor2D {
+class Duracao {
 private:
-    double x_;
-    double y_;
+    int minutos_;
+    int segundos_;
 
 public:
-    Vetor2D(double x, double y) : x_(x), y_(y) {}
+    Duracao(int minutos, int segundos) : minutos_(minutos), segundos_(segundos) {}
 
-    double x() const { return x_; }
-    double y() const { return y_; }
+    int minutos() const { return minutos_; }
+    int segundos() const { return segundos_; }
 
-    Vetor2D operator+(const Vetor2D& outro) const;
-    bool operator==(const Vetor2D& outro) const;
+    Duracao operator+(const Duracao& outra) const;
+    bool operator==(const Duracao& outra) const;
 };
 
 #endif
@@ -34,13 +33,15 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-Vetor2D Vetor2D::operator+(const Vetor2D& outro) const {
-    // TODO: retorne um novo Vetor2D com x_+outro.x_ e y_+outro.y_.
-    return Vetor2D(0.0, 0.0);
+Duracao Duracao::operator+(const Duracao& outra) const {
+    // TODO: some os minutos e os segundos separadamente e depois NORMALIZE:
+    // cada 60 segundos viram 1 minuto (use / 60 e % 60).
+    // Devolva um novo Duracao com o resultado ja normalizado.
+    return Duracao(0, 0);
 }
 
-bool Vetor2D::operator==(const Vetor2D& outro) const {
-    // TODO: retorne true se x_ == outro.x_ e y_ == outro.y_.
+bool Duracao::operator==(const Duracao& outra) const {
+    // TODO: retorne true se minutos_ e segundos_ forem iguais aos da outra.
     return false;
 }
 
@@ -48,15 +49,39 @@ bool Vetor2D::operator==(const Vetor2D& outro) const {
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Vetor2D a(1.0, 2.0);
-    Vetor2D b(3.0, 4.0);
-    Vetor2D c = a + b;
-    assert(std::abs((c.x()) - (4.0)) <= (0.0001));
-    assert(std::abs((c.y()) - (6.0)) <= (0.0001));
+    Duracao a(1, 30);
+    Duracao b(2, 45);
+
+    // 75 segundos precisam virar 1 min e 15 s
+    Duracao c = a + b;
+    assert(c.minutos() == 4);
+    assert(c.segundos() == 15);
+
+    // soma que nao precisa de normalizacao
+    Duracao simples = Duracao(1, 10) + Duracao(2, 20);
+    assert(simples.minutos() == 3);
+    assert(simples.segundos() == 30);
+
+    // exatamente 60 segundos: vira 1 minuto e 0 segundo
+    Duracao cheio = Duracao(0, 30) + Duracao(0, 30);
+    assert(cheio.minutos() == 1);
+    assert(cheio.segundos() == 0);
+
+    // somar zero nao muda nada
+    Duracao zero(0, 0);
+    Duracao igual = a + zero;
+    assert(igual.minutos() == 1);
+    assert(igual.segundos() == 30);
 
     assert(!(a == b));
-    Vetor2D d(1.0, 2.0);
+    Duracao d(1, 30);
     assert(a == d);
+
+    // a soma normalizada e igual a duracao escrita direto
+    assert((Duracao(0, 45) + Duracao(0, 45)) == Duracao(1, 30));
+
+    // minutos iguais, segundos diferentes: nao sao iguais
+    assert(!(Duracao(2, 0) == Duracao(2, 1)));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

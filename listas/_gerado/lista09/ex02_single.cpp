@@ -6,7 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -14,20 +13,19 @@
 #ifndef EX02_H
 #define EX02_H
 
-class Termometro {
+enum class Cor { Verde, Amarelo, Vermelho };
+
+class Semaforo {
 private:
-    double atual_;
-    double minimo_;
-    double maximo_;
+    Cor cor_;
+    int trocas_;
 
 public:
-    explicit Termometro(double leitura_inicial)
-        : atual_(leitura_inicial), minimo_(leitura_inicial), maximo_(leitura_inicial) {}
+    Semaforo() : cor_(Cor::Vermelho), trocas_(0) {}
 
-    void registra(double leitura);
-    double atual() const;
-    double minimo() const;
-    double maximo() const;
+    void avanca();
+    Cor cor() const;
+    int trocas() const;
 };
 
 #endif
@@ -35,41 +33,52 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-void Termometro::registra(double leitura) {
-    // TODO: atualize atual_ para leitura. Se leitura < minimo_, atualize minimo_.
-    // Se leitura > maximo_, atualize maximo_.
+void Semaforo::avanca() {
+    // TODO: passe para a proxima cor do ciclo
+    // (Verde -> Amarelo -> Vermelho -> Verde) e incremente trocas_.
+    // Nao esqueca do caso Vermelho, que volta para Verde.
 }
 
-double Termometro::atual() const {
-    // TODO: retorne atual_.
-    return 0.0;
+Cor Semaforo::cor() const {
+    // TODO: retorne cor_.
+    return Cor::Vermelho;
 }
 
-double Termometro::minimo() const {
-    // TODO: retorne minimo_.
-    return 0.0;
-}
-
-double Termometro::maximo() const {
-    // TODO: retorne maximo_.
-    return 0.0;
+int Semaforo::trocas() const {
+    // TODO: retorne trocas_.
+    return 0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Termometro t(20.0);
-    t.registra(25.0);
-    t.registra(15.0);
-    assert(std::abs((t.atual()) - (15.0)) <= (0.0001));
-    assert(std::abs((t.minimo()) - (15.0)) <= (0.0001));
-    assert(std::abs((t.maximo()) - (25.0)) <= (0.0001));
+    Semaforo s;
+    assert(s.cor() == Cor::Vermelho);
+    assert(s.trocas() == 0);
 
-    Termometro t2(10.0);
-    assert(std::abs((t2.atual()) - (10.0)) <= (0.0001));
-    assert(std::abs((t2.minimo()) - (10.0)) <= (0.0001));
-    assert(std::abs((t2.maximo()) - (10.0)) <= (0.0001));
+    s.avanca();
+    assert(s.cor() == Cor::Verde);
+    assert(s.trocas() == 1);
+
+    s.avanca();
+    assert(s.cor() == Cor::Amarelo);
+
+    s.avanca();
+    assert(s.cor() == Cor::Vermelho);   // deu a volta no ciclo
+    assert(s.trocas() == 3);
+
+    // duas voltas completas: o ciclo nao pode "parar" no vermelho
+    for (int i = 0; i < 6; i++) {
+        s.avanca();
+    }
+    assert(s.cor() == Cor::Vermelho);
+    assert(s.trocas() == 9);
+
+    // cada semaforo tem o proprio estado
+    Semaforo outro;
+    assert(outro.cor() == Cor::Vermelho);
+    assert(outro.trocas() == 0);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

@@ -15,30 +15,46 @@
 #ifndef EX04_H
 #define EX04_H
 
-// Retorna a media aritmetica dos valores de v, ou 0.0 se v estiver vazio.
-double media(const std::vector<double>& v);
+// Retorna a media dos valores maiores que zero em v,
+// ou 0.0 se nao houver nenhum positivo.
+double media_dos_positivos(const std::vector<double>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-double media(const std::vector<double>& v) {
-    // TODO: trate primeiro o vector vazio (devolva 0.0, senao ha divisao
-    // por zero). Depois acumule a soma num double e divida por v.size().
+double media_dos_positivos(const std::vector<double>& v) {
+    // TODO: declare a soma (double) e o contador (int) antes do laco.
+    // Percorra v: para cada valor > 0, some ao acumulador e incremente
+    // o contador. No fim, se o contador for 0, devolva 0.0;
+    // senao devolva soma / contador.
     return 0.0;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
-int main() {
-    assert(std::abs((media({8.0, 7.0, 10.0})) - (8.3333333)) <= (0.0001));
-    assert(std::abs((media({5.0})) - (5.0)) <= (0.0001));
-    assert(std::abs((media({2.0, 3.0})) - (2.5)) <= (0.0001));
+static bool perto(double a, double b) {
+    return std::fabs(a - b) < 1e-9;
+}
 
-    // vector vazio nao pode dividir por zero
-    assert(std::abs((media({})) - (0.0)) <= (0.0001));
+int main() {
+    assert(perto(media_dos_positivos({8.0, -3.0, 10.0}), 9.0));
+
+    // todos positivos: a media e a do vector inteiro
+    assert(perto(media_dos_positivos({2.0, 4.0}), 3.0));
+
+    // nenhum positivo: 0.0, e nao uma divisao por zero
+    assert(perto(media_dos_positivos({-1.0, -2.0}), 0.0));
+
+    // o zero NAO conta como positivo
+    assert(perto(media_dos_positivos({0.0, 6.0}), 6.0));
+    assert(perto(media_dos_positivos({0.0, 0.0}), 0.0));
+
+    // vector vazio
+    std::vector<double> vazio;
+    assert(perto(media_dos_positivos(vazio), 0.0));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

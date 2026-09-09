@@ -7,6 +7,7 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
+#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -14,31 +15,46 @@
 #ifndef EX02_H
 #define EX02_H
 
-// Retorna o maior valor de v (assume que v nao esta vazio).
-int maior_elemento(const std::vector<int>& v);
+// Retorna o indice do menor valor de v (o primeiro, em caso de empate),
+// ou std::nullopt se v estiver vazio.
+std::optional<int> indice_do_menor(const std::vector<int>& v);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-int maior_elemento(const std::vector<int>& v) {
-    // TODO: comece com maior = v[0] (NAO com 0!) e percorra o vector
-    // atualizando maior sempre que encontrar algo maior.
-    return 0;
+std::optional<int> indice_do_menor(const std::vector<int>& v) {
+    // TODO: se v estiver vazio, devolva std::nullopt.
+    // Senao, guarde o menor visto ate agora e o indice dele, comecando
+    // por v[0] e pelo indice 0, e percorra o resto do vector.
+    // Use > (e nao >=) na comparacao para que o empate fique com o primeiro.
+    return std::nullopt;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    assert(maior_elemento({4, 1, 9, 2}) == 9);
-    assert(maior_elemento({7}) == 7);
-    assert(maior_elemento({1, 2, 3}) == 3);
-    assert(maior_elemento({3, 2, 1}) == 3);
+    assert(indice_do_menor({4, 1, 9, 2}).value() == 1);
 
-    // so negativos: quem comecou em 0 erra aqui
-    assert(maior_elemento({-5, -2, -9}) == -2);
+    // empate: vale o indice da PRIMEIRA ocorrencia
+    assert(indice_do_menor({4, 1, 9, 1}).value() == 1);
+
+    // so positivos: quem comecou o menor em 0 erra aqui
+    assert(indice_do_menor({7, 3, 5}).value() == 1);
+
+    // so negativos
+    assert(indice_do_menor({-5, -2, -9}).value() == 2);
+
+    // o menor ja na primeira posicao
+    assert(indice_do_menor({1, 2, 3}).value() == 0);
+
+    // um elemento so
+    assert(indice_do_menor({42}).value() == 0);
+
+    std::vector<int> vazio;
+    assert(!(indice_do_menor(vazio).has_value()));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

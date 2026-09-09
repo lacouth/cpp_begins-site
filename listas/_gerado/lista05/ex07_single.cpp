@@ -6,7 +6,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
 #include <vector>
 
 // ============================================================
@@ -15,42 +14,54 @@
 #ifndef EX07_H
 #define EX07_H
 
-// Retorna a mediana dos valores. Recebe o vector POR VALOR de proposito:
-// a funcao precisa ordenar, e ordenar o vector de quem chamou seria um
-// efeito colateral surpreendente. Retorna 0.0 se o vector estiver vazio.
-double mediana(std::vector<int> v);
+// Insere valor em v (que ja esta ordenado de forma crescente),
+// mantendo v ordenado.
+void insere_ordenado(std::vector<int>& v, int valor);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-double mediana(std::vector<int> v) {
-    // TODO: trate o vector vazio. Depois ordene v (pode reaproveitar o
-    // bubble sort do ex05) e devolva o elemento do meio. Se a quantidade
-    // de elementos for PAR, devolva a media dos dois centrais -- cuidado
-    // para dividir por 2.0, e nao por 2.
-    return 0.0;
+void insere_ordenado(std::vector<int>& v, int valor) {
+    // TODO:
+    // 1. v.push_back(valor) -- so para abrir uma posicao no fim.
+    // 2. guarde em i o indice da ultima posicao (tamanho - 1, num int).
+    // 3. enquanto i > 0 e v[i - 1] > valor: v[i] = v[i - 1]; i--;
+    // 4. v[i] = valor;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    // impar: o do meio, depois de ordenar
-    assert(std::abs((mediana({3, 1, 2})) - (2.0)) <= (0.0001));
-    assert(std::abs((mediana({5})) - (5.0)) <= (0.0001));
+    // no meio
+    std::vector<int> v = {1, 3, 7};
+    insere_ordenado(v, 5);
+    assert((v == std::vector<int>{1, 3, 5, 7}));
 
-    // par: media dos dois centrais -- e aqui o /2.0 faz diferenca
-    assert(std::abs((mediana({1, 2})) - (1.5)) <= (0.0001));
-    assert(std::abs((mediana({4, 1, 3, 2})) - (2.5)) <= (0.0001));
+    // no comeco: o laco tem que andar ate o indice 0
+    insere_ordenado(v, 0);
+    assert((v == std::vector<int>{0, 1, 3, 5, 7}));
 
-    assert(std::abs((mediana({})) - (0.0)) <= (0.0001));
+    // no fim: o laco nao anda nenhuma vez
+    insere_ordenado(v, 9);
+    assert((v == std::vector<int>{0, 1, 3, 5, 7, 9}));
 
-    // o vector de quem chamou nao pode ser alterado
-    std::vector<int> original = {3, 1, 2};
-    mediana(original);
-    assert((original == std::vector<int>{3, 1, 2}));
+    // vector vazio
+    std::vector<int> vazio;
+    insere_ordenado(vazio, 42);
+    assert((vazio == std::vector<int>{42}));
+
+    // valor repetido: o vector continua ordenado e cresce de tamanho
+    std::vector<int> repetidos = {2, 2, 5};
+    insere_ordenado(repetidos, 2);
+    assert((repetidos == std::vector<int>{2, 2, 2, 5}));
+
+    // negativos
+    std::vector<int> negativos = {-5, -1, 4};
+    insere_ordenado(negativos, -3);
+    assert((negativos == std::vector<int>{-5, -3, -1, 4}));
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

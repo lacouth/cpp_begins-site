@@ -23,18 +23,55 @@ struct No {
     ~No() { total_vivos--; }
 };
 
-class FilaEficiente {
+class ListaEncadeada {
 private:
-    No* inicio_;
-    No* fim_;
+    No* cabeca_;
 
 public:
-    FilaEficiente() : inicio_(nullptr), fim_(nullptr) {}
-    ~FilaEficiente();
+    ListaEncadeada() : cabeca_(nullptr) {}
 
-    void enfileira(int valor);
-    int desenfileira();
-    bool vazia() const;
+    ~ListaEncadeada() {
+        No* atual = cabeca_;
+        while (atual != nullptr) {
+            No* proximo = atual->proximo;
+            delete atual;
+            atual = proximo;
+        }
+    }
+
+    void insere_fim(int valor) {
+        No* novo = new No(valor);
+        if (cabeca_ == nullptr) {
+            cabeca_ = novo;
+            return;
+        }
+        No* ultimo = cabeca_;
+        while (ultimo->proximo != nullptr) {
+            ultimo = ultimo->proximo;
+        }
+        ultimo->proximo = novo;
+    }
+
+    int tamanho() const {
+        int contagem = 0;
+        No* atual = cabeca_;
+        while (atual != nullptr) {
+            contagem++;
+            atual = atual->proximo;
+        }
+        return contagem;
+    }
+
+    int em(int indice) const {
+        No* atual = cabeca_;
+        for (int i = 0; i < indice; i++) {
+            atual = atual->proximo;
+        }
+        return atual->valor;
+    }
+
+    // O exercicio e este.
+    bool remove(int valor);
 };
 
 #endif
@@ -42,27 +79,16 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-FilaEficiente::~FilaEficiente() {
-    // TODO: percorra a partir de inicio_, guardando o proximo no ANTES de
-    // dar delete no atual, ate atual virar nullptr.
-}
-
-void FilaEficiente::enfileira(int valor) {
-    // TODO: crie um No(valor) com "new". Se fim_ for nullptr (fila vazia),
-    // inicio_ e fim_ apontam para o novo no. Senao, conecte fim_->proximo
-    // ao novo no e atualize fim_.
-}
-
-int FilaEficiente::desenfileira() {
-    // TODO: guarde inicio_->valor, avance inicio_ para inicio_->proximo,
-    // se inicio_ virou nullptr atualize fim_ para nullptr tambem, de
-    // delete no no antigo, e retorne o valor guardado.
-    return 0;
-}
-
-bool FilaEficiente::vazia() const {
-    // TODO: retorne true se inicio_ for nullptr.
-    return true;
+bool ListaEncadeada::remove(int valor) {
+    // TODO:
+    // 1. lista vazia (cabeca_ == nullptr): nao ha o que remover, devolva false.
+    // 2. o valor esta na cabeca: guarde o no antigo numa variavel, avance
+    //    cabeca_ para cabeca_->proximo, de delete no no antigo, devolva true.
+    // 3. senao, ande com "anterior" enquanto anterior->proximo nao for nullptr:
+    //    se anterior->proximo->valor for o alvo, guarde esse no, religue
+    //    anterior->proximo para no->proximo, de delete no no e devolva true.
+    // 4. chegou ao fim sem achar: devolva false.
+    return false;
 }
 
 // ============================================================
@@ -71,23 +97,52 @@ bool FilaEficiente::vazia() const {
 int main() {
     No::total_vivos = 0;
     {
-        FilaEficiente f;
-        assert(f.vazia());
-        f.enfileira(1);
-        f.enfileira(2);
-        f.enfileira(3);
-        assert(!(f.vazia()));
-        assert(f.desenfileira() == 1);
-        assert(f.desenfileira() == 2);
-        assert(No::total_vivos == 1);
+        ListaEncadeada l;
 
-        // esvazia e reenfileira -- testa se fim_ volta a apontar certo
-        assert(f.desenfileira() == 3);
-        assert(f.vazia());
-        f.enfileira(10);
-        f.enfileira(20);
-        assert(f.desenfileira() == 10);
-        assert(f.desenfileira() == 20);
+        // remover de uma lista vazia nao estoura e devolve false
+        assert(!(l.remove(1)));
+
+        l.insere_fim(1);
+        l.insere_fim(2);
+        l.insere_fim(3);
+        assert(No::total_vivos == 3);
+
+        // do meio: religa o proximo do anterior
+        assert(l.remove(2));
+        assert(l.tamanho() == 2);
+        assert(l.em(0) == 1);
+        assert(l.em(1) == 3);
+        assert(No::total_vivos == 2);   // pega o no perdido sem delete
+
+        // valor que nao existe: nada muda
+        assert(!(l.remove(99)));
+        assert(l.tamanho() == 2);
+        assert(No::total_vivos == 2);
+
+        // da cabeca: quem muda e cabeca_, nao o proximo de ninguem
+        assert(l.remove(1));
+        assert(l.tamanho() == 1);
+        assert(l.em(0) == 3);
+
+        // o ultimo elemento, que deixa a lista vazia
+        assert(l.remove(3));
+        assert(l.tamanho() == 0);
+        assert(No::total_vivos == 0);
+        assert(!(l.remove(3)));
+    }
+    assert(No::total_vivos == 0);
+
+    // apenas a PRIMEIRA ocorrencia sai
+    No::total_vivos = 0;
+    {
+        ListaEncadeada l;
+        l.insere_fim(7);
+        l.insere_fim(4);
+        l.insere_fim(7);
+        assert(l.remove(7));
+        assert(l.tamanho() == 2);
+        assert(l.em(0) == 4);
+        assert(l.em(1) == 7);
     }
     assert(No::total_vivos == 0);
 

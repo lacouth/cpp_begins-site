@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <string>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -13,18 +14,22 @@
 #ifndef EX05_H
 #define EX05_H
 
-class Base {
+class Conexao {
 public:
     static inline int destruicoes = 0;
 
-    virtual ~Base();
+    // Registro da ordem em que os destrutores rodaram:
+    // "C" para ~Conexao(), "S" para ~ConexaoSegura().
+    static inline std::string ordem = "";
+
+    virtual ~Conexao();
 };
 
-class Derivada : public Base {
+class ConexaoSegura : public Conexao {
 public:
     static inline int destruicoes = 0;
 
-    ~Derivada() override;
+    ~ConexaoSegura() override;
 };
 
 #endif
@@ -32,26 +37,52 @@ public:
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-Base::~Base() {
-    // TODO: incremente Base::destruicoes.
+Conexao::~Conexao() {
+    // TODO: incremente Conexao::destruicoes e acrescente "C" a Conexao::ordem.
 }
 
-Derivada::~Derivada() {
-    // TODO: incremente Derivada::destruicoes.
+ConexaoSegura::~ConexaoSegura() {
+    // TODO: incremente ConexaoSegura::destruicoes e acrescente "S" a Conexao::ordem.
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    Base::destruicoes = 0;
-    Derivada::destruicoes = 0;
+    // destruindo pelo ponteiro para a base: o ~Conexao() virtual e o que
+    // faz o destrutor da derivada ser chamado tambem
+    Conexao::destruicoes = 0;
+    ConexaoSegura::destruicoes = 0;
+    Conexao::ordem = "";
 
-    Base* b = new Derivada();
-    delete b;
+    Conexao* c = new ConexaoSegura();
+    delete c;
 
-    assert(Base::destruicoes == 1);
-    assert(Derivada::destruicoes == 1);
+    assert(Conexao::destruicoes == 1);
+    assert(ConexaoSegura::destruicoes == 1);
+    assert(Conexao::ordem == "SC");   // de dentro para fora, nunca "CS"
+
+    // objeto na pilha: mesma ordem
+    Conexao::destruicoes = 0;
+    ConexaoSegura::destruicoes = 0;
+    Conexao::ordem = "";
+    {
+        ConexaoSegura s;
+    }
+    assert(Conexao::destruicoes == 1);
+    assert(ConexaoSegura::destruicoes == 1);
+    assert(Conexao::ordem == "SC");
+
+    // uma Conexao pura destroi so a si mesma
+    Conexao::destruicoes = 0;
+    ConexaoSegura::destruicoes = 0;
+    Conexao::ordem = "";
+    {
+        Conexao simples;
+    }
+    assert(Conexao::destruicoes == 1);
+    assert(ConexaoSegura::destruicoes == 0);
+    assert(Conexao::ordem == "C");
 
     std::cout << "Todos os testes passaram!\n";
     return 0;
