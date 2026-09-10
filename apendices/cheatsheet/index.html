@@ -2386,6 +2386,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tipos-e-conversoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipos e conversões
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#arquivos" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2515,6 +2526,17 @@
     <span class="md-ellipsis">
       
         Containers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipos-e-conversoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipos e conversões
       
     </span>
   </a>
@@ -2704,6 +2726,43 @@
 <td>checar duplicata na mão</td>
 <td><code>std::set&lt;T&gt;</code></td>
 <td>6</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tipos-e-conversoes">Tipos e conversões<a class="headerlink" href="#tipos-e-conversoes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>C</th>
+<th>C++</th>
+<th>Capítulo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(int) x</code> (cast de C, silencioso)</td>
+<td><code>static_cast&lt;int&gt;(x)</code> (explícito e procurável)</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>size_t</code> de <code>&lt;stddef.h&gt;</code></td>
+<td><code>std::size_t</code> (o que <code>.size()</code> devolve)</td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>for (int i = 0; i &lt; n; i++)</code> com <code>n</code> à parte</td>
+<td><code>for (std::size_t i = 0; i &lt; v.size(); i++)</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td>percorrer de trás para frente com <code>int i = n - 1</code></td>
+<td><code>int n = static_cast&lt;int&gt;(v.size());</code> e então <code>int i = n - 1</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>(double) a / b</code> para evitar divisão inteira</td>
+<td><code>static_cast&lt;double&gt;(a) / b</code></td>
+<td>4</td>
 </tr>
 </tbody>
 </table>

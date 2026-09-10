@@ -2519,6 +2519,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#avisos-do-compilador-o-programa-compila-mas-o-g-reclama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avisos do compilador (o programa compila, mas o g++ reclama)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Avisos do compilador (o programa compila, mas o g++ reclama)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#warning-comparison-of-integer-expressions-of-different-signedness-int-and-stdvectorintsize_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        warning: comparison of integer expressions of different signedness: 'int' and 'std::vector&lt;int&gt;::size_type'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warning-unused-parameter-x-unused-variable-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        warning: unused parameter 'x' / unused variable 'x'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comportamento-errado-sem-erro-de-compilacao-os-mais-perigosos" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2535,6 +2574,17 @@
     <span class="md-ellipsis">
       
         O programa compila e roda, mas imprime a versão "errada" de um método sobrescrito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-laco-nunca-termina-ou-le-memoria-alheia-num-container-vazio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O laço nunca termina, ou lê memória alheia num container vazio
       
     </span>
   </a>
@@ -2883,6 +2933,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#avisos-do-compilador-o-programa-compila-mas-o-g-reclama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avisos do compilador (o programa compila, mas o g++ reclama)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Avisos do compilador (o programa compila, mas o g++ reclama)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#warning-comparison-of-integer-expressions-of-different-signedness-int-and-stdvectorintsize_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        warning: comparison of integer expressions of different signedness: 'int' and 'std::vector&lt;int&gt;::size_type'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warning-unused-parameter-x-unused-variable-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        warning: unused parameter 'x' / unused variable 'x'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comportamento-errado-sem-erro-de-compilacao-os-mais-perigosos" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2899,6 +2988,17 @@
     <span class="md-ellipsis">
       
         O programa compila e roda, mas imprime a versão "errada" de um método sobrescrito
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-laco-nunca-termina-ou-le-memoria-alheia-num-container-vazio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O laço nunca termina, ou lê memória alheia num container vazio
       
     </span>
   </a>
@@ -3016,9 +3116,21 @@
 <h2 id="quando-um-teste-falha-assertion-failed">Quando um teste falha (<code>Assertion failed</code>)<a class="headerlink" href="#quando-um-teste-falha-assertion-failed" title="Permanent link">&para;</a></h2>
 <h3 id="assertion-failed-expr-function-main-file-x-line-n-ou-similar-e-o-programa-encerra"><code>Assertion failed: (expr), function main, file X, line N.</code> (ou similar) e o programa encerra<a class="headerlink" href="#assertion-failed-expr-function-main-file-x-line-n-ou-similar-e-o-programa-encerra" title="Permanent link">&para;</a></h3>
 <p>Isso <strong>não é um erro de compilação nem um bug do seu programa em si</strong> — é o <code>assert()</code> (de <code>&lt;cassert&gt;</code>) usado pelos testes de cada exercício avisando que uma condição esperada deu falsa. <code>X:N</code> diz <strong>em qual arquivo e linha</strong> o teste parou; <code>expr</code> é a condição exata que falhou (compare com o que sua função deveria devolver ali). O programa <strong>para imediatamente</strong> nesse ponto — os testes que viriam depois dessa linha nunca chegam a rodar. Corrija a lógica da sua função (nunca a linha do <code>assert</code> em si, que é o teste — não a solução), recompile e rode de novo: se havia mais de um problema, o próximo <code>assert</code> que falhar vai aparecer na vez dele.</p>
+<h2 id="avisos-do-compilador-o-programa-compila-mas-o-g-reclama">Avisos do compilador (o programa compila, mas o <code>g++</code> reclama)<a class="headerlink" href="#avisos-do-compilador-o-programa-compila-mas-o-g-reclama" title="Permanent link">&para;</a></h2>
+<p>Aviso não é erro: o executável é gerado do mesmo jeito. Mas todo aviso do <code>-Wall -Wextra</code> aponta para algo que o compilador julgou suspeito o bastante para interromper você — trate como defeito a corrigir, não como ruído a ignorar.</p>
+<h3 id="warning-comparison-of-integer-expressions-of-different-signedness-int-and-stdvectorintsize_type"><code>warning: comparison of integer expressions of different signedness: 'int' and 'std::vector&lt;int&gt;::size_type'</code><a class="headerlink" href="#warning-comparison-of-integer-expressions-of-different-signedness-int-and-stdvectorintsize_type" title="Permanent link">&para;</a></h3>
+<p>Você comparou um <code>int</code> com o resultado de <code>.size()</code>, que é <code>std::size_t</code> — um tipo <strong>sem sinal</strong>. Para comparar, o compilador precisa converter um dos lados, e há valores em que essa conversão dá o resultado errado. Duas correções, e a escolha depende do laço (capítulo 4):</p>
+<ul>
+<li>índice que só anda para frente: declare <code>std::size_t i = 0;</code></li>
+<li>índice que entra em conta que pode ficar negativa (<code>i - 1</code>, <code>n - passada</code>, percorrer de trás para frente): guarde <code>int n = static_cast&lt;int&gt;(v.size());</code> antes do laço e compare com <code>n</code>.</li>
+</ul>
+<h3 id="warning-unused-parameter-x-unused-variable-x"><code>warning: unused parameter 'x'</code> / <code>unused variable 'x'</code><a class="headerlink" href="#warning-unused-parameter-x-unused-variable-x" title="Permanent link">&para;</a></h3>
+<p>Você declarou algo que nunca usou — muito comum em stub de exercício ainda não implementado, e nesse caso é esperado. Se não for esse o caso, geralmente indica que você esqueceu de usar o parâmetro que deveria ter usado (ou usou outro no lugar dele por engano).</p>
 <h2 id="comportamento-errado-sem-erro-de-compilacao-os-mais-perigosos">Comportamento errado sem erro de compilação (os mais perigosos)<a class="headerlink" href="#comportamento-errado-sem-erro-de-compilacao-os-mais-perigosos" title="Permanent link">&para;</a></h2>
 <h3 id="o-programa-compila-e-roda-mas-imprime-a-versao-errada-de-um-metodo-sobrescrito">O programa compila e roda, mas imprime a versão "errada" de um método sobrescrito<a class="headerlink" href="#o-programa-compila-e-roda-mas-imprime-a-versao-errada-de-um-metodo-sobrescrito" title="Permanent link">&para;</a></h3>
 <p>Falta <code>virtual</code> na classe base. Sem ele, a chamada é resolvida em tempo de compilação pelo tipo da referência/ponteiro, não pelo tipo real do objeto — veja o capítulo 11.</p>
+<h3 id="o-laco-nunca-termina-ou-le-memoria-alheia-num-container-vazio">O laço nunca termina, ou lê memória alheia num container vazio<a class="headerlink" href="#o-laco-nunca-termina-ou-le-memoria-alheia-num-container-vazio" title="Permanent link">&para;</a></h3>
+<p>Quase sempre é <code>size()</code> sem sinal. Como <code>std::size_t</code> nunca é negativo, num vector vazio <code>v.size() - 1</code> não dá <code>-1</code>: dá o maior número que cabe no tipo (<code>18446744073709551615</code> em 64 bits). Assim, <code>for (std::size_t i = 0; i &lt; v.size() - 1; i++)</code> num vector vazio percorre memória que não é sua, e <code>for (std::size_t i = v.size() - 1; i &gt;= 0; i--)</code> não termina nunca, porque <code>i &gt;= 0</code> é sempre verdadeiro. Em ambos os casos, guarde o tamanho em <code>int n = static_cast&lt;int&gt;(v.size())</code> antes do laço. Veja o capítulo 4.</p>
 <h3 id="double-free-or-corruption-ou-crash-aleatorio-perto-do-fim-do-programa">"double free or corruption", ou crash aleatório perto do fim do programa<a class="headerlink" href="#double-free-or-corruption-ou-crash-aleatorio-perto-do-fim-do-programa" title="Permanent link">&para;</a></h3>
 <p>Quase sempre cópia rasa de uma classe que gerencia um ponteiro bruto (<code>new</code>/<code>delete</code> manual) sem construtor de cópia customizado. A correção, na maioria dos casos, é a regra do zero: trocar o ponteiro bruto por <code>vector</code>/<code>string</code>/<code>unique_ptr</code> — veja o capítulo 10.</p>
 <h3 id="o-programa-usa-cada-vez-mais-memoria-ao-longo-do-tempo-sem-crash-imediato">O programa usa cada vez mais memória ao longo do tempo, sem crash imediato<a class="headerlink" href="#o-programa-usa-cada-vez-mais-memoria-ao-longo-do-tempo-sem-crash-imediato" title="Permanent link">&para;</a></h3>

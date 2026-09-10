@@ -2011,6 +2011,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ex11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ex11
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2642,6 +2653,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ex11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ex11
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3206,6 +3228,61 @@
 <a id="__codelineno-19-44" name="__codelineno-19-44" href="#__codelineno-19-44"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Todos os testes passaram!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
 <a id="__codelineno-19-45" name="__codelineno-19-45" href="#__codelineno-19-45"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-19-46" name="__codelineno-19-46" href="#__codelineno-19-46"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="ex11">ex11<a class="headerlink" href="#ex11" title="Permanent link">&para;</a></h2>
+<p>Escreva <code>ultima_ocorrencia</code>, que recebe um <code>std::vector&lt;int&gt;</code> (por referência constante) e um valor <code>alvo</code>, e devolve o <strong>índice da última</strong> ocorrência de <code>alvo</code> no vector, ou <code>-1</code> se ele não aparecer.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">  </span><span class="c1">// -&gt; 2   (a segunda aparicao do 5)</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span><span class="w">  </span><span class="c1">// -&gt; -1</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">ultima_ocorrencia</span><span class="p">({},</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">            </span><span class="c1">// -&gt; -1</span>
+</code></pre></div>
+<p>Dois pontos do <a href="../../unidade2-containers/04-vector/#tamanho-indice-e-stdsize_t">capítulo 4</a> aparecem juntos aqui: o retorno é <code>int</code>, mas o índice de um vector é <code>std::size_t</code>; e a varredura mais direta é de trás para frente, que é exatamente onde um índice <code>std::size_t</code> <strong>nunca chega a ser negativo</strong> — o laço não termina. Guarde o tamanho num <code>int</code> com <code>static_cast&lt;int&gt;</code> antes do laço, e o problema some.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1">// ex11 — versao de arquivo unico (gerada automaticamente,</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1">// nao edite este arquivo direto: edite os fontes em exercicios/ e rode</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="c1">// tools/gerar_single.py --todos de novo).</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1">//</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="c1">// Cole este arquivo inteiro no seu compilador online e rode.</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cassert&gt;</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="c1">// Declaracoes do exercicio</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="cp">#ifndef EX11_H</span>
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="cp">#define EX11_H</span>
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>
+<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="c1">// Devolve o indice da ultima ocorrencia de alvo em v, ou -1 se nao houver.</span>
+<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a><span class="kt">int</span><span class="w"> </span><span class="nf">ultima_ocorrencia</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">);</span>
+<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>
+<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a><span class="cp">#endif</span>
+<a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>
+<a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="c1">// ESCREVA SUA SOLUCAO AQUI</span>
+<a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a><span class="kt">int</span><span class="w"> </span><span class="nf">ultima_ocorrencia</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a><span class="w">    </span><span class="c1">// TODO: guarde o tamanho em int n = static_cast&lt;int&gt;(v.size()) e percorra</span>
+<a id="__codelineno-21-27" name="__codelineno-21-27" href="#__codelineno-21-27"></a><span class="w">    </span><span class="c1">// de n - 1 ate 0. Nao use std::size_t no indice: andando para tras ele</span>
+<a id="__codelineno-21-28" name="__codelineno-21-28" href="#__codelineno-21-28"></a><span class="w">    </span><span class="c1">// nunca fica negativo, e o laco nao termina.</span>
+<a id="__codelineno-21-29" name="__codelineno-21-29" href="#__codelineno-21-29"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<a id="__codelineno-21-30" name="__codelineno-21-30" href="#__codelineno-21-30"></a><span class="p">}</span>
+<a id="__codelineno-21-31" name="__codelineno-21-31" href="#__codelineno-21-31"></a>
+<a id="__codelineno-21-32" name="__codelineno-21-32" href="#__codelineno-21-32"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-21-33" name="__codelineno-21-33" href="#__codelineno-21-33"></a><span class="c1">// NAO ALTERE — testes</span>
+<a id="__codelineno-21-34" name="__codelineno-21-34" href="#__codelineno-21-34"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-21-35" name="__codelineno-21-35" href="#__codelineno-21-35"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-36" name="__codelineno-21-36" href="#__codelineno-21-36"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-21-37" name="__codelineno-21-37" href="#__codelineno-21-37"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
+<a id="__codelineno-21-38" name="__codelineno-21-38" href="#__codelineno-21-38"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<a id="__codelineno-21-39" name="__codelineno-21-39" href="#__codelineno-21-39"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span><span class="w"> </span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-21-40" name="__codelineno-21-40" href="#__codelineno-21-40"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ultima_ocorrencia</span><span class="p">({},</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
+<a id="__codelineno-21-41" name="__codelineno-21-41" href="#__codelineno-21-41"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">4</span><span class="p">},</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-21-42" name="__codelineno-21-42" href="#__codelineno-21-42"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">4</span><span class="p">},</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
+<a id="__codelineno-21-43" name="__codelineno-21-43" href="#__codelineno-21-43"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ultima_ocorrencia</span><span class="p">({</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">},</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-21-44" name="__codelineno-21-44" href="#__codelineno-21-44"></a>
+<a id="__codelineno-21-45" name="__codelineno-21-45" href="#__codelineno-21-45"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Todos os testes passaram!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-21-46" name="__codelineno-21-46" href="#__codelineno-21-46"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-21-47" name="__codelineno-21-47" href="#__codelineno-21-47"></a><span class="p">}</span>
 </code></pre></div>
 
 

@@ -798,6 +798,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tamanho-indice-e-stdsize_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tamanho, índice e std::size_t
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tamanho, índice e std::size_t">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#static_cast-a-conversao-explicita" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        static_cast: a conversão explícita
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-armadilha-sem-sinal-nao-fica-negativo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A armadilha: sem sinal não fica negativo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#vector-de-structs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2566,6 +2605,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#tamanho-indice-e-stdsize_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tamanho, índice e std::size_t
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tamanho, índice e std::size_t">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#static_cast-a-conversao-explicita" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        static_cast: a conversão explícita
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-armadilha-sem-sinal-nao-fica-negativo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A armadilha: sem sinal não fica negativo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#vector-de-structs" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2707,52 +2785,103 @@
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="p">}</span>
 </code></pre></div>
 <p>Sem o <code>&amp;</code>, <code>x</code> seria uma cópia de cada elemento, e alterar <code>x</code> não mudaria nada em <code>v</code>.</p>
+<h2 id="tamanho-indice-e-stdsize_t">Tamanho, índice e <code>std::size_t</code><a class="headerlink" href="#tamanho-indice-e-stdsize_t" title="Permanent link">&para;</a></h2>
+<p>Repare no tipo do índice do laço clássico acima: <code>std::size_t</code>, e não <code>int</code>. Não é preciosismo — é o tipo que <code>v.size()</code> realmente devolve.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">};</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w">            </span><span class="c1">// compila, mas o compilador reclama</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w">    </span><span class="c1">// o tipo certo</span>
+</code></pre></div>
+<p><code>std::size_t</code> é um tipo inteiro <strong>sem sinal</strong>: representa <code>0, 1, 2, ...</code> e nunca um número negativo. Faz sentido — um tamanho ou um índice não têm como ser negativos, e o tipo documenta isso. Não é invenção do C++: é o mesmo <code>size_t</code> que C já usa em <code>strlen</code>, <code>malloc</code> e <code>sizeof</code>; a única novidade é o <code>std::</code> na frente. Ele chega junto com <code>&lt;vector&gt;</code> e <code>&lt;string&gt;</code>; formalmente, mora em <code>&lt;cstddef&gt;</code>.</p>
+<p>O atrito aparece quando você mistura os dois tipos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">   </span><span class="c1">// int comparado com size_t</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span><span class="p">;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>warning: comparison of integer expressions of different signedness:
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>'int' and 'std::vector&lt;int&gt;::size_type' {aka 'long unsigned int'}
+</code></pre></div>
+<p>O programa roda, mas o aviso é real: para comparar, o compilador precisa converter um dos lados, e existem casos em que essa conversão dá errado.</p>
+<p>Há duas saídas, e o curso usa as duas — a escolha depende do que o índice faz.</p>
+<p><strong>Laço simples, para frente: declare o índice como <code>std::size_t</code>.</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span><span class="p">;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>Índice que entra em conta que pode ficar negativa: converta o tamanho para <code>int</code> antes.</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">      </span><span class="c1">// percorrendo de tras para frente</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span><span class="p">;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="static_cast-a-conversao-explicita"><code>static_cast</code>: a conversão explícita<a class="headerlink" href="#static_cast-a-conversao-explicita" title="Permanent link">&para;</a></h3>
+<p><code>static_cast&lt;int&gt;(v.size())</code> quer dizer "converta este valor para <code>int</code>, e eu sei o que estou fazendo". É o que o cast de C — <code>(int) v.size()</code> — fazia, com duas diferenças que importam: o nome é longo e procurável (uma busca por <code>static_cast</code> acha todas as conversões do seu programa), e o compilador só aceita conversões que fazem sentido, em vez de obedecer calado a qualquer coisa. Neste curso, use <code>static_cast</code>; o cast de C ainda funciona, mas não escreva mais.</p>
+<p>A forma geral é <code>static_cast&lt;TipoDestino&gt;(expressão)</code>, e serve para qualquer conversão que você queira deixar registrada no código:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kt">int</span><span class="w"> </span><span class="n">quantidade</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kt">double</span><span class="w"> </span><span class="n">media</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">total</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">quantidade</span><span class="p">;</span><span class="w">   </span><span class="c1">// 3.5, e nao 3</span>
+</code></pre></div>
+<p>Sem o cast, <code>total / quantidade</code> é divisão inteira e dá <code>3</code>. Este é o segundo uso mais comum de <code>static_cast</code> no curso, e não tem nada a ver com <code>vector</code>.</p>
+<h3 id="a-armadilha-sem-sinal-nao-fica-negativo">A armadilha: sem sinal não fica negativo<a class="headerlink" href="#a-armadilha-sem-sinal-nao-fica-negativo" title="Permanent link">&para;</a></h3>
+<p>Como <code>std::size_t</code> nunca é negativo, subtrair demais não produz um número negativo: dá a volta e chega no maior valor possível.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w">                     </span><span class="c1">// vazio, entao v.size() e 0</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>18446744073709551615
+</code></pre></div>
+<p>Daí saem os dois erros que mais aparecem no <a href="../05-algoritmos-classicos/">capítulo 5</a>:</p>
+<ul>
+<li><code>for (std::size_t i = 0; i &lt; v.size() - 1; i++)</code> num vector vazio não roda "zero vezes": roda dezoito quintilhões de vezes, lendo memória que não é sua. Com <code>int n = static_cast&lt;int&gt;(v.size())</code>, <code>n - 1</code> dá <code>-1</code>, a condição é falsa de saída e o laço não roda — que era a intenção.</li>
+<li><code>for (std::size_t i = v.size() - 1; i &gt;= 0; i--)</code> <strong>nunca termina</strong>: <code>i &gt;= 0</code> é sempre verdadeiro para um tipo sem sinal, e quando <code>i</code> vale <code>0</code> e é decrementado, vira o número gigante acima. Para andar de trás para frente, use o <code>int</code> com <code>static_cast</code>.</li>
+</ul>
+<p>Na dúvida sobre um índice, troque <code>v[i]</code> por <code>v.at(i)</code> enquanto desenvolve: o acesso inválido vira uma exceção em vez de um crash silencioso, e você descobre na hora que o laço passou dos limites.</p>
 <h2 id="vector-de-structs">Vector de structs<a class="headerlink" href="#vector-de-structs" title="Permanent link">&para;</a></h2>
 <p>Um <code>vector</code> guarda qualquer tipo, inclusive <code>struct</code>s que você mesmo definiu:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Aluno</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">nome</span><span class="p">;</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">nota</span><span class="p">;</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">};</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Aluno</span><span class="o">&gt;</span><span class="w"> </span><span class="n">turma</span><span class="p">;</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">turma</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="s">"Carlos"</span><span class="p">,</span><span class="w"> </span><span class="mf">8.5</span><span class="p">});</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">turma</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="s">"Marcia"</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">});</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Aluno</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">turma</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">nome</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">": "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">nota</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Aluno</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">nome</span><span class="p">;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">nota</span><span class="p">;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">};</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Aluno</span><span class="o">&gt;</span><span class="w"> </span><span class="n">turma</span><span class="p">;</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="n">turma</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="s">"Carlos"</span><span class="p">,</span><span class="w"> </span><span class="mf">8.5</span><span class="p">});</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="n">turma</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="s">"Marcia"</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">});</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Aluno</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">turma</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">nome</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">": "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">nota</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="p">}</span>
 </code></pre></div>
 <p>Repare em <code>const Aluno&amp;</code> no laço: evita copiar cada <code>Aluno</code> (poderia ter campos grandes) e, como só estamos lendo, <code>const</code> documenta a intenção e o compilador garante.</p>
 <h2 id="matrizes-vector-de-vector">"Matrizes": vector de vector<a class="headerlink" href="#matrizes-vector-de-vector" title="Permanent link">&para;</a></h2>
 <p>C++ não tem matriz nativa (assim como C não tem, de verdade — <code>int m[3][4]</code> é açúcar sintático para um bloco contíguo). A forma idiomática de representar uma matriz com tamanho variável é um <code>vector</code> de <code>vector</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// matriz 3x4, todos os elementos comecando em 0</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">matriz</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">matriz</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">99</span><span class="p">;</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">linha</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">matriz</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">linha</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span><span class="p">;</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">// matriz 3x4, todos os elementos comecando em 0</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">matriz</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">matriz</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">99</span><span class="p">;</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">linha</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">matriz</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">linha</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">valor</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span><span class="p">;</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="p">}</span>
 </code></pre></div>
 <p><code>matriz.size()</code> dá o número de linhas; <code>matriz[0].size()</code> dá o número de colunas (supondo que todas as linhas tenham o mesmo tamanho — nada impede uma "matriz irregular", já que cada linha é um <code>vector</code> independente).</p>
 <h2 id="passando-vector-para-funcao">Passando vector para função<a class="headerlink" href="#passando-vector-para-funcao" title="Permanent link">&para;</a></h2>
 <p>Regra igual à do capítulo 2: <code>const std::vector&lt;T&gt;&amp;</code> para ler sem copiar, <code>std::vector&lt;T&gt;&amp;</code> para alterar o <code>vector</code> do chamador.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">double</span><span class="w"> </span><span class="nf">media</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">notas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">soma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">notas</span><span class="p">)</span><span class="w"> </span><span class="n">soma</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">notas</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">soma</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">notas</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">}</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">dobra_todos</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kt">double</span><span class="w"> </span><span class="nf">media</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">notas</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">soma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">notas</span><span class="p">)</span><span class="w"> </span><span class="n">soma</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">notas</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">soma</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">notas</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="p">}</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">dobra_todos</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="p">}</span>
 </code></pre></div>
 <h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
 <p><strong>"Segmentation fault" ao acessar <code>v[i]</code> fora dos limites</strong> — igual C: <code>v[tamanho]</code> não é checado. Se você não tem certeza do índice, use <code>v.at(i)</code> durante o desenvolvimento (é mais lento, mas te avisa do erro em vez de corromper memória silenciosamente).</p>
 <p><strong>"error: no matching function for call to..." ao passar <code>{1,2,3}</code> direto</strong> — em contextos ambíguos, o compilador às vezes não sabe se <code>{1,2,3}</code> é um <code>vector&lt;int&gt;</code> ou outra coisa. Declare a variável explicitamente: <code>std::vector&lt;int&gt; v = {1,2,3};</code> em vez de tentar passar a lista direto num lugar ambíguo.</p>
+<p><strong><code>warning: comparison of integer expressions of different signedness</code></strong> — você comparou um <code>int i</code> com <code>v.size()</code>, que é <code>std::size_t</code> (sem sinal). Declare <code>std::size_t i = 0</code>, ou guarde o tamanho em <code>int n = static_cast&lt;int&gt;(v.size())</code> antes do laço.</p>
+<p><strong>Laço que trava ou lê memória alheia num vector vazio</strong> — quase sempre é <code>v.size() - 1</code> com <code>std::size_t</code>: num vector vazio isso não dá <code>-1</code>, dá o maior número possível. Passe pelo <code>int</code> antes de subtrair.</p>
 <p><strong>Alterar um <code>vector</code> enquanto percorre com range-for e "for sem <code>&amp;</code>"</strong> — <code>for (int x : v) { v.push_back(x); }</code> é comportamento indefinido (adicionar elementos pode realocar a memória interna do vector, invalidando o laço em andamento). Nunca modifique o tamanho do vector dentro de um laço que o percorre.</p>
 <h2 id="resumo">Resumo<a class="headerlink" href="#resumo" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2761,6 +2890,8 @@
 <li>Range-for (<code>for (T x : v)</code>) é a forma idiomática de percorrer quando não precisa do índice; use <code>T&amp;</code> para alterar os elementos.</li>
 <li>Vector de struct funciona normalmente; prefira <code>const T&amp;</code> no range-for para evitar cópias.</li>
 <li>"Matriz" em C++ moderno costuma ser <code>vector&lt;vector&lt;T&gt;&gt;</code>.</li>
+<li><code>size()</code> devolve <code>std::size_t</code>, um inteiro <strong>sem sinal</strong>: use <code>std::size_t i</code> no laço para frente, e <code>int n = static_cast&lt;int&gt;(v.size())</code> quando o índice entrar em conta que pode ficar negativa.</li>
+<li><code>static_cast&lt;T&gt;(x)</code> é a conversão explícita de C++, no lugar do <code>(T) x</code> de C.</li>
 <li>Nunca altere o tamanho de um vector enquanto o percorre com range-for.</li>
 </ul>
 
