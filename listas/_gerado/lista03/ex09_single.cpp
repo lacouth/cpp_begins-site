@@ -6,7 +6,7 @@
 
 #include <cassert>
 #include <iostream>
-#include <vector>
+#include <string>
 #include <optional>
 
 // ============================================================
@@ -15,18 +15,19 @@
 #ifndef EX09_H
 #define EX09_H
 
-// Retorna o indice da primeira posicao cujo valor ja apareceu antes no
-// vector, ou std::nullopt se todos os valores forem distintos.
-std::optional<int> primeiro_repetido(const std::vector<int>& v);
+// Retorna o primeiro caractere de "texto" que ja havia aparecido antes,
+// ou std::nullopt se todos os caracteres forem distintos.
+std::optional<char> primeiro_repetido(const std::string& texto);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-std::optional<int> primeiro_repetido(const std::vector<int>& v) {
-    // TODO: para cada posicao i, olhe todas as posicoes j anteriores a ela.
-    // Se v[i] for igual a algum v[j], devolva i.
+std::optional<char> primeiro_repetido(const std::string& texto) {
+    // TODO: para cada posicao i, verifique se texto[i] ja apareceu
+    // em alguma posicao anterior (um laco de j = 0 ate i).
+    // Se ja apareceu, devolva texto[i]. Se o laco terminar, devolva std::nullopt.
     return std::nullopt;
 }
 
@@ -34,13 +35,26 @@ std::optional<int> primeiro_repetido(const std::vector<int>& v) {
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    assert(primeiro_repetido({1, 2, 1}).value() == 2);
-    assert(primeiro_repetido({4, 4}).value() == 1);
-    assert(primeiro_repetido({1, 2, 3, 2, 1}).value() == 3);
+    auto r1 = primeiro_repetido("programacao");
+    assert(r1.has_value());
+    assert(r1.value() == 'r');
 
-    assert(!(primeiro_repetido({1, 2, 3}).has_value()));
-    assert(!(primeiro_repetido({7}).has_value()));
-    assert(!(primeiro_repetido({}).has_value()));
+    // todos distintos
+    assert(!(primeiro_repetido("bola").has_value()));
+
+    // texto vazio e texto de um caractere so
+    assert(!(primeiro_repetido("").has_value()));
+    assert(!(primeiro_repetido("a").has_value()));
+
+    // repeticao logo no comeco
+    auto r2 = primeiro_repetido("aa");
+    assert(r2.has_value());
+    assert(r2.value() == 'a');
+
+    // a primeira repeticao nao e a do caractere mais frequente
+    auto r3 = primeiro_repetido("abcbb");
+    assert(r3.has_value());
+    assert(r3.value() == 'b');
 
     std::cout << "Todos os testes passaram!\n";
     return 0;
