@@ -2084,6 +2084,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ex10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ex10
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2614,6 +2625,17 @@
     <span class="md-ellipsis">
       
         ex09
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ex10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ex10
       
     </span>
   </a>
@@ -3180,6 +3202,55 @@
 <a id="__codelineno-17-47" name="__codelineno-17-47" href="#__codelineno-17-47"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Todos os testes passaram!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
 <a id="__codelineno-17-48" name="__codelineno-17-48" href="#__codelineno-17-48"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-17-49" name="__codelineno-17-49" href="#__codelineno-17-49"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="ex10">ex10<a class="headerlink" href="#ex10" title="Permanent link">&para;</a></h2>
+<p>Escreva <code>media_notas_csv</code>, que recebe um conteúdo <strong>não vazio</strong> com várias linhas no formato <code>"nome,nota"</code> (a nota é <code>double</code>) e devolve a média das notas.</p>
+<p>É o mesmo parsing que você faria depois de ler um arquivo, só que recebendo o conteúdo já em memória — o que torna a função testável sem depender de arquivo nenhum.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">media_notas_csv</span><span class="p">(</span><span class="s">"Ana,8.0</span><span class="se">\n</span><span class="s">Bruno,6.0"</span><span class="p">)</span><span class="w">  </span><span class="c1">// -&gt; 7.0</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">media_notas_csv</span><span class="p">(</span><span class="s">"Carla,10.0"</span><span class="p">)</span><span class="w">          </span><span class="c1">// -&gt; 10.0</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">// ex10 — versao de arquivo unico (gerada automaticamente,</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1">// nao edite este arquivo direto: edite os fontes em exercicios/ e rode</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="c1">// tools/gerar_single.py --todos de novo).</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1">//</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="c1">// Cole este arquivo inteiro no seu compilador online e rode.</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cassert&gt;</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cmath&gt;</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sstream&gt;</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="c1">// Declaracoes do exercicio</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="cp">#ifndef EX10_H</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="cp">#define EX10_H</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="c1">// Recebe varias linhas "nome,nota" (nao vazio) e retorna a media das notas.</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="kt">double</span><span class="w"> </span><span class="nf">media_notas_csv</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">conteudo</span><span class="p">);</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="cp">#endif</span>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="c1">// ESCREVA SUA SOLUCAO AQUI</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="kt">double</span><span class="w"> </span><span class="nf">media_notas_csv</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">conteudo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="w">    </span><span class="c1">// TODO: percorra as linhas (igual Lista 07), some as notas (std::stod</span>
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="w">    </span><span class="c1">// converte string para double) e divida pela quantidade de linhas.</span>
+<a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a><span class="p">}</span>
+<a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a>
+<a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a><span class="c1">// NAO ALTERE — testes</span>
+<a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a><span class="c1">// ============================================================</span>
+<a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">((</span><span class="n">media_notas_csv</span><span class="p">(</span><span class="s">"Ana,8.0</span><span class="se">\n</span><span class="s">Bruno,6.0"</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="mf">7.0</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0001</span><span class="p">));</span>
+<a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">((</span><span class="n">media_notas_csv</span><span class="p">(</span><span class="s">"Carla,10.0"</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="mf">10.0</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0001</span><span class="p">));</span>
+<a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a><span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">((</span><span class="n">media_notas_csv</span><span class="p">(</span><span class="s">"A,5.0</span><span class="se">\n</span><span class="s">B,5.0</span><span class="se">\n</span><span class="s">C,5.0"</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="mf">5.0</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0001</span><span class="p">));</span>
+<a id="__codelineno-19-40" name="__codelineno-19-40" href="#__codelineno-19-40"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Todos os testes passaram!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-19-41" name="__codelineno-19-41" href="#__codelineno-19-41"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-19-42" name="__codelineno-19-42" href="#__codelineno-19-42"></a><span class="p">}</span>
 </code></pre></div>
 
 

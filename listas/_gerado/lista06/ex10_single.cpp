@@ -1,4 +1,4 @@
-// ex03 — versao de arquivo unico (gerada automaticamente,
+// ex10 — versao de arquivo unico (gerada automaticamente,
 // nao edite este arquivo direto: edite os fontes em exercicios/ e rode
 // tools/gerar_single.py --todos de novo).
 //
@@ -13,8 +13,8 @@
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
-#ifndef EX03_H
-#define EX03_H
+#ifndef EX10_H
+#define EX10_H
 
 // Retorna as chaves de "estoque" cujo valor e 0, em ordem crescente de chave.
 std::vector<std::string> chaves_com_valor_zero(const std::map<std::string, int>& estoque);

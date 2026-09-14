@@ -1,4 +1,4 @@
-// ex04 — versao de arquivo unico (gerada automaticamente,
+// ex10 — versao de arquivo unico (gerada automaticamente,
 // nao edite este arquivo direto: edite os fontes em exercicios/ e rode
 // tools/gerar_single.py --todos de novo).
 //
@@ -6,37 +6,36 @@
 
 #include <cassert>
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <sstream>
+#include <vector>
 
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
-#ifndef EX04_H
-#define EX04_H
+#ifndef EX10_H
+#define EX10_H
 
-// Recebe varias linhas "nome,nota" (nao vazio) e retorna a media das notas.
-double media_notas_csv(const std::string& conteudo);
+// Retorna true se todas as notas forem >= 6.0.
+// Escreva com laco: nada de <algorithm> nesta avaliacao.
+bool todos_aprovados(const std::vector<double>& notas);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-double media_notas_csv(const std::string& conteudo) {
-    // TODO: percorra as linhas (igual Lista 07), some as notas (std::stod
-    // converte string para double) e divida pela quantidade de linhas.
-    return 0.0;
+bool todos_aprovados(const std::vector<double>& notas) {
+    // TODO: percorra as notas. Assim que achar uma menor que 6.0, ja pode
+    // devolver false. Se o laco terminar sem achar nenhuma, devolva true.
+    return false;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    assert(std::abs((media_notas_csv("Ana,8.0\nBruno,6.0")) - (7.0)) <= (0.0001));
-    assert(std::abs((media_notas_csv("Carla,10.0")) - (10.0)) <= (0.0001));
-    assert(std::abs((media_notas_csv("A,5.0\nB,5.0\nC,5.0")) - (5.0)) <= (0.0001));
+    assert(todos_aprovados({7.0, 8.5, 6.0}));
+    assert(!(todos_aprovados({7.0, 5.9})));
+    assert(todos_aprovados({}));
     std::cout << "Todos os testes passaram!\n";
     return 0;
 }
