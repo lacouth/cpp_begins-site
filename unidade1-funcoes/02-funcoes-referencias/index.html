@@ -2647,7 +2647,7 @@
 <a href="https://www.youtube.com/playlist?list=PLQqX7KFjcSvizTF-NdPH7fvkEI0tEDCjx">03 - Parte 2 (Ponteiros)</a> ·
 <a href="https://www.youtube.com/playlist?list=PLQqX7KFjcSvizTF-NdPH7fvkEI0tEDCjx">04 - Parte 3 (Referências)</a></p>
 </div>
-<p>Este é o capítulo mais importante da Unidade 1. Em C você já domina duas formas de passar parâmetro: por valor e por ponteiro. O C++ acrescenta uma terceira — <strong>referência</strong> — que resolve o motivo mais comum pelo qual você usava ponteiro em C: "quero que a função altere a variável do chamador" ou "quero evitar copiar uma struct grande".</p>
+<p>Este é o capítulo mais importante da Unidade 1. Em C você já domina duas formas de passar parâmetro: por valor e por ponteiro. O C++ acrescenta uma terceira — <strong>referência</strong> — que resolve o motivo mais comum pelo qual você usava ponteiro em C: "quero que a função altere a variável do chamador" ou "quero evitar copiar um valor grande, como um texto".</p>
 <h2 id="por-valor-o-padrao-que-voce-ja-conhece">Por valor: o padrão que você já conhece<a class="headerlink" href="#por-valor-o-padrao-que-voce-ja-conhece" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">dobra</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">   </span><span class="c1">// altera so a copia local</span>
@@ -2697,7 +2697,7 @@
 </ul>
 <h2 id="const-t-a-combinacao-que-voce-vai-usar-o-tempo-todo"><code>const T&amp;</code>: a combinação que você vai usar o tempo todo<a class="headerlink" href="#const-t-a-combinacao-que-voce-vai-usar-o-tempo-todo" title="Permanent link">&para;</a></h2>
 <p>Agora o motivo pelo qual referência importa mesmo quando você <strong>não</strong> quer alterar nada.</p>
-<p>Passar uma <code>struct</code> grande (ou um <code>std::string</code>, ou depois um <code>std::vector</code>) por valor faz uma cópia inteira toda vez que a função é chamada:</p>
+<p>Passar um <code>std::string</code> (ou, mais adiante, um <code>std::vector</code>) por valor faz uma cópia inteira toda vez que a função é chamada:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">double</span><span class="w"> </span><span class="nf">calcula_total</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">produto</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">preco</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="c1">// "produto" foi copiado inteiro so para a funcao ler o valor</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">preco</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.1</span><span class="p">;</span>
@@ -2709,7 +2709,7 @@
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">preco</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1.1</span><span class="p">;</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
 </code></pre></div>
-<p><code>const T&amp;</code> virou o padrão em C++ para "quero ler um valor potencialmente grande sem copiar e sem correr risco de alterá-lo sem querer". Você já viu isso nos exercícios da Lista 01 (<code>const std::string&amp; nome</code>) — agora sabe por quê.</p>
+<p><code>const T&amp;</code> virou o padrão em C++ para "quero ler um valor potencialmente grande sem copiar e sem correr risco de alterá-lo sem querer". Você já viu isso nos exercícios da Lista 01 (<code>const std::string&amp; nome</code>) — agora sabe por quê. No capítulo 3 você vai criar seus próprios tipos com <code>struct</code>, e a mesma regra vale para eles: <code>const MinhaStruct&amp;</code> é o padrão para recebê-los.</p>
 <p>Regra prática para decidir a assinatura de um parâmetro:</p>
 <table>
 <thead>
