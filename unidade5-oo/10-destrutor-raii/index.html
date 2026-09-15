@@ -1321,6 +1321,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#o-destrutor-roda-em-qualquer-caminho-de-saida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O destrutor roda em qualquer caminho de saída
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#raii-resource-acquisition-is-initialization" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2409,6 +2420,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -2538,6 +2553,62 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apendices/referencias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apendices/proximos-passos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Próximos passos em C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2609,6 +2680,17 @@
     <span class="md-ellipsis">
       
         Ordem de destruição: quem morre primeiro
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#o-destrutor-roda-em-qualquer-caminho-de-saida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O destrutor roda em qualquer caminho de saída
       
     </span>
   </a>
@@ -2762,70 +2844,126 @@
 <p>Só que <code>new</code>/<code>delete</code> têm exatamente o mesmo problema de fundo que <code>malloc</code>/<code>free</code>: <strong>você ainda precisa lembrar de chamar <code>delete</code></strong>, e ainda é fácil esquecer. C++ tem uma saída melhor — e é a ideia central deste capítulo.</p>
 <h2 id="destrutor-o-metodo-que-roda-quando-o-objeto-morre">Destrutor: o método que roda quando o objeto morre<a class="headerlink" href="#destrutor-o-metodo-que-roda-quando-o-objeto-morre" title="Permanent link">&para;</a></h2>
 <p>Assim como um construtor é chamado automaticamente quando um objeto <strong>nasce</strong>, um <strong>destrutor</strong> é chamado automaticamente quando um objeto <strong>morre</strong> — seja porque saiu de escopo (variável local que chegou ao fim do bloco <code>{}</code>), seja porque foi explicitamente destruído com <code>delete</code>.</p>
-<p>Sintaxe: <code>~NomeDaClasse()</code>, sem argumentos, sem tipo de retorno:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Arquivo</span><span class="w"> </span><span class="p">{</span>
+<p>Sintaxe: <code>~NomeDaClasse()</code>, sem argumentos, sem tipo de retorno.</p>
+<p>Antes de embrulhar recurso nenhum, vamos ver <strong>só o mecanismo</strong>. Esta classe não
+gerencia nada: ela apenas avisa, em voz alta, quando nasce e quando morre.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Recurso</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">private</span><span class="o">:</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kt">FILE</span><span class="o">*</span><span class="w"> </span><span class="n">ponteiro_</span><span class="p">;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">nome_</span><span class="p">;</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">public</span><span class="o">:</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="n">Arquivo</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">caminho</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="n">ponteiro_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fopen</span><span class="p">(</span><span class="n">caminho</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="s">"r"</span><span class="p">);</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"abrindo arquivo</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="o">~</span><span class="n">Arquivo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ponteiro_</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">            </span><span class="n">fclose</span><span class="p">(</span><span class="n">ponteiro_</span><span class="p">);</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"fechando arquivo</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">};</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="kt">void</span><span class="w"> </span><span class="nf">processa</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="n">Arquivo</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="s">"dados.txt"</span><span class="p">);</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">    </span><span class="c1">// ... usa a ...</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="p">}</span><span class="w">   </span><span class="c1">// "a" sai de escopo aqui -- o destrutor ~Arquivo() roda AUTOMATICAMENTE</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="n">Recurso</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">nome</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">nome_</span><span class="p">(</span><span class="n">nome</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"abre "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">nome_</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="o">~</span><span class="n">Recurso</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">                                  </span><span class="c1">// o destrutor</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"fecha "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">nome_</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">};</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="n">Recurso</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="s">"A"</span><span class="p">);</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span><span class="n">Recurso</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="s">"B"</span><span class="p">);</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"fim</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="p">}</span>
 </code></pre></div>
-<p>Ao sair de <code>processa()</code>, <code>a</code> deixa de existir, e <code>~Arquivo()</code> é chamado sem que você precise escrever nada para isso acontecer. Não importa como a função termina — <code>return</code> normal, <code>return</code> antecipado, ou mesmo uma <strong>exceção</strong> atravessando a função no meio do caminho — o destrutor <strong>sempre</strong> roda para todo objeto local que estava vivo naquele escopo. Essa garantia é o que torna o padrão a seguir tão poderoso.</p>
-<div class="admonition note">
-<p class="admonition-title">E o que é uma exceção, afinal?</p>
-<p>É o outro jeito de uma função terminar: em vez de devolver um valor, ela
-<strong>lança</strong> um erro que interrompe a execução e volta subindo pelas funções que
-a chamaram. Você já esbarrou em algumas — <code>v.at(10)</code> fora do intervalo e
-<code>.value()</code> num <code>optional</code> vazio lançam exceção, e o programa aborta com
-<code>terminate called after throwing...</code> quando ninguém as trata.</p>
-<p>Tratar exceções (com <code>try</code>/<code>catch</code>) está fora do escopo deste curso. O que
-importa aqui é a garantia: <strong>mesmo nessa saída anormal, os destrutores dos
-objetos locais rodam.</strong> É por isso que RAII é mais forte que "lembrar de
-liberar no fim" — não existe caminho de saída que escape dele, e nenhum
-<code>free</code> colocado à mão no fim da função sobreviveria a uma exceção.</p>
-</div>
+<p>Antes de continuar lendo: <strong>em que ordem essas cinco linhas saem?</strong> Vale escrever
+a previsão num papel.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>abre A
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>abre B
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>fecha B
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>fim
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>fecha A
+</code></pre></div>
+<p>Duas coisas para tirar daqui. A primeira é que ninguém escreveu uma linha para
+que <code>fecha B</code> acontecesse: o <code>~Recurso()</code> de <code>b</code> rodou sozinho. A segunda é que
+ele rodou <strong>antes</strong> do <code>fim</code> — na chave de fechamento do bloco, não no fim do
+programa. É a intuição de "tudo é liberado no fim" que costuma cair aqui.</p>
 <h2 id="ordem-de-destruicao-quem-morre-primeiro">Ordem de destruição: quem morre primeiro<a class="headerlink" href="#ordem-de-destruicao-quem-morre-primeiro" title="Permanent link">&para;</a></h2>
 <p>Saber <em>que</em> o destrutor roda não basta; é preciso saber <strong>quando</strong>, porque a
 ordem costuma ser a resposta de "por que meu programa imprimiu isso".</p>
 <p>São três regras, e todas seguem a mesma lógica — o que nasceu por último morre
 primeiro:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">Marca</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="s">"a"</span><span class="p">);</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">{</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">Marca</span><span class="w"> </span><span class="n">interna</span><span class="p">(</span><span class="s">"interna"</span><span class="p">);</span><span class="w">   </span><span class="c1">// morre na chave abaixo, nao no fim do main</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">Marca</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="s">"b"</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">Recurso</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="s">"X"</span><span class="p">);</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">Recurso</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="s">"Y"</span><span class="p">);</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">Recurso</span><span class="w"> </span><span class="n">z</span><span class="p">(</span><span class="s">"Z"</span><span class="p">);</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"fim</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>abre X
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>abre Y
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>abre Z
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>fim
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>fecha Z
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>fecha Y
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>fecha X
 </code></pre></div>
 <ol>
-<li><strong>Fim do escopo, não fim do programa.</strong> <code>interna</code> morre na <code>}</code> do bloco, muito
-   antes de <code>a</code> e <code>b</code>.</li>
-<li><strong>Ordem inversa à de criação.</strong> No fim do <code>main</code>, morre <code>b</code> primeiro e só
-   depois <code>a</code>.</li>
+<li><strong>Fim do escopo, não fim do programa.</strong> É o que o exemplo anterior mostrou:
+   o <code>b</code> de dentro do bloco morreu na <code>}</code> daquele bloco.</li>
+<li><strong>Ordem inversa à de criação.</strong> Aqui, morre <code>z</code> primeiro e <code>x</code> por último.
+   Pense numa pilha de pratos: o último empilhado é o primeiro a sair. Isso
+   importa quando um objeto depende de outro — o que foi criado depois pode usar
+   o anterior com segurança, porque morre antes dele.</li>
 <li><strong>Os membros morrem depois do corpo do destrutor</strong>, também em ordem inversa à
    de declaração. Numa classe com dois membros <code>primeiro</code> e <code>segundo</code>, o corpo do
    <code>~Caixa()</code> roda primeiro, depois morre <code>segundo</code>, e por último <code>primeiro</code>.</li>
 </ol>
-<p>A regra 3 tem uma consequência prática: dentro do corpo do seu destrutor, <strong>todos
-os membros ainda estão vivos</strong> e podem ser usados normalmente. Um destrutor que
-grava um log usando um membro <code>std::string nome_</code> funciona — o <code>nome_</code> só será
-destruído depois.</p>
+<p>A regra 3 tem uma consequência prática, e o próprio <code>Recurso</code> acima é o exemplo:
+dentro do corpo do seu destrutor, <strong>todos os membros ainda estão vivos</strong> e podem
+ser usados normalmente. O <code>std::cout &lt;&lt; nome_</code> funciona justamente porque o
+<code>nome_</code> só será destruído depois de o corpo terminar.</p>
+<h2 id="o-destrutor-roda-em-qualquer-caminho-de-saida">O destrutor roda em qualquer caminho de saída<a class="headerlink" href="#o-destrutor-roda-em-qualquer-caminho-de-saida" title="Permanent link">&para;</a></h2>
+<p>Esta é a propriedade que torna tudo o que vem a seguir possível. Não importa
+<em>como</em> a função termina:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">pode_falhar</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">falha</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">Recurso</span><span class="w"> </span><span class="n">r</span><span class="p">(</span><span class="s">"R"</span><span class="p">);</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">falha</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"saindo cedo</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"caminho normal</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="n">pode_falhar</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="n">pode_falhar</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>abre R
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>saindo cedo
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>fecha R
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>abre R
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>caminho normal
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>fecha R
+</code></pre></div>
+<p>Compare com C: uma função com um <code>malloc</code> no começo precisa de um <code>free</code> antes de
+<strong>cada</strong> <code>return</code>. Com cinco saídas, são cinco <code>free</code> — e basta esquecer um para
+ter um vazamento que só aparece no caminho de erro, o menos testado de todos. Em
+C++, são zero: o destrutor é chamado pela linguagem em todo caminho de saída,
+inclusive nos que você esqueceu que existiam.</p>
+<div class="admonition note">
+<p class="admonition-title">E o que é uma exceção, afinal?</p>
+<p>Há ainda um terceiro jeito de uma função terminar, além do <code>return</code> normal e
+do antecipado: em vez de devolver um valor, ela <strong>lança</strong> um erro que
+interrompe a execução e volta subindo pelas funções que a chamaram. Você já
+esbarrou em algumas — <code>v.at(10)</code> fora do intervalo e <code>.value()</code> num
+<code>optional</code> vazio lançam exceção, e o programa aborta com
+<code>terminate called after throwing...</code> quando ninguém as trata.</p>
+<p>Tratar exceções (com <code>try</code>/<code>catch</code>) está fora do escopo deste curso. O que
+importa aqui é a garantia: <strong>mesmo nessa saída anormal, os destrutores dos
+objetos locais rodam.</strong> É por isso que o padrão a seguir é mais forte que
+"lembrar de liberar no fim" — não existe caminho de saída que escape dele, e
+nenhum <code>free</code> colocado à mão no fim da função sobreviveria a uma exceção.</p>
+</div>
 <h2 id="raii-resource-acquisition-is-initialization">RAII: Resource Acquisition Is Initialization<a class="headerlink" href="#raii-resource-acquisition-is-initialization" title="Permanent link">&para;</a></h2>
 <p>A ideia central do capítulo, resumida numa frase: <strong>um recurso (memória, arquivo, conexão de rede, mutex) deve ser amarrado ao ciclo de vida de um objeto.</strong> O construtor adquire o recurso; o destrutor o libera. Enquanto o objeto existir, o recurso existe; quando o objeto morre — de qualquer jeito que seja —, o recurso é liberado automaticamente.</p>
+<p>O <code>Recurso</code> das seções anteriores era uma maquete: ele imprimia "abre" e "fecha"
+sem abrir nem fechar coisa alguma. RAII é essa mesma estrutura com um recurso de
+verdade nas duas pontas.</p>
 <p>Não se deixe intimidar pela sigla: ela é reconhecidamente ruim. "Resource
 Acquisition Is Initialization" enfatiza a <strong>aquisição</strong>, quando o que torna o
 padrão útil é a outra ponta — a <strong>liberação automática</strong>, garantida pelo
@@ -2835,58 +2973,59 @@ a morte desse objeto devolvê-lo.</em></p>
 <p>Você já usou RAII sem perceber: <code>std::string</code> e <code>std::vector</code> são exemplos de RAII. <code>std::vector&lt;int&gt; v</code> aloca memória internamente conforme cresce (no construtor e em cada <code>push_back</code> que precisa de mais espaço) e libera tudo automaticamente no destrutor, quando <code>v</code> sai de escopo — é por isso que você nunca precisou dar <code>delete</code> em nada ao usar <code>vector</code> desde a Unidade 2.</p>
 <p>E aquela promessa do <a href="../../unidade3-arquivos/07-arquivos/">capítulo 7</a> — de que
 você entenderia por que o arquivo fecha sozinho — se cumpre aqui:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">salva</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">texto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="w"> </span><span class="n">arquivo</span><span class="p">(</span><span class="s">"saida.txt"</span><span class="p">);</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">arquivo</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">texto</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span><span class="w">   </span><span class="c1">// ~ofstream() roda aqui: fecha o arquivo e descarrega o que estava em buffer</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">salva</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">texto</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="w"> </span><span class="n">arquivo</span><span class="p">(</span><span class="s">"saida.txt"</span><span class="p">);</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">arquivo</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">texto</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">}</span><span class="w">   </span><span class="c1">// ~ofstream() roda aqui: fecha o arquivo e descarrega o que estava em buffer</span>
 </code></pre></div>
-<p>Não há <code>close()</code> nenhum, e mesmo assim o arquivo é fechado corretamente — inclusive
-se a função tivesse um <code>return</code> no meio. <code>std::ofstream</code> adquire o arquivo no
-construtor e o devolve no destrutor: é exatamente o mesmo padrão do <code>Arquivo</code> que
-acabamos de escrever à mão, só que pronto na biblioteca padrão. Em C, o
+<p>Não há <code>close()</code> nenhum, e mesmo assim o arquivo é fechado corretamente —
+inclusive se a função tivesse um <code>return</code> no meio, pelo mesmo motivo que o
+<code>fecha R</code> apareceu nos dois caminhos de <code>pode_falhar</code>. <code>std::ofstream</code> adquire o
+arquivo no construtor e o devolve no destrutor: é o <code>Recurso</code> da abertura do
+capítulo, agora com <code>fecha</code> de verdade no lugar do <code>std::cout</code>. Em C, o
 equivalente seria lembrar do <code>fclose</code> em todos os caminhos de saída da função.</p>
 <p>Vamos escrever nossa própria classe RAII, envolvendo um recurso alocado com <code>new</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Buffer</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">private</span><span class="o">:</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">dados_</span><span class="p">;</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho_</span><span class="p">;</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">public</span><span class="o">:</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Buffer</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">)</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">dados_</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">tamanho</span><span class="p">]),</span><span class="w"> </span><span class="n">tamanho_</span><span class="p">(</span><span class="n">tamanho</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tamanho_</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">            </span><span class="n">dados_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="o">~</span><span class="n">Buffer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">        </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">dados_</span><span class="p">;</span><span class="w">   </span><span class="c1">// delete[] porque foi alocado com new[]</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">define</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">indice</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">        </span><span class="n">dados_</span><span class="p">[</span><span class="n">indice</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">obtem</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">indice</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dados_</span><span class="p">[</span><span class="n">indice</span><span class="p">];</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
-<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">tamanho_</span><span class="p">;</span>
-<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="p">};</span>
-<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
-<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="kt">void</span><span class="w"> </span><span class="nf">usa_buffer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="w">    </span><span class="n">Buffer</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="w">    </span><span class="n">b</span><span class="p">.</span><span class="n">define</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span>
-<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="w">    </span><span class="c1">// ... usa b ...</span>
-<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="p">}</span><span class="w">   </span><span class="c1">// ~Buffer() roda aqui -- delete[] dados_ acontece sozinho, sem voce escrever nada</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Buffer</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">dados_</span><span class="p">;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho_</span><span class="p">;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Buffer</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">)</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">dados_</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="n">tamanho</span><span class="p">]),</span><span class="w"> </span><span class="n">tamanho_</span><span class="p">(</span><span class="n">tamanho</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tamanho_</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">            </span><span class="n">dados_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="o">~</span><span class="n">Buffer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">        </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">dados_</span><span class="p">;</span><span class="w">   </span><span class="c1">// delete[] porque foi alocado com new[]</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">define</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">indice</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">        </span><span class="n">dados_</span><span class="p">[</span><span class="n">indice</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">obtem</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">indice</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dados_</span><span class="p">[</span><span class="n">indice</span><span class="p">];</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">tamanho_</span><span class="p">;</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="p">};</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="kt">void</span><span class="w"> </span><span class="nf">usa_buffer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="w">    </span><span class="n">Buffer</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="w">    </span><span class="n">b</span><span class="p">.</span><span class="n">define</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a><span class="w">    </span><span class="c1">// ... usa b ...</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a><span class="p">}</span><span class="w">   </span><span class="c1">// ~Buffer() roda aqui -- delete[] dados_ acontece sozinho, sem voce escrever nada</span>
 </code></pre></div>
 <p>Note <code>delete[]</code> (com colchetes), não <code>delete</code>: memória alocada com <code>new T[n]</code> precisa ser liberada com <code>delete[]</code>, e memória alocada com <code>new T</code> (um objeto só) precisa de <code>delete</code> sem colchetes. Misturar os dois é comportamento indefinido.</p>
 <h2 id="o-problema-da-copia-por-que-a-regra-do-zero-existe">O problema da cópia (por que a "regra do zero" existe)<a class="headerlink" href="#o-problema-da-copia-por-que-a-regra-do-zero-existe" title="Permanent link">&para;</a></h2>
 <p>Existe uma armadilha séria com a classe <code>Buffer</code> acima: o que acontece se você <strong>copiar</strong> um <code>Buffer</code>?</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">Buffer</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">Buffer</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">   </span><span class="c1">// copia "rasa": b.dados_ aponta PARA O MESMO array que a.dados_</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">Buffer</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">Buffer</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">   </span><span class="c1">// copia "rasa": b.dados_ aponta PARA O MESMO array que a.dados_</span>
 </code></pre></div>
 <p>Sem você escrever nada a mais, C++ gera um construtor de cópia <strong>padrão</strong>, que copia cada campo individualmente — inclusive o ponteiro <code>dados_</code>. Resultado: <code>a</code> e <code>b</code> acabam apontando para o <strong>mesmo</strong> bloco de memória. Quando <code>b</code> sai de escopo primeiro, <code>~Buffer()</code> roda e dá <code>delete[]</code> naquele bloco. Quando <code>a</code> sai de escopo depois, <code>~Buffer()</code> roda de novo e tenta <code>delete[]</code> no <strong>mesmo</strong> bloco, que já foi liberado — <strong>double free</strong>, comportamento indefinido, e um dos bugs mais dolorosos de C++ de encontrar.</p>
 <p>Isso é o motivo de existir a chamada <strong>regra dos 3</strong>: se uma classe precisa de destrutor customizado (porque gerencia um recurso manualmente), ela <strong>também</strong> precisa de construtor de cópia e operador de atribuição de cópia customizados — os três andam juntos, porque o problema acima (cópia rasa de um recurso que só pode ter um dono) afeta os três.</p>
@@ -2894,45 +3033,45 @@ equivalente seria lembrar do <code>fclose</code> em todos os caminhos de saída 
 <p>A regra dos 3 (ou dos 5, quando se conta também a transferência de posse que aparece mais abaixo) resolve o problema, mas dá trabalho e é fácil de errar. A recomendação moderna, e a que este curso adota, é mais simples: <strong>na dúvida, regra do zero.</strong></p>
 <p><strong>Nunca gerencie um recurso bruto (<code>new</code>/<code>delete</code>) diretamente dentro da sua classe.</strong> Em vez disso, delegue o recurso para um tipo que já faz RAII corretamente — como <code>std::vector</code>, <code>std::string</code>, ou (para um objeto único alocado dinamicamente) <code>std::unique_ptr</code>. Sua classe então <strong>não precisa escrever nenhum destrutor, nenhum construtor de cópia, nada</strong> — o compilador gera tudo automaticamente, e como cada campo já sabe se cuidar sozinho (é RAII também), a versão gerada automaticamente já está correta.</p>
 <p>Reescrevendo <code>Buffer</code> seguindo a regra do zero:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Buffer</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">private</span><span class="o">:</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dados_</span><span class="p">;</span><span class="w">   </span><span class="c1">// vector ja e RAII -- ele mesmo aloca/libera</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">public</span><span class="o">:</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Buffer</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">dados_</span><span class="p">(</span><span class="n">tamanho</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">define</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">indice</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">dados_</span><span class="p">[</span><span class="n">indice</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">obtem</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">indice</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">dados_</span><span class="p">[</span><span class="n">indice</span><span class="p">];</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">dados_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="c1">// sem destrutor, sem construtor de copia -- e nao precisa!</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">};</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
-<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">Buffer</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="n">Buffer</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">   </span><span class="c1">// copia de verdade, profunda -- vector sabe se copiar corretamente</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Buffer</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dados_</span><span class="p">;</span><span class="w">   </span><span class="c1">// vector ja e RAII -- ele mesmo aloca/libera</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Buffer</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">dados_</span><span class="p">(</span><span class="n">tamanho</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">define</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">indice</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">valor</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">dados_</span><span class="p">[</span><span class="n">indice</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valor</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">obtem</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">indice</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">dados_</span><span class="p">[</span><span class="n">indice</span><span class="p">];</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">dados_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="c1">// sem destrutor, sem construtor de copia -- e nao precisa!</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="p">};</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="n">Buffer</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="n">Buffer</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">   </span><span class="c1">// copia de verdade, profunda -- vector sabe se copiar corretamente</span>
 </code></pre></div>
 <p>Agora copiar <code>b = a</code> faz uma cópia de verdade do <code>vector</code> interno (cada um com seu próprio array por baixo), e não há double free nenhum: cada <code>Buffer</code> tem seu próprio <code>vector</code>, e cada <code>vector</code> sabe se destruir sozinho.</p>
 <h2 id="stdunique_ptr-quando-voce-precisa-mesmo-de-um-ponteiro"><code>std::unique_ptr</code>: quando você precisa mesmo de um ponteiro<a class="headerlink" href="#stdunique_ptr-quando-voce-precisa-mesmo-de-um-ponteiro" title="Permanent link">&para;</a></h2>
 <p>Às vezes você precisa de um objeto único, alocado dinamicamente, sem container nenhum por cima (por exemplo, um objeto polimórfico, assunto do próximo capítulo). <code>std::unique_ptr&lt;T&gt;</code> é um "ponteiro inteligente" que segue RAII: ele dá <code>delete</code> automaticamente quando sai de escopo, e <strong>não pode ser copiado</strong> (só transferido, como se vê logo abaixo), o que impede exatamente o bug de double free descrito acima.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cria_buffer</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="p">(</span><span class="n">tamanho</span><span class="p">);</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">}</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="kt">void</span><span class="w"> </span><span class="n">usa</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cria_buffer</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span><span class="w">   </span><span class="c1">// b e um unique_ptr&lt;Buffer&gt;</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="n">b</span><span class="o">-&gt;</span><span class="n">define</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span><span class="w">             </span><span class="c1">// -&gt; funciona como um ponteiro comum</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span><span class="w">   </span><span class="c1">// ~Buffer() roda automaticamente aqui, mesmo sem "delete" explicito em lugar nenhum</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cria_buffer</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">tamanho</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="p">(</span><span class="n">tamanho</span><span class="p">);</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">}</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="kt">void</span><span class="w"> </span><span class="n">usa</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cria_buffer</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span><span class="w">   </span><span class="c1">// b e um unique_ptr&lt;Buffer&gt;</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="n">b</span><span class="o">-&gt;</span><span class="n">define</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span><span class="w">             </span><span class="c1">// -&gt; funciona como um ponteiro comum</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="p">}</span><span class="w">   </span><span class="c1">// ~Buffer() roda automaticamente aqui, mesmo sem "delete" explicito em lugar nenhum</span>
 </code></pre></div>
 <p><code>std::make_unique&lt;T&gt;(argumentos...)</code> cria o objeto e devolve o <code>unique_ptr</code> já apontando para ele — prefira essa forma a <code>new</code> direto.</p>
 <h3 id="um-dono-so-o-que-stdmove-faz-aqui">Um dono só: o que <code>std::move</code> faz aqui<a class="headerlink" href="#um-dono-so-o-que-stdmove-faz-aqui" title="Permanent link">&para;</a></h3>
 <p>"Não pode ser copiado" é uma consequência direta da ideia de <strong>posse única</strong>: se
 dois <code>unique_ptr</code> apontassem para o mesmo objeto, os dois dariam <code>delete</code> nele —
 o double free de volta. Por isso o <code>unique_ptr</code> não se copia; ele se <strong>transfere</strong>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w">   </span><span class="c1">// a posse passa de "a" para "b"</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1">// agora "a" esta vazio (nullptr) e "b" e o dono</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w">   </span><span class="c1">// a posse passa de "a" para "b"</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1">// agora "a" esta vazio (nullptr) e "b" e o dono</span>
 </code></pre></div>
 <p><code>std::move(a)</code> não move nada de lugar na memória, apesar do nome: ele apenas
 autoriza que o conteúdo de <code>a</code> seja "roubado" por <code>b</code>. Depois disso, <code>a</code> continua
@@ -2960,10 +3099,41 @@ compartilhada for de fato o que o problema pede.</p>
    <code>new</code>, como a lista encadeada do <a href="../../unidade6-estruturas/13-filas-pilhas-listas/">capítulo 13</a>.
    Aí escreva o destrutor, e lembre que ele traz junto a regra dos 3.</li>
 </ol>
+<p>O caso 3 é onde o <code>Recurso</code> da abertura deixa de ser maquete. Envolver um <code>FILE*</code>
+de C — que não tem dono pronto na biblioteca padrão de C++ — é exatamente isso:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdio&gt;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">Arquivo</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="kt">FILE</span><span class="o">*</span><span class="w"> </span><span class="n">ponteiro_</span><span class="p">;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Arquivo</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">caminho</span><span class="p">)</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">ponteiro_</span><span class="p">(</span><span class="n">fopen</span><span class="p">(</span><span class="n">caminho</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="s">"r"</span><span class="p">))</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="o">~</span><span class="n">Arquivo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ponteiro_</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">   </span><span class="c1">// fopen devolve nullptr se o arquivo nao abriu</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">            </span><span class="n">fclose</span><span class="p">(</span><span class="n">ponteiro_</span><span class="p">);</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="p">};</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="kt">void</span><span class="w"> </span><span class="nf">processa</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">    </span><span class="n">Arquivo</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="s">"dados.txt"</span><span class="p">);</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">    </span><span class="c1">// ... usa a ...</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="p">}</span><span class="w">   </span><span class="c1">// ~Arquivo() roda aqui: fclose garantido, em qualquer caminho de saida</span>
+</code></pre></div>
+<p>É o mesmo padrão do <code>Buffer</code>, com <code>fopen</code>/<code>fclose</code> no lugar de <code>new[]</code>/<code>delete[]</code>
+— e, como o <code>Buffer</code>, esta classe aciona a regra dos 3: copiar um <code>Arquivo</code> daria
+dois donos do mesmo <code>FILE*</code> e dois <code>fclose</code>. Na prática, para ler e escrever
+arquivos você usa <code>ifstream</code>/<code>ofstream</code> (capítulo 7), que já fazem isso por você;
+a classe acima é o que você escreveria se estivesse embrulhando uma biblioteca
+que só oferece uma API em C.</p>
 <p>Há um quarto caso, mais raro: o destrutor que não libera recurso nenhum, e existe
 só para <strong>observar</strong> o fim da vida do objeto — imprimir um log, decrementar um
-contador de instâncias vivas. É legítimo, mas repare que ele também aciona a
-regra dos 3, então não escreva um "só por segurança".</p>
+contador de instâncias vivas. É o que o nosso <code>Recurso</code> fazia, e é legítimo; mas
+repare que ele também aciona a regra dos 3, então não escreva um "só por
+segurança".</p>
 <h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
 <p><strong>"double free or corruption" / crash no fim do programa</strong> — geralmente é o problema da cópia rasa descrito acima: uma classe com destrutor customizado que gerencia um ponteiro bruto, copiada sem construtor de cópia customizado. A correção é a regra do zero: troque o ponteiro bruto por <code>vector</code>/<code>unique_ptr</code>.</p>
 <p><strong>Vazamento de memória silencioso (programa usa cada vez mais RAM)</strong> — um <code>new</code> sem <code>delete</code> correspondente em algum caminho do código (por exemplo, uma função que retorna cedo antes de chegar ao <code>delete</code>). A regra do zero elimina essa classe de bug inteira, porque não existe <code>new</code>/<code>delete</code> manual para esquecer.</p>
@@ -2971,13 +3141,13 @@ regra dos 3, então não escreva um "só por segurança".</p>
 <h2 id="resumo">Resumo<a class="headerlink" href="#resumo" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Destrutor (<code>~NomeDaClasse()</code>) roda automaticamente quando o objeto sai de escopo ou é destruído com <code>delete</code> — não importa o caminho de saída da função.</li>
+<li>Objetos morrem no fim do seu escopo, em ordem inversa à de criação; os membros morrem depois do corpo do destrutor, também em ordem inversa.</li>
+<li>O destrutor roda em qualquer caminho de saída, inclusive num <code>return</code> antecipado e quando uma exceção atravessa a função — é essa garantia que faz o RAII valer mais que liberar o recurso à mão no fim.</li>
 <li>RAII: recurso adquirido no construtor, liberado no destrutor. <code>vector</code>, <code>string</code>, <code>ofstream</code>/<code>ifstream</code> já são RAII por baixo dos panos.</li>
 <li>Copiar uma classe que gerencia um ponteiro bruto sem cuidado extra causa cópia rasa, e cedo ou tarde um double free.</li>
 <li>Regra dos 3: destrutor customizado exige construtor de cópia e operador de atribuição customizados também.</li>
 <li><strong>Regra do zero (a recomendação deste curso):</strong> nunca gerencie recurso bruto diretamente — delegue para <code>vector</code>, <code>string</code> ou <code>unique_ptr</code>, e não escreva destrutor nenhum. O compilador gera a versão certa sozinho.</li>
 <li><code>std::unique_ptr&lt;T&gt;</code> + <code>std::make_unique&lt;T&gt;(...)</code>: ponteiro inteligente com RAII, para quando você precisa mesmo de alocação dinâmica de um objeto único; a posse é única e se transfere com <code>std::move</code>, nunca se copia.</li>
-<li>Objetos morrem no fim do seu escopo, em ordem inversa à de criação; os membros morrem depois do corpo do destrutor, também em ordem inversa.</li>
-<li>O destrutor roda em qualquer caminho de saída, inclusive quando uma exceção atravessa a função — é essa garantia que faz o RAII valer mais que liberar o recurso à mão no fim.</li>
 </ul>
 
 
