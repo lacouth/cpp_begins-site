@@ -1,4 +1,4 @@
-// ex01 — versao de arquivo unico (gerada automaticamente,
+// ex09 — versao de arquivo unico (gerada automaticamente,
 // nao edite este arquivo direto: edite os fontes em exercicios/ e rode
 // tools/gerar_single.py --todos de novo).
 //
@@ -11,8 +11,8 @@
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
-#ifndef EX01_H
-#define EX01_H
+#ifndef EX09_H
+#define EX09_H
 
 class Ingresso {
 private:

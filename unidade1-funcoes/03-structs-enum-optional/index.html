@@ -679,6 +679,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#decidindo-por-caso-switch-sobre-um-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decidindo por caso: switch sobre um enum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devolvendo-um-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Devolvendo um enum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convertendo-entre-enum-e-int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convertendo entre enum e int
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stdpair-agrupando-dois-valores-sem-criar-uma-struct" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2544,6 +2577,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#decidindo-por-caso-switch-sobre-um-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decidindo por caso: switch sobre um enum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devolvendo-um-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Devolvendo um enum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convertendo-entre-enum-e-int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convertendo entre enum e int
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#stdpair-agrupando-dois-valores-sem-criar-uma-struct" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2711,134 +2777,218 @@ opção.)</p>
 </code></pre></div>
 <p>Note o <code>const</code> depois dos parênteses: ele diz "este método não altera os campos de <code>p</code>". É a mesma ideia de <code>const</code> do capítulo 1, aplicada a métodos — o compilador barra qualquer tentativa de atribuir a <code>x</code> ou <code>y</code> dentro de um método marcado <code>const</code>. Isso vira essencial na Unidade 5, quando <code>struct</code> evolui para <code>class</code> com encapsulamento — por enquanto, guarde a ideia: <strong><code>struct</code> com método já é 80% de uma classe.</strong></p>
 <h2 id="enum-class-mais-seguro-que-enum-de-c"><code>enum class</code>: mais seguro que <code>enum</code> de C<a class="headerlink" href="#enum-class-mais-seguro-que-enum-de-c" title="Permanent link">&para;</a></h2>
-<p>Em C, um <code>enum</code> é basicamente um <code>int</code> disfarçado — dois enums diferentes podem "vazar" e se misturar sem erro:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">enum</span><span class="w"> </span><span class="n">Cor</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">VERMELHO</span><span class="p">,</span><span class="w"> </span><span class="n">VERDE</span><span class="p">,</span><span class="w"> </span><span class="n">AZUL</span><span class="w"> </span><span class="p">};</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">enum</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">OK</span><span class="p">,</span><span class="w"> </span><span class="n">ERRO</span><span class="w"> </span><span class="p">};</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">enum</span><span class="w"> </span><span class="n">Cor</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OK</span><span class="p">;</span><span class="w"> </span><span class="c1">// compila em C, e um bug logico</span>
+<p>Antes da sintaxe, o problema. Muita coisa que um programa representa só pode
+assumir um punhado de valores: um turno é manhã, tarde ou noite; um semáforo
+está verde, amarelo ou vermelho; um pedido está pendente, pago ou cancelado. A
+saída improvisada é guardar isso num <code>int</code> (<code>0</code> é manhã, <code>1</code> é tarde...) ou numa
+<code>std::string</code> (<code>"manha"</code>, <code>"tarde"</code>). As duas funcionam e as duas mentem:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">turno</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span><span class="w">                  </span><span class="c1">// 7 nao e turno nenhum, e ninguem reclama</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Tarde"</span><span class="p">;</span><span class="w">        </span><span class="c1">// "Tarde", "tarde" ou "TARDE"? escolha errado e o if falha</span>
+</code></pre></div>
+<p>O <code>int</code> aceita valores que não existem no seu domínio; a string aceita qualquer
+texto e ainda erra por maiúscula. Nos dois casos o compilador não tem como
+ajudar, porque para ele são só um número e um texto quaisquer.</p>
+<p>Um <strong>enum</strong> resolve isso criando um tipo cujos únicos valores possíveis são os
+que você listou. Escrever algo fora da lista deixa de compilar — o erro sai na
+compilação, não na frente do usuário.</p>
+<p>Em C, porém, um <code>enum</code> é basicamente um <code>int</code> disfarçado — dois enums diferentes podem "vazar" e se misturar sem erro:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">enum</span><span class="w"> </span><span class="n">Cor</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">VERMELHO</span><span class="p">,</span><span class="w"> </span><span class="n">VERDE</span><span class="p">,</span><span class="w"> </span><span class="n">AZUL</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">enum</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">OK</span><span class="p">,</span><span class="w"> </span><span class="n">ERRO</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">enum</span><span class="w"> </span><span class="n">Cor</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OK</span><span class="p">;</span><span class="w"> </span><span class="c1">// compila em C, e um bug logico</span>
+</code></pre></div>
+<p>Pior: como os nomes ficam todos soltos no escopo de fora, dois enums não podem
+repetir um nome. Declarar <code>enum Turno { Manha, Tarde }</code> e <code>enum Periodo { Manha,
+Madrugada }</code> no mesmo programa dá erro de compilação:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>error: 'Manha' conflicts with a previous declaration
 </code></pre></div>
 <p><code>enum class</code> (C++11+) cria um tipo de verdade, isolado:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Cor</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Vermelho</span><span class="p">,</span><span class="w"> </span><span class="n">Verde</span><span class="p">,</span><span class="w"> </span><span class="n">Azul</span><span class="w"> </span><span class="p">};</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Ok</span><span class="p">,</span><span class="w"> </span><span class="n">Erro</span><span class="w"> </span><span class="p">};</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">Cor</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cor</span><span class="o">::</span><span class="n">Vermelho</span><span class="p">;</span><span class="w">   </span><span class="c1">// precisa qualificar com Cor::</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">// Cor c2 = Status::Ok;  // erro de compilacao: tipos incompativeis</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Cor</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Vermelho</span><span class="p">,</span><span class="w"> </span><span class="n">Verde</span><span class="p">,</span><span class="w"> </span><span class="n">Azul</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Ok</span><span class="p">,</span><span class="w"> </span><span class="n">Erro</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">Cor</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cor</span><span class="o">::</span><span class="n">Vermelho</span><span class="p">;</span><span class="w">   </span><span class="c1">// precisa qualificar com Cor::</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">// Cor c2 = Status::Ok;  // erro de compilacao: tipos incompativeis</span>
 </code></pre></div>
+<p>Os nomes agora moram <strong>dentro</strong> do tipo — é isso que o <code>Cor::</code> na frente
+significa, e é por isso que <code>Turno::Manha</code> e <code>Periodo::Manha</code> podem coexistir
+sem colidir.</p>
 <p>Comparação funciona normalmente:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Cor</span><span class="o">::</span><span class="n">Verde</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Cor</span><span class="o">::</span><span class="n">Verde</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
+<h2 id="decidindo-por-caso-switch-sobre-um-enum">Decidindo por caso: <code>switch</code> sobre um enum<a class="headerlink" href="#decidindo-por-caso-switch-sobre-um-enum" title="Permanent link">&para;</a></h2>
+<p>Quando a ação muda conforme o valor, o <code>switch</code> é a forma natural — e é aqui que
+o enum paga o investimento:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">nome_cor</span><span class="p">(</span><span class="n">Cor</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">Cor</span><span class="o">::</span><span class="no">Vermelho</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">"vermelho"</span><span class="p">;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">Cor</span><span class="o">::</span><span class="no">Verde</span><span class="p">:</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">"verde"</span><span class="p">;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">Cor</span><span class="o">::</span><span class="no">Azul</span><span class="p">:</span><span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="s">"azul"</span><span class="p">;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">"desconhecida"</span><span class="p">;</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>Dois detalhes que todo mundo tropeça na primeira vez:</p>
+<p><strong>O <code>case</code> precisa do qualificador.</strong> É <code>case Cor::Verde:</code>, não <code>case Verde:</code> —
+pela mesma razão de sempre, o nome mora dentro do tipo.</p>
+<p><strong>O <code>return</code> depois do <code>switch</code> parece inútil, e não é.</strong> Você cobriu as três
+cores, mas o compilador não considera isso uma garantia (nada impede que um
+<code>static_cast</code> mal-intencionado produza um <code>Cor</code> fora da lista). Sem aquela última
+linha, o <code>g++</code> avisa:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>warning: control reaches end of non-void function [-Wreturn-type]
+</code></pre></div>
+<p>Em troca, o compilador oferece algo que nem <code>int</code> nem <code>std::string</code> dariam: se
+você <strong>esquecer um caso</strong>, ele avisa, dizendo qual.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>warning: enumeration value ‘Azul’ not handled in switch [-Wswitch]
+</code></pre></div>
+<p>Isso é o argumento mais prático a favor de enum: no dia em que você acrescentar
+<code>Cor::Amarelo</code> à lista, o compilador aponta cada <code>switch</code> do programa que
+precisa ser atualizado. Com <code>int</code> ou <code>std::string</code>, você descobriria testando —
+ou não descobriria.</p>
+<h2 id="devolvendo-um-enum">Devolvendo um enum<a class="headerlink" href="#devolvendo-um-enum" title="Permanent link">&para;</a></h2>
+<p>Um enum não serve só de parâmetro: é um tipo como outro qualquer, e uma função
+pode devolvê-lo. Esse é o jeito de fazer uma classificação ficar explícita no
+tipo de retorno, em vez de devolver um <code>int</code> que quem chama precisa decifrar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Faixa</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Baixa</span><span class="p">,</span><span class="w"> </span><span class="n">Normal</span><span class="p">,</span><span class="w"> </span><span class="n">Alta</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">Faixa</span><span class="w"> </span><span class="nf">classifica</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">temperatura</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temperatura</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">18.0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">Faixa</span><span class="o">::</span><span class="n">Baixa</span><span class="p">;</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temperatura</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">26.0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">Faixa</span><span class="o">::</span><span class="n">Alta</span><span class="p">;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Faixa</span><span class="o">::</span><span class="n">Normal</span><span class="p">;</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>Quem chama <code>classifica(30.0)</code> recebe um <code>Faixa</code>, não um número solto — e só pode
+compará-lo com os valores de <code>Faixa</code>.</p>
+<h2 id="convertendo-entre-enum-e-int">Convertendo entre enum e <code>int</code><a class="headerlink" href="#convertendo-entre-enum-e-int" title="Permanent link">&para;</a></h2>
 <p>O outro lado dessa segurança é que um <code>enum class</code> <strong>não</strong> vira <code>int</code> sozinho —
 nem para imprimir. Quando você realmente precisar do número por trás do valor,
 peça a conversão explicitamente com <code>static_cast</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Cor</span><span class="o">::</span><span class="n">Azul</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">  </span><span class="c1">// 2</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">// std::cout &lt;&lt; Cor::Azul &lt;&lt; "\n";                 // erro de compilacao</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Cor</span><span class="o">::</span><span class="n">Azul</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">  </span><span class="c1">// 2</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1">// std::cout &lt;&lt; Cor::Azul &lt;&lt; "\n";                 // erro de compilacao</span>
 </code></pre></div>
 <p><code>static_cast&lt;T&gt;(x)</code> é o <code>(T) x</code> de C, com um nome que dá para procurar e que
 salta aos olhos de quem lê. A diferença é justamente essa: em C a conversão
 acontecia em silêncio, e aqui ela fica escrita no código, onde pode ser
-discutida. Os valores começam em <code>0</code> e seguem na ordem em que você declarou —
-por isso <code>Cor::Azul</code> é <code>2</code>.</p>
+discutida.</p>
+<p><strong>Por padrão</strong>, os valores começam em <code>0</code> e seguem na ordem em que você declarou
+— por isso <code>Cor::Azul</code> é <code>2</code>. Mas você pode escolher os números, o que é útil
+quando eles significam algo fora do programa:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Codigo</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="n">NaoEncontrado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">404</span><span class="p">,</span><span class="w"> </span><span class="n">ErroInterno</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Codigo</span><span class="o">::</span><span class="n">NaoEncontrado</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">  </span><span class="c1">// 404</span>
+</code></pre></div>
+<p>O caminho de volta, de <code>int</code> para o enum, também existe — e exige cuidado,
+porque <strong>nada é validado</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">Cor</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Cor</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">   </span><span class="c1">// Cor::Verde</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">Cor</span><span class="w"> </span><span class="n">ruim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Cor</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span><span class="w"> </span><span class="c1">// compila! e nao existe cor 7</span>
+</code></pre></div>
+<p>O <code>static_cast</code> obedece sem perguntar, e <code>ruim</code> passa a carregar um valor que não
+corresponde a cor nenhuma — o <code>switch</code> da seção anterior cairia direto no
+<code>return "desconhecida"</code>. Quando o número vem de fora do programa (de um arquivo,
+da entrada do usuário), conferir o intervalo <strong>antes</strong> de converter é
+responsabilidade de quem converte. Guarde essa questão: mais adiante neste
+capítulo, <code>std::optional</code> vai dar a forma honesta de uma função dizer "esse
+número não era uma cor nenhuma".</p>
 <p>Prefira <code>enum class</code> a <code>enum</code> sempre que estiver escrevendo código novo em C++.</p>
 <h2 id="stdpair-agrupando-dois-valores-sem-criar-uma-struct"><code>std::pair</code>: agrupando dois valores sem criar uma struct<a class="headerlink" href="#stdpair-agrupando-dois-valores-sem-criar-uma-struct" title="Permanent link">&para;</a></h2>
 <p>Às vezes você só precisa devolver dois valores de uma função, sem que valha a pena nomear uma struct nova:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;utility&gt;</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">divide_com_resto</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">b</span><span class="p">};</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">}</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">auto</span><span class="w"> </span><span class="n">resultado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide_com_resto</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resultado</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resultado</span><span class="p">.</span><span class="n">second</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w"> </span><span class="c1">// 3 2</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;utility&gt;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">divide_com_resto</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">b</span><span class="p">};</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="p">}</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="k">auto</span><span class="w"> </span><span class="n">resultado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide_com_resto</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resultado</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resultado</span><span class="p">.</span><span class="n">second</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w"> </span><span class="c1">// 3 2</span>
 </code></pre></div>
 <p><code>std::pair&lt;A, B&gt;</code> acessa os campos por <code>.first</code> e <code>.second</code>. Você vai reencontrar <code>pair</code> na Unidade 2, porque é exatamente o que um <code>std::map</code> usa internamente para guardar chave e valor.</p>
 <h2 id="stdoptional-pode-nao-existir-sem-codigo-de-erro-magico"><code>std::optional</code>: "pode não existir" sem código de erro mágico<a class="headerlink" href="#stdoptional-pode-nao-existir-sem-codigo-de-erro-magico" title="Permanent link">&para;</a></h2>
 <p>Em C, uma função que "pode não dar resultado" costuma devolver um valor sentinela (<code>-1</code>, <code>0</code>) ou um ponteiro que pode ser <code>NULL</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">busca_indice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">vetor</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">tamanho</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tamanho</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">vetor</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="c1">// "nao achei"</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">busca_indice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">vetor</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">tamanho</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">tamanho</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">vetor</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="c1">// "nao achei"</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="p">}</span>
 </code></pre></div>
 <p>Aqui o <code>-1</code> até funciona, porque posição nunca é negativa. Mas isso é sorte do
 problema, não uma solução: basta a função devolver algo em que <strong>todo</strong> valor
 seja legítimo para a convenção ruir. Uma divisão protegida é o caso limite —
 <code>-1</code> é um quociente perfeitamente possível:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">double</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w">  </span><span class="c1">// "deu errado"... ou o resultado de -10.0 / 10.0</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kt">double</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">;</span><span class="w">  </span><span class="c1">// "deu errado"... ou o resultado de -10.0 / 10.0</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">}</span>
 </code></pre></div>
 <p>Quem chama não tem como distinguir os dois casos, e nada obriga a checar.</p>
 <p><code>std::optional&lt;T&gt;</code> (C++17) resolve isso representando explicitamente "ou tem um
 <code>T</code>, ou não tem nada":</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;optional&gt;</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">divide_seguro</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span><span class="w">   </span><span class="c1">// "nao tem resultado", sem ambiguidade</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">              </span><span class="c1">// o double vira um optional com valor</span>
-<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;optional&gt;</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">divide_seguro</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span><span class="w">   </span><span class="c1">// "nao tem resultado", sem ambiguidade</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">              </span><span class="c1">// o double vira um optional com valor</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="p">}</span>
 </code></pre></div>
 <p>Quem chama tem três formas de lidar com a resposta. A primeira é perguntar antes
 de pegar:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide_seguro</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">);</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">has_value</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"deu "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">value</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// deu 5</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"divisao por zero</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide_seguro</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">);</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">has_value</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"deu "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">value</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// deu 5</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"divisao por zero</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="p">}</span>
 </code></pre></div>
 <p>A segunda é mais curta, e é a que você vai escrever no dia a dia: dentro de um
 <code>if</code>, o <code>optional</code> já se comporta como um <code>bool</code>, e <code>*</code> pega o valor de dentro
 (igual a um ponteiro):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide_seguro</span><span class="p">(</span><span class="mf">9.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="o">*</span><span class="n">r</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// 3</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide_seguro</span><span class="p">(</span><span class="mf">9.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="o">*</span><span class="n">r</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// 3</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="p">}</span>
 </code></pre></div>
 <p>A terceira é para quando existe um padrão razoável para o caso "não tem":
 <code>value_or</code> devolve o valor, se houver, ou o que você passar:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">auto</span><span class="w"> </span><span class="n">ruim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide_seguro</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ruim</span><span class="p">.</span><span class="n">value_or</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// 0</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">auto</span><span class="w"> </span><span class="n">ruim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide_seguro</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ruim</span><span class="p">.</span><span class="n">value_or</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// 0</span>
 </code></pre></div>
 <p>O perigo a evitar é chamar <code>value()</code> num <code>optional</code> <strong>vazio</strong>: isso lança
 exceção e aborta o programa. <code>value_or</code> nunca aborta, e no <code>if</code> acima o corpo
 nem chega a executar quando não há valor.</p>
-<p><code>std::optional</code> é o substituto moderno para "ponteiro que pode ser nulo, usado só para dizer se algo existe" — ele não aponta para memória alocada em outro lugar, ele <strong>contém</strong> o valor (ou não contém nada). Use <code>optional</code> quando a ausência de valor é um resultado normal e esperado da função, não um erro (para erros de verdade, o curso trata exceções na Unidade 5).</p>
+<p><code>std::optional</code> é o substituto moderno para "ponteiro que pode ser nulo, usado só para dizer se algo existe" — ele não aponta para memória alocada em outro lugar, ele <strong>contém</strong> o valor (ou não contém nada). Use <code>optional</code> quando a ausência de valor é um resultado normal e esperado da função, não um erro de verdade — um arquivo corrompido ou uma falha de hardware são outra categoria de problema, e C++ tem um mecanismo próprio para eles (exceções) que este curso não cobre.</p>
 <h2 id="juntando-tudo-um-exemplo-completo">Juntando tudo: um exemplo completo<a class="headerlink" href="#juntando-tudo-um-exemplo-completo" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;optional&gt;</span>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Categoria</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Eletronico</span><span class="p">,</span><span class="w"> </span><span class="n">Alimento</span><span class="p">,</span><span class="w"> </span><span class="n">Vestuario</span><span class="w"> </span><span class="p">};</span>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
-<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Produto</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">nome</span><span class="p">;</span>
-<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">preco</span><span class="p">;</span>
-<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">    </span><span class="n">Categoria</span><span class="w"> </span><span class="n">categoria</span><span class="p">;</span>
-<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
-<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">esta_em_promocao</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">preco</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">10.0</span><span class="p">;</span>
-<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="p">};</span>
-<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>
-<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">Produto</span><span class="o">&gt;</span><span class="w"> </span><span class="n">busca_produto</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">nome</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nome</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">"caneta"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Produto</span><span class="p">{</span><span class="s">"caneta"</span><span class="p">,</span><span class="w"> </span><span class="mf">2.50</span><span class="p">,</span><span class="w"> </span><span class="n">Categoria</span><span class="o">::</span><span class="n">Vestuario</span><span class="p">};</span>
-<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span>
-<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="p">}</span>
-<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>
-<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">resultado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">busca_produto</span><span class="p">(</span><span class="s">"caneta"</span><span class="p">);</span>
-<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resultado</span><span class="o">-&gt;</span><span class="n">nome</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" custa "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resultado</span><span class="o">-&gt;</span><span class="n">preco</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">resultado</span><span class="o">-&gt;</span><span class="n">esta_em_promocao</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"esta em promocao!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;optional&gt;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Categoria</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Eletronico</span><span class="p">,</span><span class="w"> </span><span class="n">Alimento</span><span class="p">,</span><span class="w"> </span><span class="n">Vestuario</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Produto</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">nome</span><span class="p">;</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">preco</span><span class="p">;</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">    </span><span class="n">Categoria</span><span class="w"> </span><span class="n">categoria</span><span class="p">;</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">esta_em_promocao</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">preco</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">10.0</span><span class="p">;</span>
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a><span class="p">};</span>
+<a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>
+<a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">Produto</span><span class="o">&gt;</span><span class="w"> </span><span class="n">busca_produto</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">nome</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nome</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">"caneta"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Produto</span><span class="p">{</span><span class="s">"caneta"</span><span class="p">,</span><span class="w"> </span><span class="mf">2.50</span><span class="p">,</span><span class="w"> </span><span class="n">Categoria</span><span class="o">::</span><span class="n">Vestuario</span><span class="p">};</span>
+<a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span>
+<a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="p">}</span>
+<a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a>
+<a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">resultado</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">busca_produto</span><span class="p">(</span><span class="s">"caneta"</span><span class="p">);</span>
+<a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-27" name="__codelineno-26-27" href="#__codelineno-26-27"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resultado</span><span class="o">-&gt;</span><span class="n">nome</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" custa "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">resultado</span><span class="o">-&gt;</span><span class="n">preco</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-26-28" name="__codelineno-26-28" href="#__codelineno-26-28"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">resultado</span><span class="o">-&gt;</span><span class="n">esta_em_promocao</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-29" name="__codelineno-26-29" href="#__codelineno-26-29"></a><span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"esta em promocao!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<a id="__codelineno-26-30" name="__codelineno-26-30" href="#__codelineno-26-30"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-26-31" name="__codelineno-26-31" href="#__codelineno-26-31"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-32" name="__codelineno-26-32" href="#__codelineno-26-32"></a><span class="p">}</span>
 </code></pre></div>
 <p>Repare em <code>resultado-&gt;nome</code>: quando você tem um <code>optional&lt;Produto&gt;</code>, <code>-&gt;</code> acessa um campo do <code>Produto</code> de dentro — funciona parecido com ponteiro, mas sem apontar para memória alocada dinamicamente.</p>
 <h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
@@ -2853,7 +3003,9 @@ nem chega a executar quando não há valor.</p>
 <li><code>struct</code> declara um tipo novo que empacota vários campos com um nome só; <code>Nome{...}</code> inicializa os campos na ordem em que foram declarados, e <code>.</code> lê ou altera cada um.</li>
 <li><code>struct</code> em C++ pode ter métodos — funções que enxergam os campos diretamente, sem receber a struct como parâmetro.</li>
 <li>Método <code>const</code> promete não alterar os campos; o compilador garante isso.</li>
-<li><code>enum class</code> cria um tipo isolado e seguro, ao contrário do <code>enum</code> "int disfarçado" de C.</li>
+<li><code>enum class</code> cria um tipo isolado e seguro, ao contrário do <code>enum</code> "int disfarçado" de C: os nomes moram dentro do tipo e não colidem.</li>
+<li><code>switch</code> sobre um enum é a forma natural de decidir por caso, e o compilador avisa quando você esquece um dos valores — o que <code>int</code> e <code>std::string</code> nunca fariam.</li>
+<li>Um enum serve de parâmetro e de retorno; a conversão para <code>int</code> e de volta exige <code>static_cast</code>, e a volta não valida nada.</li>
 <li><code>std::pair</code> agrupa dois valores sem precisar nomear uma struct.</li>
 <li><code>std::optional&lt;T&gt;</code> representa "pode não existir" de forma explícita, sem sentinelas mágicas nem ponteiro apontando para nada.</li>
 <li>Do <code>optional</code> se lê com <code>has_value()</code>/<code>value()</code>, com <code>if (auto r = ...)</code> e <code>*r</code>, ou com <code>value_or(padrao)</code>; <code>value()</code> num <code>optional</code> vazio aborta o programa em tempo de execução.</li>

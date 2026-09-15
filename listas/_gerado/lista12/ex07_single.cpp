@@ -1,4 +1,4 @@
-// ex04 — versao de arquivo unico (gerada automaticamente,
+// ex07 — versao de arquivo unico (gerada automaticamente,
 // nao edite este arquivo direto: edite os fontes em exercicios/ e rode
 // tools/gerar_single.py --todos de novo).
 //
@@ -11,8 +11,8 @@
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
-#ifndef EX04_H
-#define EX04_H
+#ifndef EX07_H
+#define EX07_H
 
 struct No {
     static inline int total_vivos = 0;

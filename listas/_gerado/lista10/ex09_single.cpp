@@ -1,4 +1,4 @@
-// ex02 — versao de arquivo unico (gerada automaticamente,
+// ex09 — versao de arquivo unico (gerada automaticamente,
 // nao edite este arquivo direto: edite os fontes em exercicios/ e rode
 // tools/gerar_single.py --todos de novo).
 //
@@ -12,8 +12,8 @@
 // ============================================================
 // Declaracoes do exercicio
 // ============================================================
-#ifndef EX02_H
-#define EX02_H
+#ifndef EX09_H
+#define EX09_H
 
 class Playlist {
 private:
