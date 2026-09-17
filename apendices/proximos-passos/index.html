@@ -2650,10 +2650,10 @@ apareceu como "autoriza roubar o conteúdo", e ficou nisso. A explicação compl
 envolve referências rvalue (<code>T&amp;&amp;</code>), construtor de movimento e operador de
 atribuição por movimento — os dois que, somados aos três da regra dos 3, dão a
 regra dos 5. É o que permite devolver um <code>vector</code> de uma função sem copiar nada.</p>
-<p><strong>Polimorfismo além do básico</strong> — destrutor virtual (a razão pela qual toda classe
-base polimórfica precisa de um <code>virtual ~Base()</code>), herança múltipla e interfaces,
-<code>dynamic_cast</code>, e por que "prefira composição a herança" é conselho tão repetido.
-Continuação direta do <a href="../../unidade5-oo/11-polimorfismo-operadores/">capítulo 11</a>.</p>
+<p><strong>Polimorfismo além do básico</strong> — herança múltipla e interfaces, <code>dynamic_cast</code>,
+e por que "prefira composição a herança" é conselho tão repetido. Continuação
+direta do <a href="../../unidade5-oo/11-polimorfismo-operadores/">capítulo 11</a>, que já
+cobriu o essencial: <code>virtual</code>, <code>override</code>, classe abstrata e destrutor virtual.</p>
 <p><strong><code>std::array</code> e <code>constexpr</code></strong> — o <code>array</code> de tamanho fixo (sem alocação dinâmica,
 diferente do <code>vector</code>) e o cálculo feito em tempo de compilação. Importa
 especialmente para embarcados, onde alocar no heap é caro ou proibido — a Unidade

@@ -2832,6 +2832,15 @@
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">delete</span><span class="w"> </span><span class="n">f</span><span class="p">;</span><span class="w">   </span><span class="c1">// qual destrutor roda?</span>
 </code></pre></div>
 <p>Se <code>~Forma()</code> <strong>não</strong> for <code>virtual</code>, <code>delete f</code> chama só <code>~Forma()</code>, e o destrutor de <code>Circulo</code> <strong>nunca roda</strong> — se <code>Circulo</code> tivesse algum recurso próprio para liberar, vazaria. Com destrutor virtual, <code>delete f</code> corretamente chama <code>~Circulo()</code> primeiro (que libera o que for específico de <code>Circulo</code>) e depois <code>~Forma()</code>. <strong>Regra fixa: toda classe pensada para ser usada polimorficamente (com <code>virtual</code> em algum método) precisa de destrutor virtual.</strong></p>
+<div class="admonition note">
+<p class="admonition-title"><code>virtual ~Base() {}</code> e <code>virtual ~Base() = default;</code> são a mesma coisa</p>
+<p>Você vai encontrar as duas formas por aí — inclusive na
+<a href="../../listas/lista11/">Lista 11</a> e no <a href="../../avaliacoes/a2-simulado/">simulado da Avaliação 2</a>,
+que usam a segunda. <code>= default</code> pede ao compilador o destrutor que ele geraria
+de qualquer forma, agora marcado <code>virtual</code>; <code>{}</code> escreve à mão um corpo vazio,
+que faz exatamente o mesmo. Para os fins deste curso são equivalentes, e você
+pode responder com a que preferir.</p>
+</div>
 <h2 id="sobrecarga-de-operadores">Sobrecarga de operadores<a class="headerlink" href="#sobrecarga-de-operadores" title="Permanent link">&para;</a></h2>
 <p>C++ permite definir o que operadores como <code>==</code>, <code>&lt;</code>, <code>+</code>, <code>&lt;&lt;</code> fazem para seus próprios tipos — é o que faz <code>std::string s1 == s2</code> ou <code>std::cout &lt;&lt; meuObjeto</code> funcionarem de forma natural.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Fracao</span><span class="w"> </span><span class="p">{</span>
