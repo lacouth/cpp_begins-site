@@ -584,14 +584,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade1-funcoes/03-structs-enum-optional/" class="md-nav__link">
+      <a href="../../unidade1-funcoes/03-structs-enum/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    3. Structs, enum class e optional
+    3. Structs e enum class
   
 
     
@@ -2028,7 +2028,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 03 · Structs, enum e optional
+    Lista 03 · Structs e enum class
   
 
     
@@ -2950,8 +2950,8 @@ inclusive nos que você esqueceu que existiam.</p>
 <p>Há ainda um terceiro jeito de uma função terminar, além do <code>return</code> normal e
 do antecipado: em vez de devolver um valor, ela <strong>lança</strong> um erro que
 interrompe a execução e volta subindo pelas funções que a chamaram. Você já
-esbarrou em algumas — <code>v.at(10)</code> fora do intervalo e <code>.value()</code> num
-<code>optional</code> vazio lançam exceção, e o programa aborta com
+esbarrou em uma — <code>v.at(10)</code> fora do intervalo lança exceção, e o programa
+aborta com
 <code>terminate called after throwing...</code> quando ninguém as trata.</p>
 <p>Tratar exceções (com <code>try</code>/<code>catch</code>) está fora do escopo deste curso. O que
 importa aqui é a garantia: <strong>mesmo nessa saída anormal, os destrutores dos

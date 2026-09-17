@@ -18,7 +18,7 @@
         <link rel="prev" href="../01-primeiros-passos/">
       
       
-        <link rel="next" href="../03-structs-enum-optional/">
+        <link rel="next" href="../03-structs-enum/">
       
       
         
@@ -732,14 +732,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../03-structs-enum-optional/" class="md-nav__link">
+      <a href="../03-structs-enum/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    3. Structs, enum class e optional
+    3. Structs e enum class
   
 
     
@@ -1967,7 +1967,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 03 · Structs, enum e optional
+    Lista 03 · Structs e enum class
   
 
     
@@ -2753,7 +2753,7 @@
 <ul>
 <li><strong>Referência não pode ser nula.</strong> Uma vez ligada a uma variável, <code>int&amp; x = n;</code> sempre aponta pra <code>n</code> — não existe "referência vazia" (ao contrário de ponteiro, que pode ser <code>nullptr</code>). Isso elimina uma categoria inteira de bug.</li>
 <li><strong>Referência não pode ser "religada".</strong> Depois de inicializada, <code>x</code> continua sendo um apelido para a mesma variável.</li>
-<li>Por isso, sempre que a intenção é "alterar o valor do chamador, e ele com certeza vai existir", referência é a ferramenta certa. Ponteiro continua fazendo sentido quando o "nada" é uma resposta válida (por exemplo, "procure X e retorne o endereço, ou nulo se não achar" — você vai ver uma alternativa mais moderna para esse caso, <code>std::optional</code>, no capítulo 3).</li>
+<li>Por isso, sempre que a intenção é "alterar o valor do chamador, e ele com certeza vai existir", referência é a ferramenta certa. Ponteiro continua fazendo sentido quando o "nada" é uma resposta válida (por exemplo, "procure X e retorne o endereço, ou nulo se não achar" — você vai ver uma alternativa mais moderna para esse caso, o padrão do capítulo 3: <code>bool</code> de retorno e o resultado por referência).</li>
 </ul>
 <h2 id="const-t-a-combinacao-que-voce-vai-usar-o-tempo-todo"><code>const T&amp;</code>: a combinação que você vai usar o tempo todo<a class="headerlink" href="#const-t-a-combinacao-que-voce-vai-usar-o-tempo-todo" title="Permanent link">&para;</a></h2>
 <p>Agora o motivo pelo qual referência importa mesmo quando você <strong>não</strong> quer alterar nada.</p>
@@ -2792,8 +2792,8 @@
 <td><code>T&amp;</code></td>
 </tr>
 <tr>
-<td>"Pode não existir" (endereço opcional)</td>
-<td>ponteiro, ou <code>std::optional&lt;T&gt;</code> (capítulo 3)</td>
+<td>"Pode não existir"</td>
+<td><code>bool</code> de retorno + parâmetro por referência (capítulo 3)</td>
 </tr>
 </tbody>
 </table>

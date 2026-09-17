@@ -677,14 +677,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade1-funcoes/03-structs-enum-optional/" class="md-nav__link">
+      <a href="../../unidade1-funcoes/03-structs-enum/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    3. Structs, enum class e optional
+    3. Structs e enum class
   
 
     
@@ -1912,7 +1912,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 03 · Structs, enum e optional
+    Lista 03 · Structs e enum class
   
 
     
@@ -2615,7 +2615,7 @@
 <h2 id="limitacoes-a-ter-em-mente">Limitações a ter em mente<a class="headerlink" href="#limitacoes-a-ter-em-mente" title="Permanent link">&para;</a></h2>
 <ul>
 <li>RAM é escasta (ESP32 simulado tem algumas centenas de KB, mas ainda é pouco comparado a um PC): evite <code>new</code>/alocação dinâmica dentro do <code>loop()</code>.</li>
-<li>Exceções e RTTI geralmente vêm desabilitados por padrão em builds Arduino — prefira <code>std::optional</code>/códigos de retorno a <code>throw</code> no código que roda no hardware.</li>
+<li>Exceções e RTTI geralmente vêm desabilitados por padrão em builds Arduino — prefira códigos de retorno a <code>throw</code> no código que roda no hardware.</li>
 <li>O simulador não é 100% fiel ao hardware real (tempo, ruído de sensor, etc.), mas é suficiente para validar lógica e arquitetura, que é o foco do curso.</li>
 </ul>
 

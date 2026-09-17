@@ -582,14 +582,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade1-funcoes/03-structs-enum-optional/" class="md-nav__link">
+      <a href="../../unidade1-funcoes/03-structs-enum/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    3. Structs, enum class e optional
+    3. Structs e enum class
   
 
     
@@ -1817,7 +1817,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 03 · Structs, enum e optional
+    Lista 03 · Structs e enum class
   
 
     
@@ -2634,6 +2634,37 @@ três ao mesmo tempo.</p>
 </div>
 <h2 id="frente-1-a-linguagem-que-ficou-de-fora">Frente 1 — A linguagem que ficou de fora<a class="headerlink" href="#frente-1-a-linguagem-que-ficou-de-fora" title="Permanent link">&para;</a></h2>
 <p>Cada item diz que problema resolve e onde o curso encostou nele.</p>
+<p><strong><code>std::optional&lt;T&gt;</code> — comece por aqui.</strong> É o assunto mais próximo do que você já
+sabe, e o que mais melhora código do dia a dia. O curso resolveu "a função pode
+não ter resposta" de duas formas, no <a href="../../unidade1-funcoes/03-structs-enum/#quando-a-funcao-pode-nao-ter-resposta">capítulo 3</a>:
+um valor impossível (<code>-1</code> para índice) ou <code>bool</code> de retorno com o resultado saindo
+por um parâmetro de referência. As duas funcionam, e as duas têm defeito. O valor
+impossível só existe por sorte do problema — some no dia em que a função devolve
+um valor do domínio, em que <code>-1</code> é uma resposta legítima. E o parâmetro de saída
+obriga quem chama a declarar a variável antes, torna a assinatura mais longa e não
+impede ninguém de ler a variável ignorando o <code>bool</code>.</p>
+<p><code>std::optional&lt;T&gt;</code> é o tipo que diz "ou tem um <code>T</code>, ou não tem nada" sem nenhuma
+das duas concessões:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;optional&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">divide</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span><span class="w">   </span><span class="c1">// "nao tem resultado", sem ambiguidade</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">              </span><span class="c1">// o double vira um optional com valor</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">divide</span><span class="p">(</span><span class="mf">9.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="o">*</span><span class="n">r</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// 3</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">}</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">divide</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">).</span><span class="n">value_or</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// 0</span>
+</code></pre></div>
+<p>O resultado vem no <strong>retorno</strong>, onde ele deveria estar; não existe valor mágico a
+combinar; e ler o valor sem checar é um erro que se percebe (<code>value()</code> num
+<code>optional</code> vazio aborta o programa, em vez de devolver lixo silenciosamente).
+Reescreva com <code>optional</code> duas ou três funções das listas 03 e 05 — <code>busca_posicao</code>,
+<code>moda</code>, <code>k_esimo_menor</code> — e a diferença aparece na hora. Depois veja
+<code>std::expected</code> (C++23), que é o mesmo com um motivo de falha anexado.</p>
 <p><strong><code>try</code>/<code>catch</code> e exceções de verdade</strong> — o <a href="../../unidade5-oo/10-destrutor-raii/">capítulo 10</a>
 declara explicitamente que o assunto ficou fora do escopo, e usou apenas a
 garantia de que destrutores rodam durante uma exceção. Falta o outro lado:

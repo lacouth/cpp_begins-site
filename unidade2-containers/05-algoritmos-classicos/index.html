@@ -584,14 +584,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade1-funcoes/03-structs-enum-optional/" class="md-nav__link">
+      <a href="../../unidade1-funcoes/03-structs-enum/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    3. Structs, enum class e optional
+    3. Structs e enum class
   
 
     
@@ -1967,7 +1967,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 03 · Structs, enum e optional
+    Lista 03 · Structs e enum class
   
 
     
@@ -2709,21 +2709,20 @@
 <p>Você acabou de ganhar o <code>std::vector</code>, que carrega o próprio tamanho e cresce sozinho. Com ele e com o que você já sabe de C — <code>for</code>, <code>if</code>, uma variável auxiliar — dá para resolver quase todo problema clássico de coleção. Este capítulo faz exatamente isso.</p>
 <h2 id="busca-linear-percorrer-ate-achar">Busca linear: percorrer até achar<a class="headerlink" href="#busca-linear-percorrer-ate-achar" title="Permanent link">&para;</a></h2>
 <p>O problema mais simples: onde está o valor?</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;optional&gt;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">busca_linear</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">());</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">busca_linear</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">());</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">}</span>
 </code></pre></div>
 <p>Três coisas a notar.</p>
 <p>O <code>return</code> <strong>dentro</strong> do laço encerra a função assim que acha — não adianta continuar procurando. Muita gente escreve uma variável <code>encontrado</code> e percorre o vector inteiro mesmo depois de ter achado; funciona, mas faz trabalho à toa.</p>
-<p>O retorno é <code>std::optional&lt;int&gt;</code> (do <a href="../../unidade1-funcoes/03-structs-enum-optional/">capítulo 3</a>), e não <code>-1</code>. Aqui os dois funcionariam, porque <code>-1</code> nunca é um índice válido — mas o hábito importa: no dia em que a função devolver um <em>valor</em> em vez de um índice, <code>-1</code> passa a ser uma resposta legítima e o truque desmorona.</p>
+<p>O <code>-1</code> é o "não achei", e ele serve aqui porque <strong>nenhum índice válido é negativo</strong> — como discutido no <a href="../../unidade1-funcoes/03-structs-enum/#quando-a-funcao-pode-nao-ter-resposta">capítulo 3</a>. Guarde a ressalva de lá: no dia em que a função devolver um <em>valor</em> em vez de um índice, <code>-1</code> passa a ser uma resposta legítima, e aí o retorno tem de ser <code>bool</code> com o resultado saindo por referência.</p>
 <p>E o <code>static_cast&lt;int&gt;</code> em volta de <code>v.size()</code> é o do <a href="../04-vector/#tamanho-indice-e-stdsize_t">capítulo 4</a>: <code>size()</code> devolve <code>std::size_t</code>, sem sinal, e comparar com um <code>int</code> gera aviso. Num laço tão simples quanto este, <code>std::size_t i = 0</code> também serviria — daqui para a frente, porém, os índices deste capítulo entram em contas que podem ficar negativas, e por isso o tamanho passa sistematicamente por um <code>int</code>.</p>
 <p><strong>Quanto custa:</strong> no pior caso, uma passada pelo vector inteiro. Com 1.000 elementos, até 1.000 comparações.</p>
 <h2 id="maximo-e-minimo-guardar-o-melhor-ate-agora">Máximo e mínimo: guardar o melhor até agora<a class="headerlink" href="#maximo-e-minimo-guardar-o-melhor-ate-agora" title="Permanent link">&para;</a></h2>
@@ -2738,7 +2737,7 @@
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
 </code></pre></div>
 <p>O erro clássico desta função é inicializar <code>maior = 0</code>. Com <code>{-5, -2, -9}</code>, a resposta sairia <code>0</code> — um valor que <strong>nem está no vector</strong>. O único ponto de partida honesto é o primeiro elemento.</p>
-<p>Isso tem uma consequência: a função exige um vector não vazio, porque <code>v[0]</code> não existe num vector vazio. Ou você documenta essa exigência, ou devolve <code>std::optional&lt;int&gt;</code> e trata o caso — é a mesma decisão da busca linear.</p>
+<p>Isso tem uma consequência: a função exige um vector não vazio, porque <code>v[0]</code> não existe num vector vazio. Ou você documenta essa exigência, ou muda a assinatura para <code>bool maior_elemento(const std::vector&lt;int&gt;&amp; v, int&amp; maior)</code> e trata o caso — e aqui <strong>não</strong> dá para usar um <code>-1</code>, porque o que volta é um valor do vector, e <code>-1</code> é um valor possível. É a decisão do capítulo 3.</p>
 <p>Se você precisa do <strong>índice</strong> do maior, e não do valor, guarde o índice e compare <code>v[i] &gt; v[indice_maior]</code>.</p>
 <h2 id="contagem-e-acumulacao-uma-variavel-que-sobrevive-ao-laco">Contagem e acumulação: uma variável que sobrevive ao laço<a class="headerlink" href="#contagem-e-acumulacao-uma-variavel-que-sobrevive-ao-laco" title="Permanent link">&para;</a></h2>
 <p>Contar quantos elementos satisfazem uma condição:</p>
@@ -2802,7 +2801,7 @@
 <p><strong>Quanto custa:</strong> no pior caso, aproximadamente n² comparações. Com 1.000 elementos, cerca de um milhão. É por isso que ninguém usa bubble sort de verdade — mas é o algoritmo de ordenação mais fácil de entender, e entender um é o que permite confiar nos outros.</p>
 <h2 id="busca-binaria-o-premio-por-ter-ordenado">Busca binária: o prêmio por ter ordenado<a class="headerlink" href="#busca-binaria-o-premio-por-ter-ordenado" title="Permanent link">&para;</a></h2>
 <p>Ordenar dá trabalho. Este é o retorno desse investimento:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">busca_binaria</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">busca_binaria</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">alvo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">inicio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">fim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">())</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
@@ -2817,7 +2816,7 @@
 <a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">            </span><span class="n">fim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">meio</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">          </span><span class="c1">// ...ou na de baixo</span>
 <a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">        </span><span class="p">}</span>
 <a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
 <a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="p">}</span>
 </code></pre></div>
 <p>A cada volta, <strong>metade</strong> dos candidatos é descartada. Num vector de 1.000 elementos, a busca linear faz até 1.000 comparações; a binária faz no máximo 10. Com um milhão de elementos: um milhão contra 20.</p>

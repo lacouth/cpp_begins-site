@@ -7,7 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,21 +14,22 @@
 #ifndef EX06_H
 #define EX06_H
 
-// Retorna o indice de alvo em v usando busca binaria.
-// Assume que v esta ORDENADO em ordem crescente.
-std::optional<int> busca_binaria(const std::vector<int>& v, int alvo);
+// Retorna o indice de "alvo" num vector JA ORDENADO,
+// ou -1 se o alvo nao estiver nele.
+int busca_binaria(const std::vector<int>& v, int alvo);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-std::optional<int> busca_binaria(const std::vector<int>& v, int alvo) {
-    // TODO: mantenha dois indices, inicio e fim. Enquanto inicio <= fim,
-    // olhe o elemento do meio: se for o alvo, devolva o indice; se for
-    // menor que o alvo, o alvo so pode estar na metade de cima; senao,
-    // na de baixo.
-    return std::nullopt;
+int busca_binaria(const std::vector<int>& v, int alvo) {
+    // TODO: mantenha "inicio" e "fim" delimitando os candidatos.
+    // Enquanto inicio <= fim: olhe o meio; se for o alvo, devolva o indice;
+    // se for menor que o alvo, jogue "inicio" para depois do meio;
+    // senao jogue "fim" para antes do meio.
+    // Se o laco terminar, devolva -1.
+    return -1;
 }
 
 // ============================================================
@@ -38,21 +38,21 @@ std::optional<int> busca_binaria(const std::vector<int>& v, int alvo) {
 int main() {
     std::vector<int> v = {1, 3, 5, 7, 9};
 
-    assert(busca_binaria(v, 1).value() == 0);
-    assert(busca_binaria(v, 5).value() == 2);
-    assert(busca_binaria(v, 9).value() == 4);
+    assert(busca_binaria(v, 1) == 0);
+    assert(busca_binaria(v, 5) == 2);
+    assert(busca_binaria(v, 9) == 4);
 
-    assert(!(busca_binaria(v, 4).has_value()));
-    assert(!(busca_binaria(v, 0).has_value()));
-    assert(!(busca_binaria(v, 10).has_value()));
+    assert(busca_binaria(v, 4) == -1);
+    assert(busca_binaria(v, 0) == -1);
+    assert(busca_binaria(v, 10) == -1);
 
     // um elemento so: o <= da condicao de parada e o que faz isto passar
     std::vector<int> um = {42};
-    assert(busca_binaria(um, 42).value() == 0);
-    assert(!(busca_binaria(um, 1).has_value()));
+    assert(busca_binaria(um, 42) == 0);
+    assert(busca_binaria(um, 1) == -1);
 
     std::vector<int> vazio;
-    assert(!(busca_binaria(vazio, 1).has_value()));
+    assert(busca_binaria(vazio, 1) == -1);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

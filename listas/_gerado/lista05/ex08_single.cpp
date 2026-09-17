@@ -7,7 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,47 +14,61 @@
 #ifndef EX08_H
 #define EX08_H
 
-// Retorna o valor mais frequente de v (o que aparece primeiro, em caso
-// de empate), ou std::nullopt se v estiver vazio.
-std::optional<int> moda(const std::vector<int>& v);
+// Escreve em "valor" o elemento mais frequente de "v" (o primeiro, em caso de
+// empate). Devolve true se havia o que responder; devolve false e nao mexe em
+// "valor" se o vector estiver vazio.
+bool moda(const std::vector<int>& v, int& valor);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-std::optional<int> moda(const std::vector<int>& v) {
-    // TODO: se v estiver vazio, devolva std::nullopt.
-    // Guarde antes do laco o melhor valor e a melhor contagem (comece em 0).
-    // Para cada i: zere um contador, percorra j de 0 ao fim contando
-    // quantas vezes v[j] == v[i], e se essa contagem for MAIOR que a
-    // melhor ate agora, atualize as duas variaveis.
-    return std::nullopt;
+bool moda(const std::vector<int>& v, int& valor) {
+    // TODO:
+    // 1. vector vazio -> devolva false.
+    // 2. para cada i, conte quantas vezes v[i] aparece no vector inteiro
+    //    (laco interno, com o contador zerado a cada i).
+    // 3. guarde o melhor até agora; use > , e nao >= , para o empate
+    //    ficar com o valor que aparece primeiro.
+    // 4. escreva o melhor em "valor" e devolva true.
+    return false;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    assert(moda({1, 2, 2, 3}).value() == 2);
+    int m = 0;
+
+    assert(moda({1, 2, 2, 3}, m));
+    assert(m == 2);
 
     // empate: vale o que aparece PRIMEIRO (quem usou >= devolve 2)
-    assert(moda({1, 1, 2, 2}).value() == 1);
+    assert(moda({1, 1, 2, 2}, m));
+    assert(m == 1);
 
     // todos distintos: todos empatam com 1, vence o primeiro
-    assert(moda({4, 7, 9}).value() == 4);
+    assert(moda({4, 7, 9}, m));
+    assert(m == 4);
 
     // um elemento so
-    assert(moda({7}).value() == 7);
+    assert(moda({7}, m));
+    assert(m == 7);
 
     // negativos e a moda no fim do vector
-    assert(moda({-1, 3, 3, -1, 3}).value() == 3);
+    assert(moda({-1, 3, 3, -1, 3}, m));
+    assert(m == 3);
 
     // valores repetidos espalhados, nao contiguos
-    assert(moda({5, 8, 5, 8, 5}).value() == 5);
+    assert(moda({5, 8, 5, 8, 5}, m));
+    assert(m == 5);
 
+    // vazio: devolve false e nao mexe no parametro de saida
+    m = 99;
     std::vector<int> vazio;
-    assert(!(moda(vazio).has_value()));
+    assert(!moda(vazio, m));
+    assert(m == 99);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

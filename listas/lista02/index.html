@@ -584,14 +584,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade1-funcoes/03-structs-enum-optional/" class="md-nav__link">
+      <a href="../../unidade1-funcoes/03-structs-enum/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    3. Structs, enum class e optional
+    3. Structs e enum class
   
 
     
@@ -1967,7 +1967,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 03 · Structs, enum e optional
+    Lista 03 · Structs e enum class
   
 
     
@@ -3115,7 +3115,7 @@
 <h2 id="ex08">ex08<a class="headerlink" href="#ex08" title="Permanent link">&para;</a></h2>
 <p>Escreva <code>raiz_quadrada</code>, que recebe um <code>double</code> e um <strong>ponteiro</strong> para <code>double</code> onde o resultado deve ser guardado. A função calcula a raiz quadrada do número (<code>std::sqrt</code>, de <code>&lt;cmath&gt;</code>) e escreve o valor no endereço apontado.</p>
 <p>Se o número for negativo, não existe raiz quadrada real: guarde <code>-1.0</code> no resultado para sinalizar isso.</p>
-<p>Este é o padrão clássico em C de "devolver resultado pelo parâmetro" — na Lista 03 você verá como o C++ resolve o mesmo problema com <code>std::optional</code>.</p>
+<p>Este é o padrão clássico de "devolver resultado pelo parâmetro", e ele volta várias vezes no curso: sempre que uma função pode não ter resposta, ela devolve <code>bool</code> (ou um valor especial como <code>-1</code>) e entrega o resultado por um parâmetro.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">raiz_quadrada</span><span class="p">(</span><span class="mf">9.0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">);</span><span class="w">    </span><span class="c1">// r vale 3.0</span>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">raiz_quadrada</span><span class="p">(</span><span class="mf">-4.0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">r</span><span class="p">);</span><span class="w">   </span><span class="c1">// r vale -1.0</span>

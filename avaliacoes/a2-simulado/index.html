@@ -584,14 +584,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade1-funcoes/03-structs-enum-optional/" class="md-nav__link">
+      <a href="../../unidade1-funcoes/03-structs-enum/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    3. Structs, enum class e optional
+    3. Structs e enum class
   
 
     
@@ -1923,7 +1923,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 03 · Structs, enum e optional
+    Lista 03 · Structs e enum class
   
 
     
@@ -2738,7 +2738,7 @@
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="o">~</span><span class="n">Ranking</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">pontos_</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
 <a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">registra</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">p</span><span class="p">);</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">melhor</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">melhor</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pontuacao</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
 <a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="k">private</span><span class="o">:</span>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">pontos_</span><span class="p">;</span>
@@ -2746,7 +2746,7 @@
 <a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="p">};</span>
 </code></pre></div>
 <p><strong>a)</strong> Reescreva <strong>apenas a seção privada</strong>, seguindo a regra do zero, e diga quais funções membro passam a não ser mais necessárias.</p>
-<p><strong>b)</strong> Escreva o corpo de <code>registra</code> e de <code>melhor</code> na sua versão. <code>melhor()</code> devolve a maior pontuação já registrada, ou <code>std::nullopt</code> se nenhuma foi registrada ainda.</p>
+<p><strong>b)</strong> Escreva o corpo de <code>registra</code> e de <code>melhor</code> na sua versão. <code>melhor()</code> escreve a maior pontuação já registrada no parâmetro e devolve <code>true</code>; devolve <code>false</code> se nenhuma foi registrada ainda.</p>
 <p><strong>c)</strong> Em uma frase: por que a versão acima quebra se alguém escrever <code>Ranking b = a;</code>?</p>
 <details class="note">
 <summary>Resposta</summary>
@@ -2760,12 +2760,13 @@
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">pontos_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Ranking</span><span class="o">::</span><span class="n">melhor</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="kt">bool</span><span class="w"> </span><span class="nf">Ranking::melhor</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">pontuacao</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pontos_</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 <a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="n">std</span><span class="o">::</span><span class="n">max_element</span><span class="p">(</span><span class="n">pontos_</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">pontos_</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="n">pontuacao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">std</span><span class="o">::</span><span class="n">max_element</span><span class="p">(</span><span class="n">pontos_</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">pontos_</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="p">}</span>
 </code></pre></div>
 <p>Repare no <code>*</code> antes do <code>std::max_element</code>: ele devolve um <strong>iterador</strong>, não o valor — desreferenciar é obrigatório. E a checagem de vazio vem primeiro, porque <code>max_element</code> de uma faixa vazia devolve <code>end()</code>, que não pode ser desreferenciado.</p>
 <p><strong>c)</strong> Porque a cópia gerada pelo compilador copia o <strong>ponteiro</strong>, não o array: <code>a.pontos_</code> e <code>b.pontos_</code> passam a apontar para o mesmo bloco, e quando os dois forem destruídos cada um dará <code>delete[]</code> nele — <strong>double free</strong>. Era exatamente para evitar isso que a regra dos 3 existe; a regra do zero evita o problema inteiro, em vez de remendá-lo.</p>
@@ -2843,16 +2844,16 @@
 <a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span><span class="o">~</span><span class="n">FilaEncadeada</span><span class="p">();</span><span class="w">                  </span><span class="c1">// ja implementado, nao precisa escrever</span>
 <a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
 <a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">entra</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="p">);</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sai</span><span class="p">();</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">sai</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">);</span>
 <a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
 <a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="k">private</span><span class="o">:</span>
 <a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">    </span><span class="n">No</span><span class="o">*</span><span class="w"> </span><span class="n">inicio_</span><span class="p">;</span>
 <a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">    </span><span class="n">No</span><span class="o">*</span><span class="w"> </span><span class="n">fim_</span><span class="p">;</span>
 <a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="p">};</span>
 </code></pre></div>
-<p>Escreva o corpo de <strong><code>entra</code></strong> e de <strong><code>sai</code></strong>. A fila é FIFO: quem entra primeiro sai primeiro. <code>entra</code> insere no fim; <code>sai</code> remove do início e devolve o item.</p>
+<p>Escreva o corpo de <strong><code>entra</code></strong> e de <strong><code>sai</code></strong>. A fila é FIFO: quem entra primeiro sai primeiro. <code>entra</code> insere no fim; <code>sai</code> remove do início e entrega o item pelo parâmetro de referência, devolvendo <code>true</code>.</p>
 <ul>
-<li><code>sai()</code> numa fila <strong>vazia</strong> devolve <code>std::nullopt</code>.</li>
+<li><code>sai()</code> numa fila <strong>vazia</strong> devolve <code>false</code> e não mexe no parâmetro.</li>
 <li><code>sai()</code> precisa liberar o nó removido.</li>
 <li><strong>Atenção:</strong> ao sair o <strong>último</strong> elemento, <code>fim_</code> precisa voltar a <code>nullptr</code>. Esse ponto será avaliado — se ele ficar apontando para memória liberada, a próxima chamada a <code>entra</code> corrompe a fila.</li>
 </ul>
@@ -2869,18 +2870,18 @@
 <a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="p">}</span>
 <a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
-<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">FilaEncadeada</span><span class="o">::</span><span class="n">sai</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="kt">bool</span><span class="w"> </span><span class="nf">FilaEncadeada::sai</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">item</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inicio_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">nullopt</span><span class="p">;</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 <a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">    </span><span class="n">No</span><span class="o">*</span><span class="w"> </span><span class="n">velho</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inicio_</span><span class="p">;</span>
-<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">velho</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">;</span><span class="w">   </span><span class="c1">// copia ANTES de liberar o no</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">    </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">velho</span><span class="o">-&gt;</span><span class="n">item</span><span class="p">;</span><span class="w">               </span><span class="c1">// copia ANTES de liberar o no</span>
 <a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">    </span><span class="n">inicio_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">velho</span><span class="o">-&gt;</span><span class="n">prox</span><span class="p">;</span>
 <a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inicio_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">         </span><span class="c1">// saiu o ultimo: a fila esvaziou</span>
 <a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">        </span><span class="n">fim_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">;</span>
 <a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="w">    </span><span class="k">delete</span><span class="w"> </span><span class="n">velho</span><span class="p">;</span>
-<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
 <a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="p">}</span>
 </code></pre></div>
 <p><strong>Os dois pontos que decidem a questão</strong> são os casos de borda, e os dois envolvem a fila ficando vazia ou deixando de estar:</p>

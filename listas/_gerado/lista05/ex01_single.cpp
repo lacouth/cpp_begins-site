@@ -7,7 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -15,19 +14,19 @@
 #ifndef EX01_H
 #define EX01_H
 
-// Retorna o indice da primeira ocorrencia de alvo em v,
-// ou std::nullopt se alvo nao estiver no vector.
-std::optional<int> busca_linear(const std::vector<int>& v, int alvo);
+// Retorna o indice da primeira ocorrencia de "alvo" em "v",
+// ou -1 se o alvo nao estiver no vector.
+int busca_linear(const std::vector<int>& v, int alvo);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-std::optional<int> busca_linear(const std::vector<int>& v, int alvo) {
-    // TODO: percorra v com um indice; ao achar alvo, devolva o indice.
-    // Se o laco terminar sem achar, devolva std::nullopt.
-    return std::nullopt;
+int busca_linear(const std::vector<int>& v, int alvo) {
+    // TODO: percorra "v" com um indice; devolva o indice assim que achar "alvo".
+    // Se o laco terminar sem achar, devolva -1.
+    return -1;
 }
 
 // ============================================================
@@ -36,16 +35,16 @@ std::optional<int> busca_linear(const std::vector<int>& v, int alvo) {
 int main() {
     std::vector<int> v = {4, 1, 9, 1};
 
-    assert(busca_linear(v, 4).value() == 0);
-    assert(busca_linear(v, 9).value() == 2);
+    assert(busca_linear(v, 4) == 0);
+    assert(busca_linear(v, 9) == 2);
 
     // primeira ocorrencia, nao a ultima
-    assert(busca_linear(v, 1).value() == 1);
+    assert(busca_linear(v, 1) == 1);
 
-    assert(!(busca_linear(v, 7).has_value()));
+    assert(busca_linear(v, 7) == -1);
 
     std::vector<int> vazio;
-    assert(!(busca_linear(vazio, 1).has_value()));
+    assert(busca_linear(vazio, 1) == -1);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

@@ -7,7 +7,6 @@
 #include <cassert>
 #include <iostream>
 #include <string>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -17,51 +16,63 @@
 
 // Converte texto para int. Aceita um '-' inicial seguido de pelo menos um
 // digito, e nada alem de digitos depois disso.
-// Retorna std::nullopt se o texto nao for um inteiro valido.
-std::optional<int> converte_para_int(const std::string& texto);
+// Devolve true e escreve em "valor" se o texto for um inteiro valido;
+// devolve false e nao mexe em "valor" caso contrario.
+bool converte_para_int(const std::string& texto, int& valor);
 
 #endif
 
 // ============================================================
 // ESCREVA SUA SOLUCAO AQUI
 // ============================================================
-std::optional<int> converte_para_int(const std::string& texto) {
+bool converte_para_int(const std::string& texto, int& valor) {
     // TODO:
-    // 1. texto vazio -> std::nullopt.
+    // 1. texto vazio -> devolva false.
     // 2. se comecar com '-', guarde que e negativo e comece a ler do indice 1;
-    //    senao comece do indice 0. Se nao sobrar nenhum caractere, nullopt.
+    //    senao comece do indice 0. Se nao sobrar nenhum caractere, false.
     // 3. percorra os caracteres restantes: se algum nao for digito
-    //    (c >= '0' && c <= '9'), devolva nullopt;
+    //    (c >= '0' && c <= '9'), devolva false;
     //    senao faca resultado = resultado * 10 + (c - '0').
-    // 4. devolva o resultado, com o sinal.
-    return std::nullopt;
+    // 4. escreva o resultado com o sinal em "valor" e devolva true.
+    return false;
 }
 
 // ============================================================
 // NAO ALTERE — testes
 // ============================================================
 int main() {
-    assert(converte_para_int("42").value() == 42);
-    assert(converte_para_int("0").value() == 0);
-    assert(converte_para_int("7").value() == 7);
+    int v = 0;
+
+    assert(converte_para_int("42", v));
+    assert(v == 42);
+    assert(converte_para_int("0", v));
+    assert(v == 0);
+    assert(converte_para_int("7", v));
+    assert(v == 7);
 
     // zeros a esquerda sao aceitos
-    assert(converte_para_int("007").value() == 7);
+    assert(converte_para_int("007", v));
+    assert(v == 7);
 
     // negativos
-    assert(converte_para_int("-7").value() == -7);
-    assert(converte_para_int("-1234").value() == -1234);
+    assert(converte_para_int("-7", v));
+    assert(v == -7);
+    assert(converte_para_int("-1234", v));
+    assert(v == -1234);
 
-    // invalidos
-    assert(!(converte_para_int("").has_value()));
-    assert(!(converte_para_int("-").has_value()));
-    assert(!(converte_para_int("12a").has_value()));
-    assert(!(converte_para_int("a12").has_value()));
-    assert(!(converte_para_int("1 2").has_value()));
-    assert(!(converte_para_int(" 12").has_value()));
-    assert(!(converte_para_int("3.14").has_value()));
-    assert(!(converte_para_int("--5").has_value()));
-    assert(!(converte_para_int("5-").has_value()));
+    // invalidos: devolvem false e nao mexem no parametro de saida
+    v = 99;
+    assert(!converte_para_int("", v));
+    assert(v == 99);
+    assert(!converte_para_int("-", v));
+    assert(!converte_para_int("12a", v));
+    assert(!converte_para_int("a12", v));
+    assert(!converte_para_int("1 2", v));
+    assert(!converte_para_int(" 12", v));
+    assert(!converte_para_int("3.14", v));
+    assert(!converte_para_int("--5", v));
+    assert(!converte_para_int("5-", v));
+    assert(v == 99);
 
     std::cout << "Todos os testes passaram!\n";
     return 0;

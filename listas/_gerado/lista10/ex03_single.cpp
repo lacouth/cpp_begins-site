@@ -8,7 +8,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <optional>
 
 // ============================================================
 // Declaracoes do exercicio
@@ -22,7 +21,9 @@ private:
 
 public:
     void visita(const std::string& pagina);
-    std::optional<std::string> ultima_visitada() const;
+    // Escreve a ultima pagina visitada em "pagina" e devolve true.
+    // Devolve false e nao mexe em "pagina" se o historico estiver vazio.
+    bool ultima_visitada(std::string& pagina) const;
     int total_visitas() const;
 };
 
@@ -35,10 +36,10 @@ void HistoricoNavegacao::visita(const std::string& pagina) {
     // TODO: adicione "pagina" ao final de paginas_.
 }
 
-std::optional<std::string> HistoricoNavegacao::ultima_visitada() const {
+bool HistoricoNavegacao::ultima_visitada(std::string& pagina) const {
     // TODO: se paginas_ estiver vazio, retorne std::nullopt.
     // Senao, retorne o ultimo elemento de paginas_.
-    return std::nullopt;
+    return false;
 }
 
 int HistoricoNavegacao::total_visitas() const {
@@ -53,13 +54,15 @@ int main() {
     HistoricoNavegacao h;
     h.visita("home");
     h.visita("perfil");
-    auto ultima = h.ultima_visitada();
-    assert(ultima.has_value());
-    assert(ultima.value() == std::string("perfil"));
+    std::string ultima;
+    assert(h.ultima_visitada(ultima));
+    assert(ultima == std::string("perfil"));
     assert(h.total_visitas() == 2);
 
     HistoricoNavegacao vazio;
-    assert(!vazio.ultima_visitada().has_value());
+    std::string nada = "intocada";
+    assert(!vazio.ultima_visitada(nada));
+    assert(nada == std::string("intocada"));
     assert(vazio.total_visitas() == 0);
 
     std::cout << "Todos os testes passaram!\n";
