@@ -2768,6 +2768,21 @@
 <td>4</td>
 </tr>
 <tr>
+<td><code>n--</code> para "tirar o último" do vetor</td>
+<td><code>v.pop_back()</code> (não devolve o valor: leia <code>v.back()</code> antes)</td>
+<td>4</td>
+</tr>
+<tr>
+<td>deslocar tudo à mão para tirar um elemento</td>
+<td><code>v.erase(v.begin() + i)</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td>laço copiando só os que ficam</td>
+<td><code>v.erase(std::remove_if(v.begin(), v.end(), criterio), v.end())</code></td>
+<td>8</td>
+</tr>
+<tr>
 <td>laço <code>for</code> manual + comparação</td>
 <td><code>std::sort</code>/<code>std::find</code>/<code>std::count_if</code> (<code>&lt;algorithm&gt;</code>)</td>
 <td>8</td>

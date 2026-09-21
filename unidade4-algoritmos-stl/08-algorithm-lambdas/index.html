@@ -1183,6 +1183,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#removendo-elementos-erase-e-o-idioma-erase-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removendo elementos: erase e o idioma erase-remove
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Removendo elementos: erase e o idioma erase-remove">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#erase-remover-de-uma-posicao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        erase: remover de uma posição
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove_if-nao-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        remove_if não remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-idioma-erase-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O idioma erase-remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#algorithm-tambem-funciona-em-stdstring" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2604,6 +2654,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#removendo-elementos-erase-e-o-idioma-erase-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removendo elementos: erase e o idioma erase-remove
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Removendo elementos: erase e o idioma erase-remove">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#erase-remover-de-uma-posicao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        erase: remover de uma posição
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove_if-nao-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        remove_if não remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-idioma-erase-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O idioma erase-remove
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#algorithm-tambem-funciona-em-stdstring" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2789,30 +2889,92 @@
 <a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">                </span><span class="p">[](</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="p">});</span>
 </code></pre></div>
 <p>Note o padrão comum: <strong>iterador de início, iterador de fim, e (quando precisa de um critério) uma lambda</strong>. Isso é o que torna <code>sort</code>, <code>find</code>, <code>count_if</code> etc. genéricos — a mesma função <code>std::sort</code> ordena <code>vector&lt;int&gt;</code>, <code>vector&lt;std::string&gt;</code> ou <code>vector&lt;Aluno&gt;</code> (com a lambda certa), sem precisar de uma versão para cada tipo.</p>
+<h2 id="removendo-elementos-erase-e-o-idioma-erase-remove">Removendo elementos: <code>erase</code> e o idioma erase-remove<a class="headerlink" href="#removendo-elementos-erase-e-o-idioma-erase-remove" title="Permanent link">&para;</a></h2>
+<p>No <a href="../../unidade2-containers/04-vector/#removendo-elementos">capítulo 4</a> você viu
+<code>pop_back()</code> e <code>clear()</code>, e ficou uma promessa: remover de uma posição
+<strong>qualquer</strong> precisava de um iterador. Agora que você tem um, a promessa se paga.</p>
+<h3 id="erase-remover-de-uma-posicao"><code>erase</code>: remover de uma posição<a class="headerlink" href="#erase-remover-de-uma-posicao" title="Permanent link">&para;</a></h3>
+<p><code>v.erase(posicao)</code> remove o elemento para o qual o iterador aponta. Como
+<code>v.begin()</code> aponta para o primeiro elemento, <code>v.begin() + i</code> aponta para o de
+índice <code>i</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">};</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">v</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">    </span><span class="c1">// remove o de indice 1 (o 20): {10, 30, 40}</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">v</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span><span class="w">        </span><span class="c1">// remove o primeiro:           {30, 40}</span>
+</code></pre></div>
+<p>E para remover uma <strong>faixa</strong> inteira, passa-se o começo e o fim — com o fim
+<strong>excluído</strong>, como em todo o <code>&lt;algorithm&gt;</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">};</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">w</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">w</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w">   </span><span class="c1">// remove os de indice 1 e 2: {1, 4, 5}</span>
+</code></pre></div>
+<p>Lembre do custo que o capítulo 4 desenhou: <code>erase</code> no meio desloca todos os
+elementos que vêm depois. Ele é conveniente, não barato.</p>
+<h3 id="remove_if-nao-remove"><code>remove_if</code> não remove<a class="headerlink" href="#remove_if-nao-remove" title="Permanent link">&para;</a></h3>
+<p>Agora o caso que aparece o tempo todo: tirar do vector <strong>todos</strong> os elementos que
+satisfazem um critério — as leituras negativas, as notas abaixo de 5. O nome
+óbvio é <code>std::remove_if</code>, e ele engana:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">};</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">auto</span><span class="w"> </span><span class="n">novo_fim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">remove_if</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="p">[](</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// 5 -- nada foi removido!</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">v</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">novo_fim</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span><span class="w">   </span><span class="c1">// 3</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1">// v agora e {5, 9, 3}</span>
+</code></pre></div>
+<p><code>remove_if</code> <strong>não muda o tamanho do vector</strong> — e não pode: ele recebe só dois
+iteradores, e iterador aponta para elementos, não tem como mexer no container.
+O que ele faz é <strong>empurrar para a frente</strong> os elementos que ficam, na ordem
+original, e devolver um iterador para onde essa parte boa termina. Do ponto
+devolvido até o fim sobra lixo — valores que você não deve usar.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>original:            5   -2    9   -1    3
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>depois do remove_if: 5    9    3    ?    ?
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>                                    ↑ novo_fim
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>depois do erase:     5    9    3
+</code></pre></div>
+<p>Quem encolhe o vector é o <code>erase</code>, apagando a faixa de <code>novo_fim</code> até <code>end()</code>.</p>
+<h3 id="o-idioma-erase-remove">O idioma erase-remove<a class="headerlink" href="#o-idioma-erase-remove" title="Permanent link">&para;</a></h3>
+<p>Como os dois passos andam sempre juntos, eles se escrevem numa linha só, e essa
+linha tem nome — <em>erase-remove</em>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">v</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">remove_if</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="p">[](</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}),</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</code></pre></div>
+<p>Leia de dentro para fora: o <code>remove_if</code> arruma e devolve o novo fim; o <code>erase</code>
+apaga do novo fim até o fim de verdade. Para remover por <strong>valor</strong> em vez de por
+critério, o parceiro é <code>std::remove</code>, sem lambda:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">v</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">remove</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">());</span><span class="w">   </span><span class="c1">// tira todos os zeros</span>
+</code></pre></div>
+<p>Compare com o que você faria sem isso, no capítulo 5: percorrer o vector e montar
+um vector novo só com os que ficam. Continua sendo uma resposta correta — e para
+quem está começando é a mais fácil de acertar. O erase-remove faz o mesmo sem
+criar o segundo vector, e numa passada só.</p>
 <h2 id="algorithm-tambem-funciona-em-stdstring"><code>&lt;algorithm&gt;</code> também funciona em <code>std::string</code><a class="headerlink" href="#algorithm-tambem-funciona-em-stdstring" title="Permanent link">&para;</a></h2>
 <p><code>std::string</code> é, por baixo, um container de <code>char</code> — então os mesmos algoritmos se aplicam:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cctype&gt;</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">texto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Programacao"</span><span class="p">;</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">std</span><span class="o">::</span><span class="n">reverse</span><span class="p">(</span><span class="n">texto</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1">// "oacamargorP" -- e aquela funcao "inverte" que voce escreveu na mao na Lista 01</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">texto</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1">// ordena os caracteres</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">texto</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">                </span><span class="p">[](</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="p">});</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="c1">// converte tudo para maiuscula -- a mesma logica do exercicio "maiusculo" da Lista 02</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cctype&gt;</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">texto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Programacao"</span><span class="p">;</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">std</span><span class="o">::</span><span class="n">reverse</span><span class="p">(</span><span class="n">texto</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1">// "oacamargorP" -- e aquela funcao "inverte" que voce escreveu na mao na Lista 01</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">texto</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="c1">// ordena os caracteres</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">texto</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">texto</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">                </span><span class="p">[](</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="c1">// converte tudo para maiuscula -- a mesma logica do exercicio "maiusculo" da Lista 02</span>
 </code></pre></div>
 <p>Perceba: os exercícios que você resolveu "na mão" nas listas 01 e 02 (inverter string, converter para maiúsculo) agora têm uma versão de uma linha usando <code>&lt;algorithm&gt;</code>. Não é acaso — aprender a versão manual primeiro é o que torna óbvio o que <code>&lt;algorithm&gt;</code> está economizando.</p>
 <h2 id="erros-comuns">Erros comuns<a class="headerlink" href="#erros-comuns" title="Permanent link">&para;</a></h2>
+<p><strong>Chamei <code>remove_if</code> e o vector não encolheu</strong> — é o comportamento esperado, não um bug: <code>remove_if</code> só arruma os elementos e devolve o novo fim; o <code>size()</code> continua o mesmo, com lixo no final. Falta o <code>erase</code>: <code>v.erase(std::remove_if(...), v.end());</code>.</p>
+<p><strong>Usei os elementos do fim depois do <code>remove_if</code> e vieram valores estranhos</strong> — do iterador devolvido até <code>end()</code>, o conteúdo não é garantido. Nunca leia essa faixa; apague-a com <code>erase</code>.</p>
 <p><strong>"error: no matching function for call to..." ao usar lambda em <code>std::sort</code></strong> — confira se a lambda de comparação retorna <code>bool</code> e recebe <strong>dois</strong> parâmetros do tipo do elemento (ex.: <code>[](int a, int b)</code>), nunca um só.</p>
 <p><strong>Esquecer <code>#include &lt;algorithm&gt;</code> ou <code>#include &lt;numeric&gt;</code></strong> — <code>sort</code>/<code>find</code>/<code>count_if</code>/<code>transform</code> vêm de <code>&lt;algorithm&gt;</code>; <code>accumulate</code> vem especificamente de <code>&lt;numeric&gt;</code>. Mensagens de erro tipo <code>'sort' is not a member of 'std'</code> geralmente significam um include faltando.</p>
 <p><strong>Capturar por referência (<code>[&amp;]</code>) uma variável que sai de escopo antes da lambda ser chamada</strong> — se você guardar a lambda para usar depois (não é o caso mais comum nas listas, mas aparece em código real), uma referência capturada pode "morrer" antes da lambda ser chamada. Prefira captura por cópia (<code>[x]</code>) quando não tiver certeza.</p>
 <h2 id="resumo">Resumo<a class="headerlink" href="#resumo" title="Permanent link">&para;</a></h2>
 <ul>
+<li><code>v.erase(v.begin() + i)</code> remove o elemento de índice <code>i</code>; <code>v.erase(inicio, fim)</code> remove uma faixa, com o fim excluído.</li>
+<li><code>std::remove_if</code> <strong>não</strong> remove: arruma os que ficam na frente e devolve o novo fim. Quem encolhe é o <code>erase</code> — o idioma é <code>v.erase(std::remove_if(v.begin(), v.end(), criterio), v.end());</code>.</li>
 <li>Iterador é um "ponteiro genérico" (<code>begin()</code>/<code>end()</code>); range-for usa iteradores por baixo.</li>
 <li>Lambda: <code>[captura](parâmetros) { corpo }</code> — função anônima definida no lugar de uso, o equivalente moderno a passar um ponteiro de função.</li>
 <li><code>&lt;algorithm&gt;</code> oferece operações prontas (<code>sort</code>, <code>find</code>, <code>count_if</code>, <code>any_of</code>, <code>all_of</code>, <code>transform</code>) que recebem um par de iteradores e, quando precisam de critério, uma lambda.</li>

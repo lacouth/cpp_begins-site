@@ -2722,6 +2722,11 @@
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
 <a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">estoque</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="s">"prego"</span><span class="p">);</span><span class="w">          </span><span class="c1">// remove pela chave</span>
 </code></pre></div>
+<p>Repare que o <code>erase</code> do <code>map</code> recebe a <strong>chave</strong>, e não uma posição — é por isso
+que ele funciona sem nada novo: basta dizer <em>qual</em> chave tirar, e se ela não
+existir não acontece nada. O <code>erase</code> de <code>vector</code> é diferente, porque num vector
+não há chave, só posição, e posição se indica com um iterador; esse fica para o
+<a href="../../unidade4-algoritmos-stl/08-algorithm-lambdas/#removendo-elementos-erase-e-o-idioma-erase-remove">capítulo 8</a>.</p>
 <p><strong>Cuidado com <code>[]</code> em <code>map</code>:</strong> <code>estoque["arruela"]</code> — se a chave <code>"arruela"</code> <strong>não existir</strong>, o <code>map</code> a <strong>cria</strong> automaticamente com valor padrão (0 para <code>int</code>). Isso é conveniente para inserir/atualizar, mas perigoso se sua intenção era só <em>checar</em> se a chave existe: <code>if (estoque["algo"] &gt; 0)</code> cria a entrada <code>"algo"</code> mesmo que você só quisesse ler. Para checar existência sem criar nada, use <code>.count()</code>.</p>
 <h2 id="percorrendo-um-map">Percorrendo um map<a class="headerlink" href="#percorrendo-um-map" title="Permanent link">&para;</a></h2>
 <p>Um <code>map</code> itera em ordem crescente de chave, automaticamente:</p>
